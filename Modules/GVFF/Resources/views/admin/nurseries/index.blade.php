@@ -45,7 +45,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-info btn-sm">Ver</a>
+                        <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-info btn-sm">Verrr</a>
                         <a href="{{ route('gvff.admin.nurseries.edit', $nursery) }}" class="btn btn-warning btn-sm">Editar</a>
                         <form action="{{ route('gvff.admin.nurseries.destroy', $nursery) }}" method="POST" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este vivero?');">
                             @csrf
