@@ -67,12 +67,9 @@ class PermissionsTableSeeder extends Seeder
             [
                 'slug' => 'gvff.admin.nurseries.showPlants',
                 'name' => 'Mostrar las plantas',
-                'description' => 'Permite mostrar la splantas',
-                'description_english' => 'Allows deleting plants',
+                'description' => 'Permite mostrar las plantas',
+                'description_english' => 'Allows displaying plants',
             ],
-
-
-            
         ];
 
         // Crear permisos para Viveros y añadirlos a la lista de permisos del administrador
@@ -88,8 +85,6 @@ class PermissionsTableSeeder extends Seeder
             );
             $permissions_admin[] = $permission->id;
         }
-
-        
 
         // Permisos para el CRUD de Plantas
         $plants_permissions = [
@@ -129,7 +124,6 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite eliminar plantas',
                 'description_english' => 'Allows deleting plants',
             ],
-        
             [
                 'slug' => 'gvff.admin.plants.sell',
                 'name' => 'Vender plantas',
@@ -142,7 +136,6 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite procesar la venta de plantas',
                 'description_english' => 'Allows processing the sale of plants',
             ],
-            // Nuevos permisos para rutas de creación por tipo
             [
                 'slug' => 'gvff.admin.plants.ornamental.create',
                 'name' => 'Crear planta ornamental',
@@ -195,6 +188,60 @@ class PermissionsTableSeeder extends Seeder
 
         // Crear permisos para Plantas y añadirlos a la lista de permisos del administrador
         foreach ($plants_permissions as $perm) {
+            $permission = Permission::updateOrCreate(
+                ['slug' => $perm['slug']],
+                [
+                    'name' => $perm['name'],
+                    'description' => $perm['description'],
+                    'description_english' => $perm['description_english'],
+                    'app_id' => $app->id
+                ]
+            );
+            $permissions_admin[] = $permission->id;
+        }
+
+        // Permisos para el CRUD de Faunas
+        $faunas_permissions = [
+            [
+                'slug' => 'gvff.admin.faunas.index',
+                'name' => 'Ver lista de faunas',
+                'description' => 'Permite ver la lista de faunas',
+                'description_english' => 'Allows viewing the list of faunas',
+            ],
+            [
+                'slug' => 'gvff.admin.faunas.create',
+                'name' => 'Crear faunas',
+                'description' => 'Permite mostrar el formulario para crear faunas',
+                'description_english' => 'Allows displaying the form to create faunas',
+            ],
+            [
+                'slug' => 'gvff.admin.faunas.store',
+                'name' => 'Almacenar fauna',
+                'description' => 'Permite guardar una nueva fauna',
+                'description_english' => 'Allows storing a new fauna',
+            ],
+            [
+                'slug' => 'gvff.admin.faunas.edit',
+                'name' => 'Editar faunas',
+                'description' => 'Permite mostrar el formulario para editar faunas existentes',
+                'description_english' => 'Allows displaying the form to edit existing faunas',
+            ],
+            [
+                'slug' => 'gvff.admin.faunas.update',
+                'name' => 'Actualizar faunas',
+                'description' => 'Permite actualizar una fauna editada',
+                'description_english' => 'Allows updating faunas',
+            ],
+            [
+                'slug' => 'gvff.admin.faunas.destroy',
+                'name' => 'Eliminar faunas',
+                'description' => 'Permite eliminar faunas',
+                'description_english' => 'Allows deleting faunas',
+            ],
+        ];
+
+        // Crear permisos para Faunas y añadirlos a la lista de permisos del administrador
+        foreach ($faunas_permissions as $perm) {
             $permission = Permission::updateOrCreate(
                 ['slug' => $perm['slug']],
                 [

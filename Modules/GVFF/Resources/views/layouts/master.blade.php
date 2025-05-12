@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
     <style>
-        /* Custom styles for elegance and nature theme */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9;
@@ -134,7 +133,7 @@
                         }
                         </script>
                 </div>
-                <a href="#fauna" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
+                <a href="{{ route('gvff.admin.faunas.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
                     <i class="fa-solid fa-paw mr-2"></i> Fauna
                 </a>
                 <a href="#compras" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
