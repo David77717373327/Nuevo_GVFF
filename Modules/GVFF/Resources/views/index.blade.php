@@ -26,17 +26,17 @@
                     <i class="fa-solid fa-seedling text-3xl text-green-600 mr-4"></i>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-700">Total Plantas</h3>
-                        <p class="text-2xl font-bold text-gray-900">245</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $totalPlants }}</p>
                     </div>
                 </div>
             </div>
             <!-- Card: Pending Tasks -->
             <div class="card bg-white p-6 rounded-lg shadow-md">
                 <div class="flex items-center">
-                    <i class="fa-solid fa-tasks text-3xl text-green-600 mr-4"></i>
+                    <i class="fa-solid fa-paw text-3xl text-green-600 mr-4"></i>
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-700">Tareas Pendientes</h3>
-                        <p class="text-2xl font-bold text-gray-900">8</p>
+                        <h3 class="text-lg font-semibold text-gray-700">fauna</h3>
+                        <p class="text-2xl font-bold text-gray-900">{{ $totalFauna }}</p>
                     </div>
                 </div>
             </div>
@@ -45,45 +45,26 @@
         <!-- Quick Actions -->
         <div class="mb-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Acciones Rápidas</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="{{ route('gvff.admin.nurseries.create') }}" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition">
-                    <i class="fa-solid fa-leaf text-2xl mb-2"></i>
-                    <span>Nuevo Vivero</span>
-                </a>
-                <a href="{{ route('gvff.admin.plants.create') }}" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition">
+            <p class="text-gray-600 mb-4">Realiza acciones rápidas para gestionar viveros y plantas.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                 <a href="{{ route('gvff.admin.nurseries.create') }}" class="card p-4 rounded-lg shadow-md hover:shadow-lg transition" style="background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);">
+                <i class="fa-solid fa-leaf text-2xl mb-2"></i>
+                <span class="font-semibold">Nuevo Vivero</span>
+            </a>
+                <a href="{{ route('gvff.admin.plants.create') }}" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition"  style="background-image: url('https://curiosidadessobre.es/wp-content/uploads/2024/03/Curiosidades-sobre-las-plantas.jpg'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7)">
                     <i class="fa-solid fa-seedling text-2xl mb-2"></i>
                     <span>Nueva Planta</span>
                 </a>
-                <a href="#compras" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition">
-                    <i class="fa-solid fa-receipt text-2xl mb-2"></i>
-                    <span>Registrar Compra</span>
+                <a href="{{ route('gvff.admin.faunas.create') }}" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition" style="background-image: url('https://th.bing.com/th/id/OIP.QdTR8wNFD3lBLKb-Aq6OEgHaE9?w=1024&h=685&rs=1&pid=ImgDetMain'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7)">
+                    <i class="fa-solid fa-paw text-2xl mb-2"></i>
+                    <span>Nueva Fauna</span>
+
+                <a href="{{ route('gvff.admin.plants.venta.create') }}" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition"style="background-image: url('https://1.bp.blogspot.com/-Qw5sUgKt0UA/YJiBSk7YPKI/AAAAAAAAAYQ/-PYKipvO4K4lJiBkn9Rk80Z9YArS6fAgwCPcBGAYYCw/w1200-h630-p-k-no-nu/venta-de-plantas-portada.png'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7)">
+                    <i class="fa-solid fa-shopping-cart text-2xl mb-2"></i>
+                    <span>Registrar Venta</span>
                 </a>
-                <a href="#seguimientos" class="card bg-green-600 text-white p-4 rounded-lg shadow-md hover:bg-green-700 transition">
-                    <i class="fa-solid fa-chart-line text-2xl mb-2"></i>
-                    <span>Ver Seguimientos</span>
-                </a>
-            </div>
+                </div>
         </div>
 
-        <!-- Recent Activity -->
-        <div>
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Actividad Reciente</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <ul class="space-y-4">
-                    <li class="flex items-center">
-                        <i class="fa-solid fa-leaf text-green-600 mr-3"></i>
-                        <span>Nuevo vivero "Vivero Central" registrado el 10/05/2025.</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fa-solid fa-seedling text-green-600 mr-3"></i>
-                        <span>Planta "Rosa Roja" añadida al catálogo el 09/05/2025.</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fa-solid fa-tasks text-green-600 mr-3"></i>
-                        <span>Tarea "Revisión de Suministros" completada el 08/05/2025.</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+  
 @endsection

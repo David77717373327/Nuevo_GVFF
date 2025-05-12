@@ -39,7 +39,7 @@ class GVFFFaunasController extends Controller
         $fauna->diet = $request->input('diet');
         $fauna->status = $request->input('status');
         $fauna->location = $request->input('location');
-        $fauna->admin_id = auth()->id();
+    
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -77,8 +77,7 @@ class GVFFFaunasController extends Controller
         $fauna->diet = $request->input('diet');
         $fauna->status = $request->input('status');
         $fauna->location = $request->input('location');
-        $fauna->admin_id = auth()->id();
-
+    
         if ($request->hasFile('image')) {
             // Eliminar imagen antigua si existe
             if ($fauna->image && file_exists(public_path($fauna->image))) {

@@ -64,7 +64,7 @@
             @enderror
         </div>
         <button type="submit" class="btn btn-primary">Crear Fauna</button>
-        <a href="{{ route('gvff.admin.faunas.index') }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('gvff.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 
