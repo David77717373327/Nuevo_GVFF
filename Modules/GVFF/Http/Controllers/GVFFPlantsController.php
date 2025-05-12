@@ -11,6 +11,7 @@ class GVFFPlantsController extends Controller
 {
     public function index()
     {
+        
         $plants = Plants::all();
         return view('gvff::admin.plants.index', compact('plants'));
     }

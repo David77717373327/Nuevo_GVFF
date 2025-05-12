@@ -98,10 +98,10 @@
                     </a>
                     <div class="submenu" id="plantas-submenu">
                         <a href="{{ route('gvff.admin.plants.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-flower mr-2"></i> plantas
+                            <i class="fa-solid fa-seedling mr-2"></i> plantas
                         </a>
                         <a href="{{ route('gvff.admin.plants.ornamental.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-flower mr-2"></i> Crear Planta Ornamental
+                            <i class="fa-solid fa-seedling mr-2"></i> Crear Planta Ornamental
                         </a>
                         <a href="{{ route('gvff.admin.plants.medicinal.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
                             <i class="fa-solid fa-mortar-pestle mr-2"></i> Crear Planta Medicinal

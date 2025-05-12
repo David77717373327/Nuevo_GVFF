@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\GVFF\Entities\Plants;
 
 class GVFFController extends Controller
 
@@ -13,8 +14,14 @@ class GVFFController extends Controller
     //funcion para el administrador
     public function index()
     {
-        return view('gvff::index');
+        // Get the count of unique nurseries from the plants table
+        $totalNurseries = Plants::distinct('nurseries_id')->count('nurseries_id');
+
+        // Pass the count to the view
+        return view('gvff::index', compact('totalNurseries'));
     }
+
+    
 
 
     //Funcion para los aprensices que no necesitan autenticacion
