@@ -34,11 +34,14 @@ Route::middleware(['lang'])->group(function () {
     Route::post('/plantas/venta/store', 'GVFFPlantsController@storeVenta')->name('gvff.admin.plants.venta.store');
     Route::get('/plantas/forestal/create', 'GVFFPlantsController@createForestal')->name('gvff.admin.plants.forestal.create');
     Route::post('/plantas/forestal/store', 'GVFFPlantsController@storeForestal')->name('gvff.admin.plants.forestal.store');
-    
+
+    Route::get('/faunas', 'GVFFFaunasController@index')->name('gvff.admin.faunas.index');
+    Route::get('/faunas/create', 'GVFFFaunasController@create')->name('gvff.admin.faunas.create');
+    Route::post('/faunas/store', 'GVFFFaunasController@store')->name('gvff.admin.faunas.store');
+    Route::get('/faunas/{fauna}/edit', 'GVFFFaunasController@edit')->name('gvff.admin.faunas.edit');
+    Route::put('/faunas/{fauna}', 'GVFFFaunasController@update')->name('gvff.admin.faunas.update');
+    Route::delete('/faunas/{fauna}', 'GVFFFaunasController@destroy')->name('gvff.admin.faunas.destroy');
     });
-
-    
-
 });
 
 
