@@ -10,37 +10,37 @@
 
         <!-- Quick Stats -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- Card: Total Nurseries -->
-            <div class="card bg-white p-6 rounded-lg shadow-md">
-                <div class="flex items-center">
-                    <i class="fa-solid fa-leaf text-3xl text-green-600 mr-4"></i>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-700">Total Viveros</h3>
-                        <p class="text-2xl font-bold text-gray-900">{{ $totalNurseries }}</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Card: Total Plants -->
-            <div class="card bg-white p-6 rounded-lg shadow-md">
-                <div class="flex items-center">
-                    <i class="fa-solid fa-seedling text-3xl text-green-600 mr-4"></i>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-700">Total Plantas</h3>
-                        <p class="text-2xl font-bold text-gray-900">{{ $totalPlants }}</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Card: Pending Tasks -->
-            <div class="card bg-white p-6 rounded-lg shadow-md">
-                <div class="flex items-center">
-                    <i class="fa-solid fa-paw text-3xl text-green-600 mr-4"></i>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-700">fauna</h3>
-                        <p class="text-2xl font-bold text-gray-900">{{ $totalFauna }}</p>
-                    </div>
-                </div>
+    <!-- Card: Total Nurseries -->
+    <div class="card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center space-x-4">
+            <img src="{{ asset('modules/gvff/images/faunas/gato-1747067617.jpg') }}" alt="Fauna" class="w-20 h-20 object-cover rounded-full border-2 border-green-500">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Total Viveros</h3>
+                <p class="text-2xl font-bold text-gray-900">{{ $totalNurseries }}</p>
             </div>
         </div>
+    </div>
+    <!-- Card: Total Plants -->
+    <div class="card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center space-x-4">
+            <img src="{{ asset('modules/gvff/images/faunas/gato-1747067617.jpg') }}" alt="Fauna" class="w-20 h-20 object-cover rounded-full border-2 border-green-100">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Total Plantas</h3>
+                <p class="text-2xl font-bold text-gray-900">{{ $totalPlants }}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Card: Fauna -->
+    <div class="card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center space-x-4">
+            <img src="{{ asset('modules/gvff/images/faunas/gato-1747067617.jpg') }}" alt="Fauna" class="w-20 h-20 object-cover rounded-full border-2 border-green-100">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Fauna</h3>
+                <p class="text-2xl font-bold text-gray-900">{{ $totalFauna }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Quick Actions -->
         <div class="mb-8">
