@@ -15,7 +15,7 @@
         <div class="flex items-center space-x-4">
             <img src="{{ asset('modules/gvff/images/faunas/gato-1747067617.jpg') }}" alt="Fauna" class="w-20 h-20 object-cover rounded-full border-2 border-green-500">
             <div>
-                <h3 class="text-lg font-semibold text-gray-800">Total Viveros</h3>
+                <h3 class="text-lg font-semibold text-gray-800">Total Viverosos</h3>
                 <p class="text-2xl font-bold text-gray-900">{{ $totalNurseries }}</p>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="flex items-center space-x-4">
             <img src="{{ asset('modules/gvff/images/faunas/gato-1747067617.jpg') }}" alt="Fauna" class="w-20 h-20 object-cover rounded-full border-2 border-green-100">
             <div>
-                <h3 class="text-lg font-semibold text-gray-800">Total Plantas</h3>
+                <h3 class="text-lg font-semibold text-gray-800">Total Plantasos</h3>
                 <p class="text-2xl font-bold text-gray-900">{{ $totalPlants }}</p>
             </div>
         </div>
