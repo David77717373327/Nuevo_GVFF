@@ -14,16 +14,17 @@ class GVFFController extends Controller
 {
     //funcion para el administrador
     public function index()
-    {
-        // Get the count of unique nurseries from the plants table
-        $totalNurseries = Plants::distinct('nurseries_id')->count('nurseries_id');
+{
+    // Get the count of unique nurseries from the plants table
+    $totalNurseries = Plants::distinct('nurseries_id')->count('nurseries_id');
 
-        $totalPlants = Plants::count();
-        $totalFauna = Fauna::count();
+    $totalPlants = Plants::count();
+    $totalFauna = Fauna::count();
+    $faunaImage = 'gvff/images/faunas/gato-1747067651.jpg'; // Ruta correcta relativa a public/
 
-        // Pass the count to the view
-        return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna'));
-    }
+    // Pass the count to the view
+    return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'faunaImage'));
+}
 
     
 
