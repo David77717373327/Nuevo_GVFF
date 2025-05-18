@@ -20,10 +20,13 @@ class GVFFController extends Controller
 
     $totalPlants = Plants::count();
     $totalFauna = Fauna::count();
-    $faunaImage = 'gvff/images/faunas/gato-1747067651.jpg'; // Ruta correcta relativa a public/
+    
+    $ornamentalPlants = Plants::where('plant_type', 'ornamental')->count();
+        $medicinalPlants = Plants::where('plant_type', 'medicinal')->count();
+        $ventaPlants = Plants::where('plant_type', 'venta')->count();
 
     // Pass the count to the view
-    return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'faunaImage'));
+    return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'ornamentalPlants', 'medicinalPlants', 'ventaPlants', 'totalFauna'));
 }
 
     
@@ -39,9 +42,6 @@ class GVFFController extends Controller
         
         return view('gvff::welcome');
     }
-
- 
-    
     /**
      * Show the form for creating a new resource.
      * @return Renderable

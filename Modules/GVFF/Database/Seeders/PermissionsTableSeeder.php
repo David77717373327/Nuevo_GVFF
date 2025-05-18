@@ -184,6 +184,32 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite guardar una nueva planta forestal',
                 'description_english' => 'Allows storing a new forestal plant',
             ],
+        
+            [
+                'slug' => 'gvff.admin.plants.ornamental.lista_ornamental',
+                'name' => 'Ver lista de plantas ornamentales',
+                'description' => 'Permite ver la lista de plantas ornamentales',
+                'description_english' => 'Allows viewing the list of ornamental plants',
+            ],
+            [
+                'slug' => 'gvff.admin.plants.medicinal.lista_medicinal',
+                'name' => 'Ver lista de plantas medicinales',
+                'description' => 'Permite ver la lista de plantas medicinales',
+                'description_english' => 'Allows viewing the list of medicinal plants',
+            ],
+            [
+                'slug' => 'gvff.admin.plants.forestal.lista_forestal',
+                'name' => 'Ver lista de plantas forestales',
+                'description' => 'Permite ver la lista de plantas forestales',
+                'description_english' => 'Allows viewing the list of forestal plants',
+            ],
+            [
+                'slug' => 'gvff.admin.plants.venta.lista_venta',
+                'name' => 'Ver lista de plantas en venta',
+                'description' => 'Permite ver la lista de plantas en venta',
+                'description_english' => 'Allows viewing the list of plants for sale',
+            ],
+
         ];
 
         // Crear permisos para Plantas y añadirlos a la lista de permisos del administrador

@@ -39,6 +39,7 @@
                     <option value="ornamental" {{ old('plant_type', $plants->plant_type) == 'ornamental' ? 'selected' : '' }}>Ornamental</option>
                     <option value="forestal" {{ old('plant_type', $plants->plant_type) == 'forestal' ? 'selected' : '' }}>Forestal</option>
                     <option value="medicinal" {{ old('plant_type', $plants->plant_type) == 'medicinal' ? 'selected' : '' }}>Medicinal</option>
+                    <option value="venta" {{ old('plant_type', $plants->plant_type) == 'venta' ? 'selected' : '' }}>Venta</option>
                 </select>
                 @error('plant_type')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -110,13 +111,15 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="price">Precio</label>
-                <input type="number" step="0.01" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $plants->price) }}">
-                @error('price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+            @if($plants->plant_type == 'venta')
+                <div class="form-group">
+                    <label for="price">Precio</label>
+                    <input type="number" step="0.01" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $plants->price) }}">
+                    @error('price')
+                        <div class="invalid-feedback">{{$message }}</div>
+                    @enderror
+                </div>
+            @endif
             <div class="form-group">
                 <label for="location">Ubicación</label>
                 <input type="text" name="location" id="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location', $plants->location) }}">

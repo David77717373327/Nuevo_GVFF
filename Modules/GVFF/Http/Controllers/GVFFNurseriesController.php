@@ -13,9 +13,6 @@ class GVFFNurseriesController extends Controller
     
     public function index()
     {
-     
-
-
         $nurseries = nurseries::all();
         return view('gvff::admin.nurseries.index', compact('nurseries'));
     }

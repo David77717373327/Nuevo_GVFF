@@ -5,53 +5,51 @@ namespace Modules\GVFF\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\GVFF\Entities\Plants;
-use Modules\GVFF\Entities\nurseries;
+use Modules\GVFF\Entities\Nurseries;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class GVFFPlantsController extends Controller
 {
     public function index()
     {
-        
         $plants = Plants::all();
         return view('gvff::admin.plants.index', compact('plants'));
     }
 
+    public function listaOrnamental()
+    {
+        $plants = Plants::where('plant_type', 'ornamental')->get();
+        return view('gvff::admin.plants.ornamental.lista_ornamental', compact('plants'));
+    }
+
+    public function listaMedicinal()
+    {
+        $plants = Plants::where('plant_type', 'medicinal')->get();
+        return view('gvff::admin.plants.medicinal.lista_medicinal', compact('plants'));
+    }
+
+    public function listaForestal()
+    {
+        $plants = Plants::where('plant_type', 'forestal')->get();
+        $nurseries = Nurseries::all();
+        return view('gvff::admin.plants.forestal.lista_forestal', compact('plants', 'nurseries'));
+    }
+
+    public function listaVenta()
+    {
+        $plants = Plants::where('plant_type', 'venta')->get();
+        return view('gvff::admin.plants.venta.lista_venta', compact('plants'));
+    }
+
     public function create()
     {
-        $nurseries = nurseries::all();
+        $nurseries = Nurseries::all();
         return view('gvff::admin.plants.create', compact('nurseries'));
     }
 
-    // Mostrar formulario para ornamental
-    public function createOrnamental()
-    {
-        $nurseries = nurseries::all();
-        return view('gvff::admin.plants.ornamental.create', compact('nurseries'));
-    }
-
-    // Mostrar formulario para medicinal
-    public function createMedicinal()
-    {
-        $nurseries = nurseries::all();
-        return view('gvff::admin.plants.medicinal.create', compact('nurseries'));
-    }
-
-    // Mostrar formulario para venta
-    public function createVenta()
-    {
-        $nurseries = nurseries::all();
-        return view('gvff::admin.plants.venta.create', compact('nurseries'));
-    }
-
-    // Mostrar formulario para forestal
-    public function createForestal()
-    {
-        $nurseries = nurseries::all();
-        return view('gvff::admin.plants.forestal.create', compact('nurseries'));
-    }
-
-    // Almacenar planta (común para todos los tipos)
-    protected function storePlant(Request $request)
+    protected function storePlant(Request $request, $isAjax = false)
     {
         $rules = [
             'nurseries_id' => 'required|exists:nurseries,id',
@@ -73,53 +71,65 @@ class GVFFPlantsController extends Controller
             'observations' => 'nullable|string',
         ];
 
-        // Validación condicional para el precio si es tipo 'venta'
         if ($request->input('plant_type') === 'venta') {
             $rules['price'] = 'required|numeric|min:0';
         }
 
-        $validatedData = $request->validate($rules);
+        try {
+            $validatedData = $request->validate($rules);
+            $validatedData['available'] = $request->boolean('available', true);
 
-        // Asegurar que 'available' esté en $validatedData con un valor por defecto
-        $validatedData['available'] = $request->boolean('available', true);
+            if ($request->hasFile('image')) {
+                $name_image = Str::slug($request->input('common_name')) . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                $path = $request->file('image')->storeAs('plants', $name_image, 'public');
+                $validatedData['image'] = $path;
+            }
 
-        // Manejo de la imagen
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $extension = $image->getClientOriginalExtension();
-            $name_image = Str::slug($request->input('common_name')) . '-' . time() . '.' . $extension;
-            $image->move(public_path('modules/gvff/images/plants/'), $name_image);
-            $validatedData['image'] = 'modules/gvff/images/plants/' . $name_image;
+            Plants::create($validatedData);
+
+            if ($isAjax) {
+                return response()->json(['success' => true, 'message' => 'Planta creada con éxito.']);
+            }
+
+            return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta creada con éxito.');
+        } catch (\ValidationException $e) {
+            Log::error('Validation error in storePlant: ' . json_encode($e->validator->errors()), ['request' => $request->all()]);
+            if ($isAjax) {
+                return response()->json(['success' => false, 'errors' => $e->validator->errors()], 422);
+            }
+            throw $e;
+        } catch (\Exception $e) {
+            Log::error('Error in storePlant: ' . $e->getMessage(), ['exception' => $e, 'request' => $request->all()]);
+            if ($isAjax) {
+                return response()->json(['success' => false, 'errors' => ['general' => 'Ocurrió un error al crear la planta: ' . $e->getMessage()]], 500);
+            }
+            throw $e;
         }
-
-        // Crear la planta
-        Plants::create($validatedData);
-
-        return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta creada con éxito.');
     }
 
-    // Almacenar planta ornamental
+    public function store(Request $request)
+    {
+        return $this->storePlant($request);
+    }
+
     public function storeOrnamental(Request $request)
     {
         return $this->storePlant($request);
     }
 
-    // Almacenar planta medicinal
     public function storeMedicinal(Request $request)
     {
         return $this->storePlant($request);
     }
 
-    // Almacenar planta en venta
     public function storeVenta(Request $request)
     {
         return $this->storePlant($request);
     }
 
-    // Almacenar planta forestal
     public function storeForestal(Request $request)
     {
-        return $this->storePlant($request);
+        return $this->storePlant($request, true);
     }
 
     public function sell($id)
@@ -127,31 +137,29 @@ class GVFFPlantsController extends Controller
         $plants = Plants::findOrFail($id);
         return view('gvff::admin.plants.sell', compact('plants'));
     }
-    
+
     public function processSell(Request $request, $id)
     {
         $request->validate([
             'price' => 'required|numeric|min:0',
         ]);
-    
+
         $plants = Plants::findOrFail($id);
         $plants->price = $request->price;
         $plants->save();
-    
+
         return redirect()->route('gvff.admin.plants.index')->with('success', 'Precio de venta actualizado con éxito.');
     }
-    
 
-    
     public function edit(Plants $plants)
     {
-        $nurseries = nurseries::all();
+        $nurseries = Nurseries::all();
         return view('gvff::admin.plants.edit', compact('plants', 'nurseries'));
     }
 
     public function update(Request $request, Plants $plants)
     {
-        $request->validate([
+        $rules = [
             'nurseries_id' => 'required|exists:nurseries,id',
             'scientific_name' => 'required|string|max:255|unique:plants,scientific_name,' . $plants->id,
             'common_name' => 'required|string|max:255',
@@ -169,47 +177,57 @@ class GVFFPlantsController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'available' => 'boolean',
             'observations' => 'nullable|string',
-        ]);
+        ];
 
-        $plants->nurseries_id = $request->input('nurseries_id');
-        $plants->scientific_name = $request->input('scientific_name');
-        $plants->common_name = $request->input('common_name');
-        $plants->plant_type = $request->input('plant_type');
-        $plants->structure_type = $request->input('structure_type');
-        $plants->family = $request->input('family');
-        $plants->characteristics = $request->input('characteristics');
-        $plants->benefits = $request->input('benefits');
-        $plants->properties = $request->input('properties');
-        $plants->traditional_uses = $request->input('traditional_uses');
-        $plants->status = $request->input('status');
-        $plants->inventory = $request->input('inventory');
-        $plants->price = $request->input('price');
-        $plants->location = $request->input('location');
-        $plants->available = $request->boolean('available', true);
-        $plants->observations = $request->input('observations');
+        try {
+            $validatedData = $request->validate($rules);
 
-        if ($request->hasFile('image')) {
-            if ($plants->image && file_exists(public_path($plants->image))) {
-                unlink(public_path($plants->image));
+            $plants->nurseries_id = $validatedData['nurseries_id'];
+            $plants->scientific_name = $validatedData['scientific_name'];
+            $plants->common_name = $validatedData['common_name'];
+            $plants->plant_type = $validatedData['plant_type'];
+            $plants->structure_type = $validatedData['structure_type'];
+            $plants->family = $validatedData['family'];
+            $plants->characteristics = $validatedData['characteristics'];
+            $plants->benefits = $validatedData['benefits'];
+            $plants->properties = $validatedData['properties'];
+            $plants->traditional_uses = $validatedData['traditional_uses'];
+            $plants->status = $validatedData['status'];
+            $plants->inventory = $validatedData['inventory'];
+            $plants->price = $validatedData['price'];
+            $plants->location = $validatedData['location'];
+            $plants->available = $request->boolean('available', true);
+            $plants->observations = $validatedData['observations'];
+
+            if ($request->hasFile('image')) {
+                if ($plants->image && Storage::disk('public')->exists($plants->image)) {
+                    Storage::disk('public')->delete($plants->image);
+                }
+                $name_image = Str::slug($validatedData['common_name']) . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+                $path = $request->file('image')->storeAs('plants', $name_image, 'public');
+                $plants->image = $path;
             }
-            $image = $request->file('image');
-            $extension = $image->getClientOriginalExtension();
-            $name_image = \Str::slug($plants->common_name) . '-' . time() . '.' . $extension;
-            $image->move(public_path('modules/gvff/images/plants/'), $name_image);
-            $plants->image = 'modules/gvff/images/plants/' . $name_image;
+
+            $plants->save();
+
+            return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta actualizada con éxito.');
+        } catch (\Exception $e) {
+            Log::error('Error in update: ' . $e->getMessage(), ['exception' => $e, 'request' => $request->all()]);
+            return redirect()->back()->withErrors(['general' => 'Ocurrió un error al actualizar la planta: ' . $e->getMessage()]);
         }
-
-        $plants->save();
-
-        return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta actualizada con éxito.');
     }
 
     public function destroy(Plants $plants)
     {
-        if ($plants->image && file_exists(public_path($plants->image))) {
-            unlink(public_path($plants->image));
+        try {
+            if ($plants->image && Storage::disk('public')->exists($plants->image)) {
+                Storage::disk('public')->delete($plants->image);
+            }
+            $plants->delete();
+            return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta eliminada con éxito.');
+        } catch (\Exception $e) {
+            Log::error('Error in destroy: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->back()->withErrors(['general' => 'Ocurrió un error al eliminar la planta: ' . $e->getMessage()]);
         }
-        $plants->delete();
-        return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta eliminada con éxito.');
     }
 }

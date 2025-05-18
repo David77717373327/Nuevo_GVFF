@@ -6,23 +6,71 @@
     <title>Sistema de Gestión de Viveros</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Animate.css for Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9;
+            transition: all 0.3s ease;
         }
         .sidebar {
-            background: linear-gradient(180deg, #2f855a, #1a4731);
+            transition: all 0.3s ease;
+            height: 100vh;
+            position: fixed;
+            z-index: 50;
+            width: 250px;
+            overflow: hidden;
+        }
+        .sidebar video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.8); /* Increased brightness to 0.8 */
+        }
+        .sidebar .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Reduced opacity to 0.3 */
+            z-index: 1;
+        }
+        .sidebar .sidebar-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
             transition: all 0.3s ease;
         }
         .sidebar a:hover {
             background-color: #38a169;
             transform: translateX(5px);
+        }
+        .sidebar .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
         }
         .card {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -31,138 +79,122 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        .header {
-            background: linear-gradient(to right, #38a169, #68d391);
+        .main-content {
+            min-height: 100vh;
+            background-color: #f1f5f9;
+        }
+        .submenu {
+            display: none;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        .submenu.active {
+            display: block;
+        }
+        .submenu-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .submenu-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .submenu-list li a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .submenu-list li a:hover {
+            background-color: #38a169;
+            transform: translateX(5px);
+        }
+        .logout-btn a {
+            color: #ff0000 !important;
         }
         /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
         }
-        /* Submenu styles */
-        .submenu {
-            display: none;
-            margin-left: 1rem;
-        }
-        .submenu.active {
-            display: block;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- Header -->
-    
-
     <!-- Main Content Area -->
     <div class="flex flex-1">
         <!-- Sidebar -->
-        <aside class="sidebar w-64 h-screen fixed text-white flex flex-col shadow-lg">
-            <div class="p-6 text-2xl font-bold border-b border-green-700">
-                <i class="fa-solid fa-leaf mr-2"></i> GVFF
-            </div>
-            <header class="header w-full p-4 text-white shadow-md">
-        <nav class="flex items-center justify-end space-x-4">
-            @auth
-                @if(checkRol('gvff.admin'))
-                        Administrador
-                @endif
-                @if(checkRol('gvff.users'))
-                    <a href="{{ route('gvff.users.users') }}" 
-                       class="nav-link hover:text-gray-200 @if(Route::is('gvff.users.*')) font-bold @endif">
-                        Usuario
+        <aside class="sidebar text-white flex flex-col shadow-lg">
+            <video autoplay muted loop>
+                <source src="{{ asset('modules/gvff/images/Learn and Play with Magic Media.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+            <div class="sidebar-content">
+               <div class="p-6 border-b border-gray-700 text-center">
+    <div class="flex justify-center">
+    <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" 
+         alt="Vivero"
+         class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
+</div>
+
+
+
+
+</div>
+                <!-- Add "Administrador" below the logo -->
+                @auth
+                    @if(checkRol('gvff.admin'))
+                        <div class="p-4 text-lg font-semibold text-center">
+                            Administrador
+                        </div>
+                    @endif
+                @endauth
+                <nav class="flex-1 p-4">
+                    <a href="{{ route('gvff.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-home"></i> Dashboard
                     </a>
-                @endif
-            @endauth
-        </nav>
-    </header>
-            <nav class="flex-1 p-4">
-                <a href="{{ route('gvff.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-home mr-2"></i> Dashboard
-                </a>
-                <div>
-                    <a href="{{ route('gvff.admin.nurseries.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                        <i class="fa-solid fa-leaf mr-2"></i> Viveros
+                    <a href="{{ route('gvff.admin.nurseries.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-leaf"></i> Viveros
                     </a>
-                    <div class="submenu" id="viveros-submenu">
-                        <a href="#viveros-ornamen" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-flower mr-2"></i> Ornamental
-                        </a>
-                        <a href="#viveros-forestal" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-tree mr-2"></i> Forestal
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <a href="{{ route('gvff.admin.plants.index') }}"  class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition" onclick="toggleSubmenu(event, 'plantas-submenu')">
-                        <i class="fa-solid fa-seedling mr-2"></i> Plantas
+                    <a href="{{ route('gvff.admin.plants.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition" onclick="toggleSubmenu(event, 'plantas-submenu')">
+                        <i class="fa-solid fa-seedling"></i> Plantas
                     </a>
                     <div class="submenu" id="plantas-submenu">
-                        <a href="{{ route('gvff.admin.plants.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-seedling mr-2"></i> plantas
-                        </a>
-                        <a href="{{ route('gvff.admin.plants.ornamental.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-seedling mr-2"></i> Crear Planta Ornamental
-                        </a>
-                        <a href="{{ route('gvff.admin.plants.medicinal.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-mortar-pestle mr-2"></i> Crear Planta Medicinal
-                        </a>
-                        <a href="{{ route('gvff.admin.plants.venta.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-shopping-cart mr-2"></i> Crear Planta en Venta
-                        </a>
-                        <a href="{{ route('gvff.admin.plants.forestal.create') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                            <i class="fa-solid fa-tree mr-2"></i> Crear Planta Forestal
-                        </a>
+                        <ul class="submenu-list">
+                            <li><a href="{{ route('gvff.admin.plants.index') }}"><i class="fa-solid fa-seedling"></i> Plantas</a></li>
+                            <li><a href="{{ route('gvff.admin.plants.ornamental.lista_ornamental') }}"><i class="fa-solid fa-seedling"></i> lista Planta Ornamental</a></li>
+                            <li><a href="{{ route('gvff.admin.plants.medicinal.lista_medicinal') }}"><i class="fa-solid fa-mortar-pestle"></i> lista Planta Medicinal</a></li>
+                            <li><a href="{{ route('gvff.admin.plants.venta.lista_venta') }}"><i class="fa-solid fa-shopping-cart"></i> lista Planta en Venta</a></li>
+                            <li><a href="{{ route('gvff.admin.plants.forestal.lista_forestal') }}"><i class="fa-solid fa-tree"></i> lista Planta Forestal</a></li>
+                        </ul>
                     </div>
-                    
-                    <script>
-                        function toggleSubmenu(event, submenuId) {
-                            const submenu = document.getElementById(submenuId);
-                        
-                            if (!submenu) return;
-                        
-                            const isVisible = submenu.style.display === "block";
-                        
-                            // Si el submenú NO está visible, lo mostramos y prevenimos navegación
-                            if (!isVisible) {
-                                event.preventDefault();
-                                submenu.style.display = "block";
-                            } else {
-                                // Si ya está visible, permitimos navegación (no se hace preventDefault)
-                                // Opcional: podrías cerrarlo aquí si quieres
-                                // submenu.style.display = "none";
-                            }
-                        }
-                        </script>
-                </div>
-                <a href="{{ route('gvff.admin.faunas.index') }}" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-paw mr-2"></i> Fauna
-                </a>
-                <a href="#compras" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-receipt mr-2"></i> Compras
-                </a>
-                <a href="#suministros" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-box mr-2"></i> Suministros
-                </a>
-                <a href="#herramientas" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-hammer mr-2"></i> Herramientas
-                </a>
-                <a href="#registros" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-book mr-2"></i> Registros
-                </a>
-                <a href="#seguimientos" class="block py-2 px-4 rounded-lg mb-2 hover:bg-green-600 transition">
-                    <i class="fa-solid fa-chart-line mr-2"></i> Seguimientos
-                </a>
-
-                
-            </nav>
-            <div class="p-4 border-t border-green-700">
-                <a href="{{ route('login') }}" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition">
+                    <a href="{{ route('gvff.admin.faunas.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-paw"></i> Fauna
+                    </a>
+                    <a href="#compras" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-receipt"></i> Compras
+                    </a>
+                    <a href="#suministros" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-box"></i> Suministros
+                    </a>
+                    <a href="#herramientas" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-hammer"></i> Herramientas
+                    </a>
+                </nav>
+                <div class="p-4 border-t border-green-700">
+                <a href="{{ route('logout') }}" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition" onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition">
                     <i class="fa-solid fa-sign-out-alt mr-2"></i> Cerrar Sesión
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                    </form>
+                </div>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 ml-64 p-8 bg-gray-100">
+        <main class="flex-1 ml-[250px] p-8 main-content">
             @yield('content')
         </main>
     </div>
@@ -172,20 +204,22 @@
         function toggleSubmenu(event, submenuId) {
             event.preventDefault();
             const submenu = document.getElementById(submenuId);
+            if (!submenu) return;
+
             const isActive = submenu.classList.contains('active');
-            // Close all submenus
             document.querySelectorAll('.submenu').forEach(sub => sub.classList.remove('active'));
-            // Toggle the clicked submenu
             if (!isActive) {
                 submenu.classList.add('active');
+            } else {
+                submenu.classList.remove('active');
             }
-            // Navigate to the parent section if submenu is closed
-            const parentSection = submenuId.split('-')[0];
+
             if (!submenu.classList.contains('active')) {
-                window.location.hash = parentSection;
+                const parentSection = submenuId.split('-')[0];
+                window.location.hash = `#${parentSection}`;
             }
         }
     </script>
+    @stack('scripts')
 </body>
-@stack('scripts')
 </html>
