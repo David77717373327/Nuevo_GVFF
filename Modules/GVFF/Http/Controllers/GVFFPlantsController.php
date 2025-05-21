@@ -191,13 +191,13 @@ public function store(Request $request)
 
     public function edit(Plants $plants)
     {
-        $nurseries = Nurseries::all();
+        $nurseries = nurseries::all();
         return view('gvff::admin.plants.edit', compact('plants', 'nurseries'));
     }
 
     public function update(Request $request, Plants $plants)
     {
-        $rules = [
+        $request->validate([
             'nurseries_id' => 'required|exists:nurseries,id',
             'scientific_name' => 'required|string|max:255|unique:plants,scientific_name,' . $plants->id,
             'common_name' => 'required|string|max:255',
@@ -215,47 +215,41 @@ public function store(Request $request)
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'available' => 'boolean',
             'observations' => 'nullable|string',
-        ];
+        ]);
 
-        try {
-            $validatedData = $request->validate($rules);
+        $plants->nurseries_id = $request->input('nurseries_id');
+        $plants->scientific_name = $request->input('scientific_name');
+        $plants->common_name = $request->input('common_name');
+        $plants->plant_type = $request->input('plant_type');
+        $plants->structure_type = $request->input('structure_type');
+        $plants->family = $request->input('family');
+        $plants->characteristics = $request->input('characteristics');
+        $plants->benefits = $request->input('benefits');
+        $plants->properties = $request->input('properties');
+        $plants->traditional_uses = $request->input('traditional_uses');
+        $plants->status = $request->input('status');
+        $plants->inventory = $request->input('inventory');
+        $plants->price = $request->input('price');
+        $plants->location = $request->input('location');
+        $plants->available = $request->boolean('available', true);
+        $plants->observations = $request->input('observations');
 
-            $plants->nurseries_id = $validatedData['nurseries_id'];
-            $plants->scientific_name = $validatedData['scientific_name'];
-            $plants->common_name = $validatedData['common_name'];
-            $plants->plant_type = $validatedData['plant_type'];
-            $plants->structure_type = $validatedData['structure_type'];
-            $plants->family = $validatedData['family'];
-            $plants->characteristics = $validatedData['characteristics'];
-            $plants->benefits = $validatedData['benefits'];
-            $plants->properties = $validatedData['properties'];
-            $plants->traditional_uses = $validatedData['traditional_uses'];
-            $plants->status = $validatedData['status'];
-            $plants->inventory = $validatedData['inventory'];
-            $plants->price = $validatedData['price'];
-            $plants->location = $validatedData['location'];
-            $plants->available = $request->boolean('available', true);
-            $plants->observations = $validatedData['observations'];
-
-            if ($request->hasFile('image')) {
-                if ($plants->image && Storage::disk('public')->exists($plants->image)) {
-                    Storage::disk('public')->delete($plants->image);
-                }
-                $name_image = Str::slug($validatedData['common_name']) . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension();
-                $path = $request->file('image')->storeAs('plants', $name_image, 'public');
-                $plants->image = $path;
+        if ($request->hasFile('image')) {
+            if ($plants->image && file_exists(public_path($plants->image))) {
+                unlink(public_path($plants->image));
             }
-
-            $plants->save();
-
-            return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta actualizada con éxito.');
-        } catch (\Exception $e) {
-            Log::error('Error in update: ' . $e->getMessage(), ['exception' => $e, 'request' => $request->all()]);
-            return redirect()->back()->withErrors(['general' => 'Ocurrió un error al actualizar la planta: ' . $e->getMessage()]);
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $name_image = \Str::slug($plants->common_name) . '-' . time() . '.' . $extension;
+            $image->move(public_path('modules/gvff/images/plants/'), $name_image);
+            $plants->image = 'modules/gvff/images/plants/' . $name_image;
         }
-    }
 
-    public function destroy(Plants $plants)
+        $plants->save();
+
+        return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta actualizada con éxito.');
+    }
+        public function destroy(Plants $plants)
     {
         try {
             if ($plants->image && Storage::disk('public')->exists($plants->image)) {
