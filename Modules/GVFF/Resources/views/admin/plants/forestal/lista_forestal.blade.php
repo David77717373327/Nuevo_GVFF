@@ -4,7 +4,7 @@
     <div class="container mx-auto p-6">
         <!-- Botón para abrir el modal -->
         <div class="mb-4">
-            <button id="openModalBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200">Crear Planta Forestal</button>
+            <button id="openModalBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 {{ $nurseries->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}" {{ $nurseries->isEmpty() ? 'disabled' : '' }}>Crear Planta Forestal</button>
         </div>
 
         <div class="mb-8">
@@ -51,7 +51,7 @@
         <div id="createModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
                 <h2 class="text-xl font-semibold mb-4 text-gray-800">Crear Nueva Planta Forestal</h2>
-                <form id="createPlantForm" enctype="multipart/form-data">
+                <form id="createPlants" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="plant_type" value="forestal">
 
@@ -60,7 +60,7 @@
                         <!-- Vivero -->
                         <div>
                             <label for="nurseries_id" class="block text-sm font-medium text-gray-700 mb-1">Vivero *</label>
-                            @if(isset($nurseries) && $nurseries->isNotEmpty())
+                            @if($nurseries->isNotEmpty())
                                 <select name="nurseries_id" id="nurseries_id" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error('nurseries_id') border-red-500 @enderror" required>
                                     <option value="">Seleccione un vivero</option>
                                     @foreach ($nurseries as $nursery)
@@ -145,94 +145,127 @@
         </div>
     </div>
 
-    <script>
-    // Control del modal
-    document.getElementById('openModalBtn').addEventListener('click', function() {
-        document.getElementById('createModal').classList.remove('hidden');
-    });
 
-    document.getElementById('closeModalBtn').addEventListener('click', function() {
-        document.getElementById('createModal').classList.add('hidden');
-        clearFormErrors();
-    });
+   <script>
+    // JavaScript para manejar el modal y la validación del formulario
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('createModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const createPlantForm = document.getElementById('createPlants');
+        const submitBtn = document.getElementById('submitBtn');
 
-    // Cerrar el modal al hacer clic fuera de él
-    document.getElementById('createModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            this.classList.add('hidden');
-            clearFormErrors();
+        if (!createPlantForm) {
+            console.error('Form with ID "createPlants" not found');
+            return;
         }
-    });
 
-    // Enviar el formulario con AJAX
-    document.getElementById('createPlantForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+        if (!submitBtn) {
+            console.error('Submit button with ID "submitBtn" not found');
+            return;
+        }
 
-        const formData = new FormData(this);
-        formData.append('_token', '{{ csrf_token() }}'); // Añadir el token CSRF a FormData
+        openModalBtn.addEventListener('click', () => {
+            console.log('Open modal button clicked');
+            modal.classList.remove('hidden');
+        });
 
-        fetch('{{ route("gvff.admin.plants.storeForestal") }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Mantener el encabezado por si acaso
+        closeModalBtn.addEventListener('click', () => {
+            console.log('Close modal button clicked');
+            modal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                console.log('Clicked outside modal');
+                modal.classList.add('hidden');
             }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.status);
+        });
+
+        createPlantForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            console.log('Form submission triggered');
+
+            const requiredFields = ['nurseries_id', 'scientific_name', 'common_name', 'inventory'];
+            let hasError = false;
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                const errorDiv = document.getElementById(`${field}_error`);
+                if (!input.value) {
+                    errorDiv.textContent = 'Este campo es obligatorio.';
+                    errorDiv.classList.remove('hidden');
+                    hasError = true;
+                } else {
+                    errorDiv.classList.add('hidden');
+                }
+            });
+
+            if (hasError) {
+                console.log('Validation failed, stopping submission');
+                return;
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert(data.message || 'Planta creada con éxito.');
-                document.getElementById('createModal').classList.add('hidden');
-                clearFormErrors();
-                location.reload(); // Recargar la página para mostrar la nueva planta
-            } else {
-                displayErrors(data.errors);
+
+            const formData = new FormData(this);
+            console.log('FormData:', Object.fromEntries(formData));
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || document.querySelector('input[name="_token"]')?.value;
+            if (!csrfToken) {
+                console.error('CSRF token not found');
+                alert('Error: No se encontró el token CSRF.');
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al crear la planta: ' + error.message);
+            console.log('CSRF Token:', csrfToken);
+
+            fetch("{{ route('gvff.admin.plants.storeForestal') }}", {
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers.get('Content-Type'));
+                return response.text().then(text => {
+                    console.log('Raw response:', text);
+                    if (!response.ok) {
+                        if (response.status === 403) {
+                            throw new Error('No tienes permiso para realizar esta acción. Por favor, inicia sesión o verifica tus permisos.');
+                        }
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            throw new Error('Invalid JSON: ' + text);
+                        }
+                    }
+                    return JSON.parse(text);
+                });
+            })
+            .then(data => {
+                console.log('Parsed JSON:', data);
+                if (data.success) {
+                    alert(data.message);
+                    modal.classList.add('hidden');
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (error.errors) {
+                    Object.entries(error.errors).forEach(([key, messages]) => {
+                        const errorDiv = document.getElementById(`${key}_error`);
+                        if (errorDiv) {
+                            errorDiv.textContent = messages.join(', ');
+                            errorDiv.classList.remove('hidden');
+                        }
+                    });
+                } else {
+                    alert('Error al enviar el formulario: ' + error.message);
+                }
+            });
         });
     });
-
-    // Mostrar errores de validación
-    function displayErrors(errors) {
-        clearFormErrors();
-        for (let field in errors) {
-            const errorDiv = document.getElementById(`${field}_error`);
-            if (errorDiv) {
-                errorDiv.textContent = errors[field][0];
-                errorDiv.classList.remove('hidden');
-                document.getElementById(field).classList.add('border-red-500');
-            }
-        }
-    }
-
-    // Limpiar errores de validación y estilos
-    function clearFormErrors() {
-        const errorDivs = document.getElementsByClassName('text-red-500');
-        for (let div of errorDivs) {
-            div.classList.add('hidden');
-            div.textContent = '';
-        }
-        const inputs = document.getElementsByTagName('input');
-        const textareas = document.getElementsByTagName('textarea');
-        const selects = document.getElementsByTagName('select');
-        for (let input of inputs) {
-            input.classList.remove('border-red-500');
-        }
-        for (let textarea of textareas) {
-            textarea.classList.remove('border-red-500');
-        }
-        for (let select of selects) {
-            select.classList.remove('border-red-500');
-        }
-        document.getElementById('createPlantForm').reset();
-    }
 </script>
+    
 @endsection

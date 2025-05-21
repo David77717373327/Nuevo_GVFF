@@ -112,6 +112,7 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite editar plantas existentes',
                 'description_english' => 'Allows editing existing plants',
             ],
+            
             [
                 'slug' => 'gvff.admin.plants.update',
                 'name' => 'Actualizar plantas',
@@ -179,12 +180,19 @@ class PermissionsTableSeeder extends Seeder
                 'description_english' => 'Allows displaying the form to create forestal plants',
             ],
             [
+             
                 'slug' => 'gvff.admin.plants.forestal.store',
                 'name' => 'Almacenar planta forestal',
                 'description' => 'Permite guardar una nueva planta forestal',
                 'description_english' => 'Allows storing a new forestal plant',
             ],
-        
+            [
+                'slug' => 'gvff.admin.plants.forestal.createForestal',
+                'name' => 'Crear planta forestal',
+                'description' => 'Permite mostrar el formulario para crear plantas forestales',
+                'description_english' => 'Allows displaying the form to create forestal plants',
+            ],
+            
             [
                 'slug' => 'gvff.admin.plants.ornamental.lista_ornamental',
                 'name' => 'Ver lista de plantas ornamentales',
@@ -209,6 +217,10 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite ver la lista de plantas en venta',
                 'description_english' => 'Allows viewing the list of plants for sale',
             ],
+
+
+
+
 
         ];
 
@@ -240,12 +252,14 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite mostrar el formulario para crear faunas',
                 'description_english' => 'Allows displaying the form to create faunas',
             ],
+
             [
                 'slug' => 'gvff.admin.faunas.store',
                 'name' => 'Almacenar fauna',
                 'description' => 'Permite guardar una nueva fauna',
                 'description_english' => 'Allows storing a new fauna',
             ],
+
             [
                 'slug' => 'gvff.admin.faunas.edit',
                 'name' => 'Editar faunas',
@@ -264,6 +278,8 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite eliminar faunas',
                 'description_english' => 'Allows deleting faunas',
             ],
+
+
         ];
 
         // Crear permisos para Faunas y añadirlos a la lista de permisos del administrador
@@ -279,6 +295,7 @@ class PermissionsTableSeeder extends Seeder
             );
             $permissions_admin[] = $permission->id;
         }
+    
 
         // Consultar rol de administrador
         $rol_admin = Role::where('slug', 'gvff.admin')->first();

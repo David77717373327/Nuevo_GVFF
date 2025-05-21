@@ -24,6 +24,7 @@ Route::middleware(['lang'])->group(function () {
     Route::get('/plantas/lista/medicinal', 'GVFFPlantsController@listaMedicinal')->name('gvff.admin.plants.medicinal.lista_medicinal');
     Route::get('/plantas/lista/forestal', 'GVFFPlantsController@listaForestal')->name('gvff.admin.plants.forestal.lista_forestal');
     Route::get('/plantas/lista/venta', 'GVFFPlantsController@listaVenta')->name('gvff.admin.plants.venta.lista_venta');
+    
     Route::get('/plantas/{plants}/edit', 'GVFFPlantsController@edit')->name('gvff.admin.plants.edit');
     Route::put('/plantas/{plants}', 'GVFFPlantsController@update')->name('gvff.admin.plants.update');
     Route::delete('/plantas/{plants}', 'GVFFPlantsController@destroy')->name('gvff.admin.plants.destroy');
