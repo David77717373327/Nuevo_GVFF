@@ -179,9 +179,16 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite mostrar el formulario para crear plantas forestales',
                 'description_english' => 'Allows displaying the form to create forestal plants',
             ],
-            [
+            [  
              
                 'slug' => 'gvff.admin.plants.forestal.store',
+                'name' => 'Almacenar planta forestal',
+                'description' => 'Permite guardar una nueva planta forestal',
+                'description_english' => 'Allows storing a new forestal plant',
+            ],
+            [  
+             
+                'slug' => 'gvff.admin.plants.forestal.storeForestal',
                 'name' => 'Almacenar planta forestal',
                 'description' => 'Permite guardar una nueva planta forestal',
                 'description_english' => 'Allows storing a new forestal plant',

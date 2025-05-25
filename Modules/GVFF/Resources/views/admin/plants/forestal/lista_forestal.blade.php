@@ -144,10 +144,10 @@
             </div>
         </div>
     </div>
+    
 
 
    <script>
-    // JavaScript para manejar el modal y la validación del formulario
     document.addEventListener('DOMContentLoaded', function () {
         const modal = document.getElementById('createModal');
         const openModalBtn = document.getElementById('openModalBtn');
@@ -183,89 +183,90 @@
         });
 
         createPlantForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            console.log('Form submission triggered');
+    e.preventDefault();
+    console.log('Form submission triggered');
 
-            const requiredFields = ['nurseries_id', 'scientific_name', 'common_name', 'inventory'];
-            let hasError = false;
-            requiredFields.forEach(field => {
-                const input = document.getElementById(field);
-                const errorDiv = document.getElementById(`${field}_error`);
-                if (!input.value) {
-                    errorDiv.textContent = 'Este campo es obligatorio.';
-                    errorDiv.classList.remove('hidden');
-                    hasError = true;
-                } else {
-                    errorDiv.classList.add('hidden');
-                }
-            });
-
-            if (hasError) {
-                console.log('Validation failed, stopping submission');
-                return;
-            }
-
-            const formData = new FormData(this);
-            console.log('FormData:', Object.fromEntries(formData));
-
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || document.querySelector('input[name="_token"]')?.value;
-            if (!csrfToken) {
-                console.error('CSRF token not found');
-                alert('Error: No se encontró el token CSRF.');
-                return;
-            }
-            console.log('CSRF Token:', csrfToken);
-
-            fetch("{{ route('gvff.admin.plants.storeForestal') }}", {
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers.get('Content-Type'));
-                return response.text().then(text => {
-                    console.log('Raw response:', text);
-                    if (!response.ok) {
-                        if (response.status === 403) {
-                            throw new Error('No tienes permiso para realizar esta acción. Por favor, inicia sesión o verifica tus permisos.');
-                        }
-                        try {
-                            return JSON.parse(text);
-                        } catch (e) {
-                            throw new Error('Invalid JSON: ' + text);
-                        }
-                    }
-                    return JSON.parse(text);
-                });
-            })
-            .then(data => {
-                console.log('Parsed JSON:', data);
-                if (data.success) {
-                    alert(data.message);
-                    modal.classList.add('hidden');
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                if (error.errors) {
-                    Object.entries(error.errors).forEach(([key, messages]) => {
-                        const errorDiv = document.getElementById(`${key}_error`);
-                        if (errorDiv) {
-                            errorDiv.textContent = messages.join(', ');
-                            errorDiv.classList.remove('hidden');
-                        }
-                    });
-                } else {
-                    alert('Error al enviar el formulario: ' + error.message);
-                }
-            });
-        });
+    const requiredFields = ['nurseries_id', 'scientific_name', 'common_name', 'inventory'];
+    let hasError = false;
+    requiredFields.forEach(field => {
+        const input = document.getElementById(field);
+        const errorDiv = document.getElementById(`${field}_error`);
+        if (!input.value) {
+            errorDiv.textContent = 'Este campo es obligatorio.';
+            errorDiv.classList.remove('hidden');
+            hasError = true;
+        } else {
+            errorDiv.classList.add('hidden');
+        }
     });
+
+    if (hasError) {
+        console.log('Validation failed, stopping submission');
+        return;
+    }
+
+    const formData = new FormData(this);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || document.querySelector('input[name="_token"]')?.value;
+    if (!csrfToken) {
+        console.error('CSRF token not found');
+        alert('Error: No se encontró el token CSRF.');
+        return;
+    }
+    console.log('CSRF Token:', csrfToken); // Ahora está definido
+    console.log('FormData:', Object.fromEntries(formData)); // Ahora está definido
+
+    fetch("{{ route('gvff.admin.plants.storeForestal') }}", {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: formData,
+        credentials: 'include' // Asegura que las cookies de sesión se incluyan
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('Content-Type'));
+        return response.text().then(text => {
+            console.log('Raw response:', text);
+            if (!response.ok) {
+                if (response.status === 403) {
+                    throw new Error('No tienes permiso para realizar esta acción. Por favor, inicia sesión o verifica tus permisos.');
+                }
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    throw new Error('Invalid JSON: ' + text);
+                }
+            }
+            return JSON.parse(text);
+        });
+    })
+    .then(data => {
+        console.log('Parsed JSON:', data);
+        if (data.success) {
+            alert(data.message);
+            modal.classList.add('hidden');
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        if (error.errors) {
+            Object.entries(error.errors).forEach(([key, messages]) => {
+                const errorDiv = document.getElementById(`${key}_error`);
+                if (errorDiv) {
+                    errorDiv.textContent = messages.join(', ');
+                    errorDiv.classList.remove('hidden');
+                }
+            });
+        } else {
+            alert('Error al enviar el formulario: ' + error.message);
+        }
+    });
+});
+    });
+
 </script>
     
 @endsection

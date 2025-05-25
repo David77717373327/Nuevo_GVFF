@@ -9,6 +9,7 @@ use Modules\SICA\Entities\Role;
 use Modules\SICA\Entities\Permission;
 
 class RolesTableSeeder extends Seeder
+
 {
     public function run()
     {

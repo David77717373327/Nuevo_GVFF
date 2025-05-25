@@ -76,6 +76,9 @@ class GVFFPlantsController extends Controller
 
 
 
+
+
+    
     protected function storePlant(Request $request, $isAjax = false)
 {
     try {
@@ -165,10 +168,19 @@ public function store(Request $request)
         return $this->storePlant($request);
     }
 
+
+
     public function storeForestal(Request $request)
-    {
-        return $this->storePlant($request, true);
+{
+    \Log::info('Solicitud recibida en storeForestal', [
+        'user' => auth()->check() ? auth()->user()->id : 'No autenticado',
+        'data' => $request->all()
+    ]);
+    if (auth()->check()) {
+        \Log::info('Permisos del usuario: ' . json_encode(auth()->user()->getAllPermissions()->pluck('slug')));
     }
+    return $this->storePlant($request, true);
+}
 
     public function sell($id)
     {
