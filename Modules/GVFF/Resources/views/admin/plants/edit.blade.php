@@ -138,9 +138,10 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="available">Disponible</label>
-                <input type="checkbox" name="available" id="available" value="1" {{ old('available', $plants->available) ? 'checked' : '' }}>
-            </div>
+    <label for="available">Disponible</label>
+    <input type="hidden" name="available" value="0">
+    <input type="checkbox" name="available" id="available" value="1" {{ old('available', $plants->available) ? 'checked' : '' }}>
+</div>
             <div class="form-group">
                 <label for="observations">Observaciones</label>
                 <textarea name="observations" id="observations" class="form-control @error('observations') is-invalid @enderror">{{ old('observations', $plants->observations) }}</textarea>

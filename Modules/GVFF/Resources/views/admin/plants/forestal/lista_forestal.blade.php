@@ -113,9 +113,12 @@
                         </div>
 
                         <!-- Disponible -->
-                        <div class="flex items-center">
-                            <input type="checkbox" name="available" id="available" value="1" checked class="mr-2">
-                            <label for="available" class="text-sm font-medium text-gray-700">Disponible</label>
+                        <div>
+                            <label for="available" class="block text-sm font-medium text-gray-700 mb-1">Disponible</label>
+                            <select name="available" id="available" class="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="1">Sí</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
                     </div>
 
@@ -183,90 +186,117 @@
         });
 
         createPlantForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    console.log('Form submission triggered');
+            e.preventDefault();
+            console.log('Form submission triggered');
 
-    const requiredFields = ['nurseries_id', 'scientific_name', 'common_name', 'inventory'];
-    let hasError = false;
-    requiredFields.forEach(field => {
-        const input = document.getElementById(field);
-        const errorDiv = document.getElementById(`${field}_error`);
-        if (!input.value) {
-            errorDiv.textContent = 'Este campo es obligatorio.';
-            errorDiv.classList.remove('hidden');
-            hasError = true;
-        } else {
-            errorDiv.classList.add('hidden');
-        }
-    });
-
-    if (hasError) {
-        console.log('Validation failed, stopping submission');
-        return;
-    }
-
-    const formData = new FormData(this);
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || document.querySelector('input[name="_token"]')?.value;
-    if (!csrfToken) {
-        console.error('CSRF token not found');
-        alert('Error: No se encontró el token CSRF.');
-        return;
-    }
-    console.log('CSRF Token:', csrfToken); // Ahora está definido
-    console.log('FormData:', Object.fromEntries(formData)); // Ahora está definido
-
-    fetch("{{ route('gvff.admin.plants.storeForestal') }}", {
-        method: "POST",
-        headers: {
-            'X-CSRF-TOKEN': csrfToken,
-            'Accept': 'application/json'
-        },
-        body: formData,
-        credentials: 'include' // Asegura que las cookies de sesión se incluyan
-    })
-    .then(response => {
-        console.log('Response status:', response.status);
-        console.log('Response headers:', response.headers.get('Content-Type'));
-        return response.text().then(text => {
-            console.log('Raw response:', text);
-            if (!response.ok) {
-                if (response.status === 403) {
-                    throw new Error('No tienes permiso para realizar esta acción. Por favor, inicia sesión o verifica tus permisos.');
-                }
-                try {
-                    return JSON.parse(text);
-                } catch (e) {
-                    throw new Error('Invalid JSON: ' + text);
-                }
-            }
-            return JSON.parse(text);
-        });
-    })
-    .then(data => {
-        console.log('Parsed JSON:', data);
-        if (data.success) {
-            alert(data.message);
-            modal.classList.add('hidden');
-            location.reload();
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        if (error.errors) {
-            Object.entries(error.errors).forEach(([key, messages]) => {
-                const errorDiv = document.getElementById(`${key}_error`);
-                if (errorDiv) {
-                    errorDiv.textContent = messages.join(', ');
+            const requiredFields = ['nurseries_id', 'scientific_name', 'common_name', 'inventory'];
+            let hasError = false;
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                const errorDiv = document.getElementById(`${field}_error`);
+                if (!input.value.trim()) { // Check for empty or whitespace-only input
+                    errorDiv.textContent = 'Este campo es obligatorio.';
                     errorDiv.classList.remove('hidden');
+                    hasError = true;
+                } else {
+                    errorDiv.classList.add('hidden');
                 }
             });
-        } else {
-            alert('Error al enviar el formulario: ' + error.message);
-        }
+
+            if (hasError) {
+                console.log('Validation failed, stopping submission');
+                return;
+            }
+
+            const formData = new FormData(this);
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || document.querySelector('input[name="_token"]')?.value;
+            if (!csrfToken) {
+                console.error('CSRF token not found');
+                alert('Error: No se encontró el token CSRF.');
+                return;
+            }
+
+
+            console.log('CSRF Token:', csrfToken);
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.cambiar-disponibilidad').forEach(el => {
+                    el.addEventListener('click', function () {
+                        document.getElementById('formDisponibilidad').action = this.dataset.url;
+                        document.getElementById('accionDisponibilidad').textContent = 
+                            this.dataset.estado === 'disponible' ? 'marcar como disponible' : 'marcar como no disponible';
+                    });
+                });
+            });
+
+            fetch("{{ route('gvff.admin.plants.forestal.store') }}", {
+    method: "POST",
+    headers: {
+        'X-CSRF-TOKEN': csrfToken,
+        'Accept': 'application/json'
+    },
+    body: formData,
+    credentials: 'same-origin'
+})
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers.get('Content-Type'));
+                return response.text().then(text => {
+                    console.log('Raw response:', text);
+                    if (!response.ok) {
+                        if (response.status === 403) {
+                            throw new Error('No tienes permiso para realizar esta acción. Por favor, inicia sesión o verifica tus permisos.');
+                        } else if (response.status === 422) {
+                            throw new Error('Datos inválidos: ' + text);
+                        }
+                        throw new Error('Error en la solicitud: ' + text);
+                    }
+                    return JSON.parse(text);
+                });
+            })
+            .then(data => {
+                console.log('Parsed JSON:', data);
+                if (data.success) {
+                    alert(data.message);
+                    modal.classList.add('hidden');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (data.errors?.general || 'No se pudo crear la planta.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (error.message.includes('Datos inválidos:')) {
+                    try {
+                        const errors = JSON.parse(error.message.split('Datos inválidos: ')[1]);
+                        Object.entries(errors).forEach(([key, messages]) => {
+                            const errorDiv = document.getElementById(`${key}_error`);
+                            if (errorDiv) {
+                                errorDiv.textContent = messages.join(', ');
+                                errorDiv.classList.remove('hidden');
+                            }
+                        });
+                    } catch (e) {
+                        alert('Error al procesar los datos: ' + error.message);
+                    }
+                } else {
+                    alert('Error al enviar el formulario: ' + error.message);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.cambiar-disponibilidad').forEach(el => {
+        el.addEventListener('click', function () {
+            document.getElementById('formDisponibilidad').action = this.dataset.url;
+            document.getElementById('inputAvailable').value = this.dataset.available;
+            document.getElementById('accionDisponibilidad').textContent =
+                this.dataset.available == 1 ? 'marcar como disponible' : 'marcar como no disponible';
+        });
     });
 });
-    });
-
 </script>
     
 @endsection

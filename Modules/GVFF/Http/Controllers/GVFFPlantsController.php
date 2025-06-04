@@ -79,7 +79,7 @@ class GVFFPlantsController extends Controller
 
 
     
-    protected function storePlant(Request $request, $isAjax = false)
+protected function storePlant(Request $request, $isAjax = false)
 {
     try {
         $rules = [
@@ -102,8 +102,11 @@ class GVFFPlantsController extends Controller
             'observations' => 'nullable|string',
         ];
 
+        
+
         $validatedData = $request->validate($rules);
-        $validatedData['available'] = $request->boolean('available', true);
+        $validatedData['available'] = $request->has('available') && $request->input('available') == 1;
+
 
         if ($request->hasFile('image')) {
             $name_image = Str::slug($request->input('common_name')) . '-' . time() . '.' . $request->file('image')->getClientOriginalExtension();
@@ -116,27 +119,15 @@ class GVFFPlantsController extends Controller
         if ($isAjax) {
             return response()->json(['success' => true, 'message' => 'Planta creada con éxito.']);
         }
-        // Redirigir a la lista de plantas
-        if ($request->input('plant_type') == 'forestal') {
-            return redirect()->route('gvff.admin.plants.lista_forestal')->with('success', 'Planta forestal creada con éxito.');
-        }
+        
+        Log::info('Planta creada con éxito', ['data' => $validatedData, 'user' => auth()->user() ? auth()->user()->id : 'No autenticado']);
         return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta creada con éxito.');
     } catch (ValidationException $e) {
         Log::error('Validation error in storePlant: ' . json_encode($e->validator->errors()), ['request' => $request->all()]);
-        // Manejar errores de validación
-        // Puedes devolver un JSON con los errores si es una petición AJAX
         if ($isAjax) {
             return response()->json(['success' => false, 'errors' => $e->validator->errors()], 422);
         }
-        // O redirigir con errores si no es AJAX
-
         throw $e;
-    } catch (\Exception $e) {
-        Log::error('General error in storePlant: ' . $e->getMessage(), ['exception' => $e, 'request' => $request->all()]);
-        // Manejar otros errores
-        if ($isAjax) {
-            return response()->json(['success' => false, 'errors' => ['general' => 'Ocurrió un error al crear la planta: ' . $e->getMessage()]], 500);
-        }
     } catch (Throwable $e) {
         Log::error('Error in storePlant: ' . $e->getMessage(), ['exception' => $e, 'request' => $request->all()]);
         if ($isAjax) {
@@ -170,15 +161,16 @@ public function store(Request $request)
 
 
 
-    public function storeForestal(Request $request)
+public function storeForestal(Request $request)
 {
     \Log::info('Solicitud recibida en storeForestal', [
         'user' => auth()->check() ? auth()->user()->id : 'No autenticado',
         'data' => $request->all()
     ]);
-    if (auth()->check()) {
-        \Log::info('Permisos del usuario: ' . json_encode(auth()->user()->getAllPermissions()->pluck('slug')));
-    }
+    // Comment out to avoid error until User model is updated
+    // if (auth()->check()) {
+    //     \Log::info('Permisos del usuario: ' . json_encode(auth()->user()->getAllPermissions()->pluck('slug')));
+    // }
     return $this->storePlant($request, true);
 }
 
@@ -243,7 +235,7 @@ public function store(Request $request)
         $plants->inventory = $request->input('inventory');
         $plants->price = $request->input('price');
         $plants->location = $request->input('location');
-        $plants->available = $request->boolean('available', true);
+        $plants->available = $request->boolean('available');
         $plants->observations = $request->input('observations');
 
         if ($request->hasFile('image')) {
