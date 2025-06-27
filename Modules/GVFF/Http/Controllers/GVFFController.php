@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\GVFF\Entities\Plants;
+use Modules\GVFF\Entities\Plant;
 use Modules\GVFF\Entities\Fauna;
 
 class GVFFController extends Controller
@@ -16,14 +16,14 @@ class GVFFController extends Controller
     public function index()
 {
     // Get the count of unique nurseries from the plants table
-    $totalNurseries = Plants::distinct('nurseries_id')->count('nurseries_id');
+    $totalNurseries = Plant::distinct('nurseries_id')->count('nurseries_id');
 
-    $totalPlants = Plants::count();
+    $totalPlants = Plant::count();
     $totalFauna = Fauna::count();
     
-    $ornamentalPlants = Plants::where('plant_type', 'ornamental')->count();
-        $medicinalPlants = Plants::where('plant_type', 'medicinal')->count();
-        $ventaPlants = Plants::where('plant_type', 'venta')->count();
+    $ornamentalPlants = Plant::where('plant_type', 'ornamental')->count();
+        $medicinalPlants = Plant::where('plant_type', 'medicinal')->count();
+        $ventaPlants = Plant::where('plant_type', 'venta')->count();
 
     // Pass the count to the view
     return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'ornamentalPlants', 'medicinalPlants', 'ventaPlants', 'totalFauna'));

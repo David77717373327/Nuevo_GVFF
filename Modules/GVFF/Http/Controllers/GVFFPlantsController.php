@@ -4,7 +4,7 @@ namespace Modules\GVFF\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\GVFF\Entities\Plants;
+use Modules\GVFF\Entities\Plant;
 use Modules\GVFF\Entities\Nurseries;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +17,7 @@ class GVFFPlantsController extends Controller
 {
     public function index()
     {
-        $plants = Plants::all();
+        $plants = Plant::all();
         return view('gvff::admin.plants.index', compact('plants'));
     }
 
@@ -25,26 +25,26 @@ class GVFFPlantsController extends Controller
 
     public function listaOrnamental()
     {
-        $plants = Plants::where('plant_type', 'ornamental')->get();
+        $plants = Plant::where('plant_type', 'ornamental')->get();
         return view('gvff::admin.plants.ornamental.lista_ornamental', compact('plants'));
     }
 
     public function listaMedicinal()
     {
-        $plants = Plants::where('plant_type', 'medicinal')->get();
+        $plants = Plant::where('plant_type', 'medicinal')->get();
         return view('gvff::admin.plants.medicinal.lista_medicinal', compact('plants'));
     }
 
     public function listaForestal()
     {
-        $plants = Plants::where('plant_type', 'forestal')->get();
+        $plants = Plant::where('plant_type', 'forestal')->get();
         $nurseries = Nurseries::all();
         return view('gvff::admin.plants.forestal.lista_forestal', compact('plants', 'nurseries'));
     }
 
     public function listaVenta()
     {
-        $plants = Plants::where('plant_type', 'venta')->get();
+        $plants = Plant::where('plant_type', 'venta')->get();
         return view('gvff::admin.plants.venta.lista_venta', compact('plants'));
     }
 
@@ -89,7 +89,7 @@ protected function storePlant(Request $request, $isAjax = false)
             $validatedData['image'] = $path;
         }
 
-        Plants::create($validatedData);
+        Plant::create($validatedData);
 
         if ($isAjax) {
             return response()->json(['success' => true, 'message' => 'Planta creada con éxito.']);
@@ -148,7 +148,7 @@ public function storeForestal(Request $request)
 
     public function sell($id)
     {
-        $plants = Plants::findOrFail($id);
+        $plants = Plant::findOrFail($id);
         return view('gvff::admin.plants.sell', compact('plants'));
     }
 
@@ -158,20 +158,20 @@ public function storeForestal(Request $request)
             'price' => 'required|numeric|min:0',
         ]);
 
-        $plants = Plants::findOrFail($id);
+        $plants = Plant::findOrFail($id);
         $plants->price = $request->price;
         $plants->save();
 
         return redirect()->route('gvff.admin.plants.index')->with('success', 'Precio de venta actualizado con éxito.');
     }
 
-    public function edit(Plants $plants)
+    public function edit(Plant $plants)
     {
         $nurseries = nurseries::all();
         return view('gvff::admin.plants.edit', compact('plants', 'nurseries'));
     }
 
-    public function update(Request $request, Plants $plants)
+    public function update(Request $request, Plant $plants)
     {
         $request->validate([
             'nurseries_id' => 'required|exists:nurseries,id',
@@ -225,7 +225,7 @@ public function storeForestal(Request $request)
 
         return redirect()->route('gvff.admin.plants.index')->with('success', 'Planta actualizada con éxito.');
     }
-        public function destroy(Plants $plants)
+        public function destroy(Plant $plants)
     {
         try {
             if ($plants->image && Storage::disk('public')->exists($plants->image)) {
