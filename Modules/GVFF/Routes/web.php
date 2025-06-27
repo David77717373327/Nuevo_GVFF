@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\GVFF\Http\Controllers\PlantInventoryController;
+
 
 
 
@@ -17,14 +19,29 @@ Route::middleware(['lang'])->group(function () {
 
         // Nuevas rutas para plantas
     Route::get('/plantas', 'GVFFPlantsController@index')->name('gvff.admin.plants.index');
+
     Route::get('/plantas/create', 'GVFFPlantsController@create')->name('gvff.admin.plants.create');
     Route::post('/plantas/store', 'GVFFPlantsController@store')->name('gvff.admin.plants.store');
+    Route::get('/plantas/lista/ornamental', 'GVFFPlantsController@listaOrnamental')->name('gvff.admin.plants.ornamental.lista_ornamental');
+    Route::get('/plantas/lista/medicinal', 'GVFFPlantsController@listaMedicinal')->name('gvff.admin.plants.medicinal.lista_medicinal');
+    Route::get('/plantas/lista/forestal', 'GVFFPlantsController@listaForestal')->name('gvff.admin.plants.forestal.lista_forestal');
+
+    Route::get('/plantas/lista/venta', 'GVFFPlantsController@listaVenta')->name('gvff.admin.plants.venta.lista_venta');
+
+    
     Route::get('/plantas/{plants}/edit', 'GVFFPlantsController@edit')->name('gvff.admin.plants.edit');
     Route::put('/plantas/{plants}', 'GVFFPlantsController@update')->name('gvff.admin.plants.update');
     Route::delete('/plantas/{plants}', 'GVFFPlantsController@destroy')->name('gvff.admin.plants.destroy');
     Route::get('/plantas/{plants}/sell', 'GVFFPlantsController@sell')->name('gvff.admin.plants.sell');
     Route::post('/plantas/{plants}/sell', 'GVFFPlantsController@processSell')->name('gvff.admin.plants.processSell');
 
+
+    Route::post('/plantas/store-forestal', 'GVFFPlantsController@storeForestal')->name('gvff.admin.plants.storeForestal');
+    Route::post('/plantas/store-forestal', 'GVFFPlantsController@storeForestal')->name('gvff.admin.plants.forestal.store');
+
+
+
+    
         // Nuevas rutas para creación por tipo
     Route::get('/plantas/ornamental/create', 'GVFFPlantsController@createOrnamental')->name('gvff.admin.plants.ornamental.create');
     Route::post('/plantas/ornamental/store', 'GVFFPlantsController@storeOrnamental')->name('gvff.admin.plants.ornamental.store');
@@ -41,14 +58,31 @@ Route::middleware(['lang'])->group(function () {
     Route::get('/faunas/{fauna}/edit', 'GVFFFaunasController@edit')->name('gvff.admin.faunas.edit');
     Route::put('/faunas/{fauna}', 'GVFFFaunasController@update')->name('gvff.admin.faunas.update');
     Route::delete('/faunas/{fauna}', 'GVFFFaunasController@destroy')->name('gvff.admin.faunas.destroy');
-    });
+
+    Route::get('/admin/plant_inventory/index', 'PlantInventoryController@index')->name('gvff.admin.plant_inventory.index');
+    Route::get('/admin/plant_inventory/entrance', 'PlantInventoryController@entrance')->name('gvff.admin.plant_inventory.entrance');
+    Route::post('/admin/plant_inventory/store', 'PlantInventoryController@store')->name('gvff.admin.plant_inventory.store');
+
+    Route::get('/admin/plant_inventory/sale/index', 'PlantInventoryController@sale')->name('gvff.admin.plant_inventory.sale.index');
+    Route::get('/admin/plant_inventory/sale/get_plants/{id}', 'PlantInventoryController@getPlantsByWarehouse')->name('gvff.admin.plant_inventory.sale.getPlantsByWarehouse');
+    Route::get('/admin/plant_inventory/sale/search/{id}', 'PlantInventoryController@searchPerson')->name('gvff.admin.plant_inventory.sale.searchPerson');
+    Route::post('/admin/plant_inventory/sale/store', 'PlantInventoryController@processSale')->name('gvff.admin.plant_inventory.sale.store');
+    Route::get('/admin/plant_inventory/history', 'PlantInventoryController@history')->name('gvff.admin.plant_inventory.sale.history');
+
 });
+});
+
+
+
+
+
 
 
 Route::prefix('gvff')->group(function () {
     //Rura para los aprendices
     Route::get('/welcome', 'GVFFController@welcome')->name('gvff.welcome');
 });
+
 
 
 

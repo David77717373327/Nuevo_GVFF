@@ -25,7 +25,7 @@ class AppTableSeeder extends Seeder
         );
 
         Model::reguard();
-          
+        
         
         
     }

@@ -5,6 +5,7 @@ namespace Modules\SICA\Entities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\GVFF\Entities\MovementDetailPlant;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Movement extends Model implements Auditable
@@ -48,6 +49,10 @@ class Movement extends Model implements Auditable
     }
     public function warehouse_movements(){ // Accede a todos los movimientos de bodega que pertenecen a este movimiento
         return $this->hasMany(WarehouseMovement::class);
+    }
+    public function movement_detail_plants() // Accede a los detalles de movimiento de plantas que pertenecen a este movimiento
+    {
+        return $this->hasMany(MovementDetailPlant::class);
     }
 
 

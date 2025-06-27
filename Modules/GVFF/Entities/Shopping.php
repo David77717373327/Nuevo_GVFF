@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\GVFF\Entities\Plants;
+use Modules\GVFF\Entities\Plant;
 
 class Shopping extends Model
 {
@@ -37,6 +37,6 @@ class Shopping extends Model
      */
     public function plants()
     {
-        return $this->belongsTo(Plants::class, 'plant_id');
+        return $this->belongsTo(Plant::class, 'plant_id');
     }
 }

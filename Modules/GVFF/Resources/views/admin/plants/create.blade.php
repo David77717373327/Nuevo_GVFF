@@ -124,10 +124,13 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
+            
             <div class="form-group">
                 <label for="available">Disponible</label>
                 <input type="checkbox" name="available" id="available" value="1" {{ old('available', 1) ? 'checked' : '' }}>
             </div>
+
             <div class="form-group">
                 <label for="observations">Observaciones</label>
                 <textarea name="observations" id="observations" class="form-control @error('observations') is-invalid @enderror">{{ old('observations') }}</textarea>

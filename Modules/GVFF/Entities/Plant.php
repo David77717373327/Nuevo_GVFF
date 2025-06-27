@@ -4,7 +4,7 @@ namespace Modules\GVFF\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Plants extends Model
+class Plant extends Model
 {
     protected $table = 'plants';
 
