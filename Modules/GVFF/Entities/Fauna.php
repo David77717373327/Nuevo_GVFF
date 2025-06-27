@@ -19,7 +19,7 @@ class Fauna extends Model
         'status',
         'location',
         'image',
-    ];
+    ]; 
 
     protected $casts = [
         'status' => 'string',

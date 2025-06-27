@@ -57,6 +57,7 @@ Route::middleware(['lang'])->group(function () {
     Route::get('/faunas/{fauna}/edit', 'GVFFFaunasController@edit')->name('gvff.admin.faunas.edit');
     Route::put('/faunas/{fauna}', 'GVFFFaunasController@update')->name('gvff.admin.faunas.update');
     Route::delete('/faunas/{fauna}', 'GVFFFaunasController@destroy')->name('gvff.admin.faunas.destroy');
+
     });
 });
 

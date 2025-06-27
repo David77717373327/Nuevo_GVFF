@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\GVFF\Entities\Plants;
 use Modules\GVFF\Entities\Fauna;
 
+
 class GVFFController extends Controller
 
 {
@@ -42,10 +43,8 @@ class GVFFController extends Controller
         
         return view('gvff::welcome');
     }
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
+    
+    
     public function create()
     {
         return view('gvff::create');

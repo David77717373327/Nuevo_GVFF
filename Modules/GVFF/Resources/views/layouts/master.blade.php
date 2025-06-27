@@ -136,10 +136,6 @@
          alt="Vivero"
          class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
 </div>
-
-
-
-
 </div>
                 <!-- Add "Administrador" below the logo -->
                 @auth
@@ -174,13 +170,18 @@
                     <a href="#compras" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-receipt"></i> Compras
                     </a>
-                    <a href="#suministros" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                    <a href="#" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-box"></i> Suministros
                     </a>
-                    <a href="#herramientas" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
-                        <i class="fa-solid fa-hammer"></i> Herramientas
-                    </a>
-                </nav>
+                    <a href="{{ route('gvff.admin.tools.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition" onclick="toggleSubmenu(event, 'herramientas-submenu')">
+    <i class="fa-solid fa-hammer"></i> Herramientas
+</a>
+    <div class="submenu" id="herramientas-submenu">
+    <ul class="submenu-list">
+        <li><a href="{{ route('gvff.admin.tools.index') }}"><i class="fa-solid fa-hammer"></i> Herramientas</a></li>
+        <li><a href="{{ route('gvff.admin.tools.create') }}"><i class="fa-solid fa-plus"></i> Crear Herramienta</a></li>
+    </ul>
+    </div>
                 <div class="p-4 border-t border-green-700">
                 <a href="{{ route('logout') }}" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition">
@@ -192,13 +193,11 @@
                 </div>
             </div>
         </aside>
-
         <!-- Main Content -->
         <main class="flex-1 ml-[250px] p-8 main-content">
             @yield('content')
         </main>
     </div>
-
     <!-- JavaScript for Submenu Toggle -->
     <script>
         function toggleSubmenu(event, submenuId) {
