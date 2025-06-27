@@ -94,7 +94,7 @@
                     <i class="fa-solid fa-paw text-2xl mb-2 animate__animated animate__pulse"></i>
                     <span class="font-extrabold text-xl tracking-tight">Nueva Fauna</span>
                 </a>
-                <a href="{{ route('gvff.admin.plants.venta.create') }}" class="card p-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform" style="background-image: url('https://1.bp.blogspot.com/-Qw5sUgKt0UA/YJiBSk7YPKI/AAAAAAAAAYQ/-PYKipvO4K4lJiBkn9Rk80Z9YArS6fAgwCPcBGAYYCw/w1200-h630-p-k-no-nu/venta-de-plantas-portada.png'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);">
+                <a href="{{ route('gvff.admin.plants.venta.lista_venta') }}" class="card p-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 transform" style="background-image: url('https://1.bp.blogspot.com/-Qw5sUgKt0UA/YJiBSk7YPKI/AAAAAAAAAYQ/-PYKipvO4K4lJiBkn9Rk80Z9YArS6fAgwCPcBGAYYCw/w1200-h630-p-k-no-nu/venta-de-plantas-portada.png'); background-size: cover; background-position: center; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);">
                     <i class="fa-solid fa-shopping-cart text-2xl mb-2 animate__animated animate__pulse"></i>
                     <span class="font-extrabold text-xl tracking-tight">Registrar Venta</span>
                 </a>
