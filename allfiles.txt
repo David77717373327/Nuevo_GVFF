@@ -1109,7 +1109,7 @@ cff5b35c47f681099d9009959e5a56b4e5f03dbd Modules/GVFF/Database/Seeders/Permissio
 1ba03d5120678da967f1bcb266412b2c2255e9e1 Modules/GVFF/Database/Seeders/UsersTableSeeder.php
 6b93594713d2a3b0a2e6ac56a4079e78d39b4782 Modules/GVFF/Entities
 25f00ef53f660a5764b87c4e715bf9fab9d9916e Modules/GVFF/Entities/Nurseries.php
-450281315f7582b700c1e9ded8ce98a04eebbcd9 Modules/GVFF/Entities/Plants.php
+450281315f7582b700c1e9ded8ce98a04eebbcd9 Modules/GVFF/Entities/Plant.php
 4e0464877fe46c5aba4abff9a7412c36fd8ea2ab Modules/GVFF/Entities/Shopping.php
 582404faabdf5ce755e0a63b11796cb584099a07 Modules/GVFF/Http
 e04c4d4d1a14a0dbaff7192d4be96eebb9af2d6f Modules/GVFF/Http/Controllers

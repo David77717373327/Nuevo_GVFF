@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
     <!-- Animate.css for Animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+        
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -159,19 +161,29 @@
                         <ul class="submenu-list">
                             <li><a href="{{ route('gvff.admin.plants.index') }}"><i class="fa-solid fa-seedling"></i> Plantas</a></li>
                             <li><a href="{{ route('gvff.admin.plants.ornamental.lista_ornamental') }}"><i class="fa-solid fa-seedling"></i> lista Planta Ornamental</a></li>
+                            <li><a href="{{ route('gvff.admin.plants.forestal.lista_forestal') }}"><i class="fa-solid fa-tree"></i> lista Planta Forestal</a></li>
                             <li><a href="{{ route('gvff.admin.plants.medicinal.lista_medicinal') }}"><i class="fa-solid fa-mortar-pestle"></i> lista Planta Medicinal</a></li>
                             <li><a href="{{ route('gvff.admin.plants.venta.lista_venta') }}"><i class="fa-solid fa-shopping-cart"></i> lista Planta en Venta</a></li>
-                            <li><a href="{{ route('gvff.admin.plants.forestal.lista_forestal') }}"><i class="fa-solid fa-tree"></i> lista Planta Forestal</a></li>
+                            
                         </ul>
                     </div>
                     <a href="{{ route('gvff.admin.faunas.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-paw"></i> Fauna
                     </a>
-                    <a href="#compras" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
-                        <i class="fa-solid fa-receipt"></i> Compras
+                    <a href="{{ route('gvff.admin.plant_inventory.entrance')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-box"></i> Entrada de Inventario
                     </a>
                     <a href="#" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-box"></i> Suministros
+                    </a>
+                    <a href="{{ route('gvff.admin.plant_inventory.index')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-box"></i> Inventario de Plantas
+                    </a>
+                    <a href="{{ route('gvff.admin.plant_inventory.sale.index')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-box"></i> Registrar Venta
+                    </a>
+                    <a href="{{ route('gvff.admin.plant_inventory.sale.history')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
+                        <i class="fa-solid fa-box"></i> Historial de Ventas
                     </a>
                     <a href="{{ route('gvff.admin.tools.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition" onclick="toggleSubmenu(event, 'herramientas-submenu')">
     <i class="fa-solid fa-hammer"></i> Herramientas

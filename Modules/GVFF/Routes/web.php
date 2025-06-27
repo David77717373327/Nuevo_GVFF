@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\GVFF\Http\Controllers\PlantInventoryController;
 
 
 
@@ -58,9 +59,20 @@ Route::middleware(['lang'])->group(function () {
     Route::put('/faunas/{fauna}', 'GVFFFaunasController@update')->name('gvff.admin.faunas.update');
     Route::delete('/faunas/{fauna}', 'GVFFFaunasController@destroy')->name('gvff.admin.faunas.destroy');
 
-    });
-});
 
+    });
+
+    Route::get('/admin/plant_inventory/index', 'PlantInventoryController@index')->name('gvff.admin.plant_inventory.index');
+    Route::get('/admin/plant_inventory/entrance', 'PlantInventoryController@entrance')->name('gvff.admin.plant_inventory.entrance');
+    Route::post('/admin/plant_inventory/store', 'PlantInventoryController@store')->name('gvff.admin.plant_inventory.store');
+
+    Route::get('/admin/plant_inventory/sale/index', 'PlantInventoryController@sale')->name('gvff.admin.plant_inventory.sale.index');
+    Route::get('/admin/plant_inventory/sale/get_plants/{id}', 'PlantInventoryController@getPlantsByWarehouse')->name('gvff.admin.plant_inventory.sale.getPlantsByWarehouse');
+    Route::get('/admin/plant_inventory/sale/search/{id}', 'PlantInventoryController@searchPerson')->name('gvff.admin.plant_inventory.sale.searchPerson');
+    Route::post('/admin/plant_inventory/sale/store', 'PlantInventoryController@processSale')->name('gvff.admin.plant_inventory.sale.store');
+    Route::get('/admin/plant_inventory/history', 'PlantInventoryController@history')->name('gvff.admin.plant_inventory.sale.history');
+
+});
 
 
 
