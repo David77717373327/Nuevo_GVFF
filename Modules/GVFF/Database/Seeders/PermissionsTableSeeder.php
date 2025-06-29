@@ -70,6 +70,7 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite mostrar las plantas',
                 'description_english' => 'Allows displaying plants',
             ],
+
         ];
 
         // Crear permisos para Viveros y añadirlos a la lista de permisos del administrador
@@ -298,6 +299,55 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Permite eliminar faunas',
                 'description_english' => 'Allows deleting faunas',
             ],
+            //PERMISOS PARA LAS RUTAS DE INVENTARIO PLANTAS
+            [
+                'slug' => 'gvff.admin.plant_inventory.index',
+                'name' => 'Mostrar inventario de plantas',
+                'description' => 'Permite mostrar los detalles del inventario de plantas',
+                'description_english' => 'Allows displaying the details of the plant inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.entrance',
+                'name' => 'Registrar entrada de plantas',
+                'description' => 'Permite registrar la entrada de plantas al inventario',
+                'description_english' => 'Allows registering the entry of plants to the inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.store',
+                'name' => 'Almacenar entrada de plantas',
+                'description' => 'Permite almacenar la entrada de plantas al inventario',
+                'description_english' => 'Allows storing the entry of plants to the inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.index',
+                'name' => 'Mostrar venta de plantas',
+                'description' => 'Permite mostrar las plantas disponibles para la venta',
+                'description_english' => 'Allows displaying available plants for sale',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.getPlantsByWarehouse',
+                'name' => 'Obtener plantas por vivero',
+                'description' => 'Permite obtener las plantas disponibles en un vivero específico',
+                'description_english' => 'Allows getting available plants in a specific nursery',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.searchPerson',
+                'name' => 'Buscar persona para venta de plantas',
+                'description' => 'Permite buscar una persona para realizar la venta de plantas',
+                'description_english' => 'Allows searching for a person to sell plants',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.store',
+                'name' => 'Procesar venta de plantas',
+                'description' => 'Permite procesar la venta de plantas seleccionadas por el usuario',
+                'description_english' => 'Allows processing the sale of plants selected by the user',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.history',
+                'name' => 'Historial de ventas de plantas',
+                'description' => '',
+                'description_english' => 'Allows viewing the history of plant sales',
+            ]
 
 
         ];

@@ -100,7 +100,6 @@ class PlantInventoryController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Entrada de inventario registrada correctamente.');
-
         } catch (\Exception $e) {
 
             DB::rollBack();
