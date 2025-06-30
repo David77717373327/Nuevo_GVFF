@@ -235,7 +235,7 @@
                 <!-- Menú -->
                 <ul class="nav-links flex space-x-10 md:flex items-center text-lg font-semibold">
                     <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.home') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-home animate-pulse"></i>
                             <span>Inicio</span>
                             <!-- <a href="#">Inicio</a> -->
@@ -265,7 +265,7 @@
 <ul class="dropdown-menu absolute hidden bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50 flex-col">
     <!-- Ornamentales -->
     <li>
-        <a href="#" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
+        <a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
             <i class="fas fa-seedling"></i>
             <span>Ornamentales</span>
         </a>
@@ -273,7 +273,7 @@
 
     <!-- Forestales -->
     <li>
-        <a href="#" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
+        <a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
             <i class="fas fa-tree"></i>
             <span>Forestales</span>
         </a>
@@ -281,7 +281,7 @@
 
     <!-- Medicinales -->
     <li>
-        <a href="#" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
+        <a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
             <i class="fas fa-mortar-pestle"></i>
             <span>Medicinales</span>
         </a>
@@ -289,7 +289,7 @@
 
     <!-- En Venta -->
     <li>
-        <a href="#" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
+        <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
             <i class="fas fa-shopping-cart"></i>
             <span>En Venta</span>
         </a>
@@ -297,7 +297,7 @@
 
     <!-- Destacadas -->
     <li>
-        <a href="#" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
+        <a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
             <i class="fas fa-star text-yellow-400"></i>
             <span>Destacadas</span>
         </a>
@@ -320,7 +320,7 @@
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Contáctanos por WhatsApp</span>
                     </li>
                     <li data-aos="fade-right" data-aos-delay="600" class="relative">
-                        <form action="#" class="flex items-center">
+                        <form action="{{ route('gvff.user.plants.search') }}" class="flex items-center">
                             <input type="text" placeholder="Buscar plantas..." class="search-input px-3 py-2 rounded-l-md bg-white text-gray-800 focus:outline-none">
                             <button type="submit" class="px-3 py-2 bg-green-600 rounded-r-md hover:bg-green-700">
                                 <i class="fas fa-search"></i>

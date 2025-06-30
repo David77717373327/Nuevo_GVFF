@@ -4,6 +4,7 @@ namespace Modules\GVFF\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Nurseries extends Model
 {
     protected $table = 'nurseries';
@@ -27,4 +28,8 @@ class Nurseries extends Model
     {
         return $this->hasMany(Plant::class, 'Nurseries_id');
     }
+
+    
+
+    
 }
