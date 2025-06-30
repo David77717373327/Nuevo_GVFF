@@ -83,19 +83,6 @@ Route::prefix('gvff')->group(function () {
     Route::get('/plantas/destacadas', 'UserDestacadasPlantsController@destacadas')->name('gvff.user.plants.destacadas');
     Route::get('/plantas/search', 'UserPlantSearchControllerr@search')->name('gvff.user.plants.search');
     Route::get('/home', 'UserHomeController@index')->name('gvff.user.home');
-            
-
-    
-
-
-
-  
-   
-   
-
-    
-    
-           
 
 });
 

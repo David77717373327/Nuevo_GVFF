@@ -138,10 +138,6 @@
          alt="Vivero"
          class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
 </div>
-
-
-
-
 </div>
                 <!-- Add "Administrador" below the logo -->
                 @auth

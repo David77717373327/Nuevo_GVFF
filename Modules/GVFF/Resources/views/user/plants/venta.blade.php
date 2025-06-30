@@ -1,5 +1,4 @@
 @extends('gvff::layouts.masterusers')
-
 @section('title', 'Plantas en Venta')
 
 @push('styles')
