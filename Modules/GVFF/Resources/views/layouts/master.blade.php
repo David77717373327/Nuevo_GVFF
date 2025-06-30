@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
     <!-- Animate.css for Animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-        
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -173,9 +171,7 @@
                     <a href="{{ route('gvff.admin.plant_inventory.entrance')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-box"></i> Entrada de Inventario
                     </a>
-                    <a href="#" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
-                        <i class="fa-solid fa-box"></i> Suministros
-                    </a>
+                   
                     <a href="{{ route('gvff.admin.plant_inventory.index')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-box"></i> Inventario de Plantas
                     </a>
@@ -185,13 +181,13 @@
                     <a href="{{ route('gvff.admin.plant_inventory.sale.history')}}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-box"></i> Historial de Ventas
                     </a>
-                    <a href="{{ route('gvff.admin.tools.index') }}" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition" onclick="toggleSubmenu(event, 'herramientas-submenu')">
+                    <a href="#" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition" onclick="toggleSubmenu(event, 'herramientas-submenu')">
     <i class="fa-solid fa-hammer"></i> Herramientas
 </a>
     <div class="submenu" id="herramientas-submenu">
     <ul class="submenu-list">
-        <li><a href="{{ route('gvff.admin.tools.index') }}"><i class="fa-solid fa-hammer"></i> Herramientas</a></li>
-        <li><a href="{{ route('gvff.admin.tools.create') }}"><i class="fa-solid fa-plus"></i> Crear Herramienta</a></li>
+        <li><a href="#"><i class="fa-solid fa-hammer"></i> Herramientas</a></li>
+        <li><a href="#"><i class="fa-solid fa-plus"></i> Crear Herramienta</a></li>
     </ul>
     </div>
                 <div class="p-4 border-t border-green-700">

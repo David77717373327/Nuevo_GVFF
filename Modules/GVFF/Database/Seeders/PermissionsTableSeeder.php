@@ -238,132 +238,9 @@ class PermissionsTableSeeder extends Seeder
                 'description_english' => 'Allows viewing the list of plants for sale',
             ],
 
-            //// Permisos para el CRUD de Herramientas
-
-            [
-                'slug' => 'gvff.admin.tools.index',
-                'name' => 'Ver lista de herramientas',
-                'description' => 'Permite ver la lista de herramientas disponibles',
-                'description_english' => 'Allows viewing the list of available tools',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.assign',
-                'name' => 'Asignar herramienta',
-                'description' => 'Permite mostrar el formulario para asignar herramientas a una labor',
-                'description_english' => 'Allows displaying the form to assign tools to a labor',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.store',
-                'name' => 'Almacenar asignación de herramienta',
-                'description' => 'Permite guardar la asignación de una herramienta a una labor',
-                'description_english' => 'Allows storing the assignment of a tool to a labor',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.assigned',
-                'name' => 'Ver herramientas asignadas',
-                'description' => 'Permite ver la lista de herramientas asignadas',
-                'description_english' => 'Allows viewing the list of assigned tools',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.release',
-                'name' => 'Liberar herramienta',
-                'description' => 'Permite liberar una herramienta asignada',
-                'description_english' => 'Allows releasing an assigned tool',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.create',
-                'name' => 'Crear herramienta',
-                'description' => 'Permite mostrar el formulario para crear una nueva herramienta',
-                'description_english' => 'Allows displaying the form to create a new tool',
-            ],
-            [
-                'slug' => 'gvff.admin.tools.store',
-                'name' => 'Almacenar herramienta',
-                'description' => 'Permite guardar una nueva herramienta',
-                'description_english' => 'Allows storing a new tool',
-            ],
             
-            [
-                'slug' => 'gvff.admin.tools.storeAssign',
-                'name' => 'Almacenar asignación de herramienta',
-                'description' => 'Permite guardar la asignación de una herramienta a una labor',
-                'description_english' => 'Allows storing the assignment of a tool to a labor',
-            ],
 
-            [   'slug' => 'gvff.admin.labors.index',
-                'name' => 'Ver lista de labores',
-                'description' => 'Permite ver la lista de labores',
-                'description_english' => 'Allows viewing the list of labors',
-            ],
-            [
-                'slug' => 'gvff.admin.labors.create',
-                'name' => 'Crear labor',
-                'description' => 'Permite mostrar el formulario para crear una nueva labor',
-                'description_english' => 'Allows displaying the form to create a new labor',
-            ],
-            [
-                'slug' => 'gvff.admin.labors.store',
-                'name' => 'Almacenar labor',
-                'description' => 'Permite guardar una nueva labor',
-                'description_english' => 'Allows storing a new labor',
-            ],
-            [
-                'slug' => 'gvff.admin.labors.edit',
-                'name' => 'Editar labor',
-                'description' => 'Permite mostrar el formulario para editar una labor existente',
-                'description_english' => 'Allows displaying the form to edit an existing labor',
-            ],
-            [
-                'slug' => 'gvff.admin.labors.update',
-                'name' => 'Actualizar labor',
-                'description' => 'Permite actualizar una labor editada',
-                'description_english' => 'Allows updating labors',
-            ],
-            [
-                'slug' => 'gvff.admin.labors.destroy',
-                'name' => 'Eliminar labor',
-                'description' => 'Permite eliminar una labor',
-                'description_english' => 'Allows deleting labors',
-            ],
-
-            //permisos para suministros
-            [
-                'slug' => 'gvff.admin.supplies.index',
-                'name' => 'Ver lista de suministros',
-                'description' => 'Permite ver la lista de suministros',
-                'description_english' => 'Allows viewing the list of supplies',
-            ],
-            [
-                'slug' => 'gvff.admin.supplies.create',
-                'name' => 'Crear suministro',
-                'description' => 'Permite mostrar el formulario para crear un nuevo suministro',
-                'description_english' => 'Allows displaying the form to create a new supply',
-            ],
-            [
-                'slug' => 'gvff.admin.supplies.store',
-                'name' => 'Almacenar suministro',
-                'description' => 'Permite guardar un nuevo suministro',
-                'description_english' => 'Allows storing a new supply',
-            ],
-            [
-                'slug' => 'gvff.admin.supplies.edit',
-                'name' => 'Editar suministro',
-                'description' => 'Permite mostrar el formulario para editar un suministro existente',
-                'description_english' => 'Allows displaying the form to edit an existing supply',
-            ],
-            [
-                'slug' => 'gvff.admin.supplies.update',
-                'name' => 'Actualizar suministro',
-                'description' => 'Permite actualizar un suministro editado',
-                'description_english' => 'Allows updating supplies',
-            ],
-            [
-                'slug' => 'gvff.admin.supplies.destroy',
-                'name' => 'Eliminar suministro',
-                'description' => 'Permite eliminar un suministro',
-                'description_english' => 'Allows deleting supplies',
-            ],
-
+            
         ];
 
         // Crear permisos para Plantas y añadirlos a la lista de permisos del administrador
@@ -421,6 +298,55 @@ class PermissionsTableSeeder extends Seeder
                 'description_english' => 'Allows deleting faunas',
             ],
 
+            //permisos para inventario de plantas
+            [
+                'slug' => 'gvff.admin.plant_inventory.index',
+                'name' => 'Ver inventario de plantas',
+                'description' => 'Permite ver el inventario de plantas',
+                'description_english' => 'Allows viewing the plant inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.entrance',
+                'name' => 'Entrada de inventario de plantas',
+                'description' => 'Permite registrar la entrada de plantas al inventario',
+                'description_english' => 'Allows registering the entry of plants to the inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.store',
+                'name' => 'Almacenar entrada de inventario de plantas',
+                'description' => 'Permite almacenar la entrada de plantas al inventario',
+                'description_english' => 'Allows storing the entry of plants to the inventory',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.index',
+                'name' => 'Ver ventas de plantas',
+                'description' => 'Permite ver las ventas de plantas realizadas',
+                'description_english' => 'Allows viewing the plant sales made',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.getPlantsByWarehouse',
+                'name' => 'Obtener plantas por almacén',
+                'description' => 'Permite obtener las plantas disponibles en un almacén específico para la venta',
+                'description_english' => 'Allows obtaining available plants in a specific warehouse for sale',
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.searchPerson',
+                'name' => 'Buscar persona para venta de plantas',
+                'description' => 'Permite buscar una persona para realizar una venta de plantas',
+                'description_english' => "Allows searching for a person to make a plant sale",
+            ],
+            [
+                'slug' => 'gvff.admin.plant_inventory.sale.store',
+                'name' => "Procesar venta de plantas",
+                "description" => "Permite procesar la venta de plantas y actualizar el inventario",
+                "description_english" => "Allows processing the sale of plants and updating the inventory",
+            ],
+           [
+               'slug' => "gvff.admin.plant_inventory.sale.history",
+               'name' => "Historial de ventas de plantas",
+               'description' => "Permite ver el historial de ventas de plantas",
+               'description_english' => "Allows viewing the history of plant sales",
+           ]
 
         ];
 
