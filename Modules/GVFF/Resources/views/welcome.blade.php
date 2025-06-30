@@ -1,4 +1,4 @@
-@extends('gvff::layouts.masterusers')
+@extends('gvff::layouts.masterusersNarvas')
 
 @section('content')
     <h1>Gestion de Viveros Fauna y Flora </h1>

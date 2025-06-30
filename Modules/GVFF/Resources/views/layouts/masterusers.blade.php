@@ -235,7 +235,7 @@
                 <!-- Menú -->
                 <ul class="nav-links flex space-x-10 md:flex items-center text-lg font-semibold">
                     <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                        <a href="{{ route('gvff.user.home') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-home animate-pulse"></i>
                             <span>Inicio</span>
                             <!-- <a href="#">Inicio</a> -->

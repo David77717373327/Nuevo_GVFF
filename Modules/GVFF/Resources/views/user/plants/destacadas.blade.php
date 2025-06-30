@@ -1,4 +1,4 @@
-@extends('gvff::layouts.masterusers')
+@extends('gvff::layouts.masterusersNarvas')
 
 @section('title', 'Plantas Destacadas')
 
