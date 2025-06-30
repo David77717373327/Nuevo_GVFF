@@ -368,6 +368,7 @@
             <div class="swiper-button-next text-white"></div>
             <div class="swiper-button-prev text-white"></div>
             <div class="swiper-pagination"></div>
+            
             <div class="swiper-thumbs absolute bottom-4 w-full">
                 <div class="swiper-wrapper flex justify-center space-x-4">
                     <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div>

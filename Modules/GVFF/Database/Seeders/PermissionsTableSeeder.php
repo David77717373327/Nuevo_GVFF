@@ -347,7 +347,8 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Historial de ventas de plantas',
                 'description' => '',
                 'description_english' => 'Allows viewing the history of plant sales',
-            ]
+            ],
+            
 
 
         ];

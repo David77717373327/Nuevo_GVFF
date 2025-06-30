@@ -42,6 +42,10 @@
                     <input type="text" id="plant_stock" class="form-control" readonly>
                 </div>
                 <div class="col-md-2">
+                    <label>Precio Unitario</label>
+                    <input type="text" id="plant_price" class="form-control" readonly>
+                </div>
+                <div class="col-md-2">
                     <label>Cantidad a Vender</label>
                     <input type="number" id="plant_quantity" class="form-control" min="1">
                 </div>
@@ -55,7 +59,9 @@
                     <tr>
                         <th>Planta</th>
                         <th>Cantidad Disponible</th>
+                        <th>Precio Unitario</th>
                         <th>Cantidad a Vender</th>
+                        <th>Subtotal</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -63,6 +69,11 @@
                     <!-- Plantas agregadas -->
                 </tbody>
             </table>
+
+            <div class="mt-3">
+                <h4><strong>Total de la Venta:</strong> <span id="totalPrice">0</span></h4>
+                <input type="hidden" name="total_price" id="total_price_input">
+            </div>
 
             <h4 class="mt-4">Datos del Cliente</h4>
             <div class="mb-3">
@@ -87,8 +98,20 @@
 <script>
 let availablePlants = {};
 
-$(document).ready(function () {
+function updateTotalPrice() {
+    let total = 0;
+    $('#saleTable tr').each(function() {
+        const quantity = parseFloat($(this).find('input[name^="plants"]').val()) || 0;
+        const price = parseFloat($(this).find('.subtotal').data('price')) || 0;
+        const subtotal = quantity * price;
+        $(this).find('.subtotal').text(subtotal.toFixed(2));
+        total += subtotal;
+    });
+    $('#totalPrice').text(total.toFixed(2));
+    $('#total_price_input').val(total.toFixed(2));
+}
 
+$(document).ready(function () {
     $('#productive_unit_warehouse_id').on('change', function () {
         const warehouseId = $(this).val();
         if (warehouseId) {
@@ -122,10 +145,14 @@ $(document).ready(function () {
 
     $('#plant_select').on('change', function () {
         const plantId = $(this).val();
+        console.log('Seleccionando planta:', plantId, availablePlants[plantId]); // Depuración
         if (plantId && availablePlants[plantId]) {
-            $('#plant_stock').val(availablePlants[plantId].amount);
+            const plantData = availablePlants[plantId];
+            $('#plant_stock').val(plantData.amount);
+            $('#plant_price').val(parseFloat(plantData.price || 0).toFixed(2));
         } else {
             $('#plant_stock').val('');
+            $('#plant_price').val('');
         }
     });
 
@@ -133,6 +160,7 @@ $(document).ready(function () {
         const plantId = $('#plant_select').val();
         const plantName = $('#plant_select option:selected').text();
         const stock = parseInt($('#plant_stock').val());
+        const price = parseFloat(availablePlants[plantId].price) || 0;
         const quantity = parseInt($('#plant_quantity').val());
 
         if (!plantId || quantity <= 0 || quantity > stock) {
@@ -145,22 +173,45 @@ $(document).ready(function () {
             return;
         }
 
+        const subtotal = (quantity * price).toFixed(2);
+
         $('#saleTable').append(`
             <tr id="row_${plantId}">
                 <td>${plantName}</td>
                 <td>${stock}</td>
+                <td>${price.toFixed(2)}</td>
                 <td>
-                    <input type="number" name="plants[${plantId}]" class="form-control" value="${quantity}" min="1" max="${stock}" required>
+                    <input type="number" name="plants[${plantId}]" class="form-control plant-quantity" value="${quantity}" min="1" max="${stock}" required>
                 </td>
+                <td class="subtotal" data-price="${price}">${subtotal}</td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="$('#row_${plantId}').remove();">Eliminar</button>
+                    <button type="button" class="btn btn-danger btn-sm remove-plant" data-id="${plantId}">Eliminar</button>
                 </td>
             </tr>
         `);
 
+        updateTotalPrice();
+
         $('#plant_select').val('');
         $('#plant_stock').val('');
+        $('#plant_price').val('');
         $('#plant_quantity').val('');
+    });
+
+    $(document).on('click', '.remove-plant', function () {
+        const plantId = $(this).data('id');
+        $(`#row_${plantId}`).remove();
+        updateTotalPrice();
+    });
+
+    $(document).on('change', '.plant-quantity', function () {
+        const quantity = parseInt($(this).val());
+        const max = parseInt($(this).attr('max'));
+        if (quantity < 1 || quantity > max) {
+            alert('Cantidad inválida.');
+            $(this).val(1);
+        }
+        updateTotalPrice();
     });
 
     $('#searchPerson').on('click', function () {
@@ -186,6 +237,5 @@ $(document).ready(function () {
             });
         }
     });
-
 });
 </script>
