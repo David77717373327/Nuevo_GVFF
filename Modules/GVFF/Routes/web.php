@@ -6,6 +6,7 @@ use Modules\GVFF\Http\Controllers\PlantInventoryController;
 
 
 
+
 Route::middleware(['lang'])->group(function () {
     Route::prefix('gvff')->group(function () {
         Route::get('/index', 'GVFFController@index')->name('gvff.index');
@@ -80,6 +81,27 @@ Route::middleware(['lang'])->group(function () {
 Route::prefix('gvff')->group(function () {
     //Rura para los aprendices
     Route::get('/welcome', 'GVFFController@welcome')->name('gvff.welcome');
+    Route::get('/plantas/ornamental', 'UserOrnamentalPlantsController@ornamental')->name('gvff.user.plants.ornamental');
+    Route::get('/plantas/medicinal', 'UserMedicinalPlantsController@medicinal')->name('gvff.user.plants.medicinal');
+    Route::get('/plantas/forestal', 'UserForestalPlantsController@forestal')->name('gvff.user.plants.forestal');
+    Route::get('/plantas/venta', 'UserVentaPlantsController@venta')->name('gvff.user.plants.venta');
+    Route::get('/plantas/destacadas', 'UserDestacadasPlantsController@destacadas')->name('gvff.user.plants.destacadas');
+    Route::get('/plantas/search', 'UserPlantSearchControllerr@search')->name('gvff.user.plants.search');
+    Route::get('/home', 'UserHomeController@index')->name('gvff.user.home');
+            
+
+    
+
+
+
+  
+   
+   
+
+    
+    
+           
+
 });
 
 

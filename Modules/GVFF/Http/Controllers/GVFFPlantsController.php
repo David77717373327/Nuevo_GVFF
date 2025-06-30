@@ -53,31 +53,6 @@ class GVFFPlantsController extends Controller
         $nurseries = Nurseries::all();
         return view('gvff::admin.plants.create', compact('nurseries'));
     }
-    public function createOrnamental()
-    {
-        $nurseries = Nurseries::all();
-        return view('gvff::admin.plants.ornamental.create_ornamental', compact('nurseries'));
-    }
-    public function createMedicinal()
-    {
-        $nurseries = Nurseries::all();
-        return view('gvff::admin.plants.medicinal.create_medicinal', compact('nurseries'));
-    }
-    public function createForestal()
-    {
-        $nurseries = Nurseries::all();
-        return view('gvff::admin.plants.forestal.create_forestal', compact('nurseries'));
-    }
-    public function createVenta()
-    {
-        $nurseries = Nurseries::all();
-        return view('gvff::admin.plants.venta.create_venta', compact('nurseries'));
-    }
-
-
-
-
-
     
 protected function storePlant(Request $request, $isAjax = false)
 {
@@ -136,9 +111,6 @@ protected function storePlant(Request $request, $isAjax = false)
         throw $e;
     }
 }
-
-
-
 public function store(Request $request)
     {
         return $this->storePlant($request);

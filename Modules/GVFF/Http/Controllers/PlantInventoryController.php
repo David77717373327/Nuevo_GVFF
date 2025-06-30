@@ -35,7 +35,7 @@ class PlantInventoryController extends Controller
         $productiveUnitWarehouses = ProductiveUnitWarehouse::with(relations: ['productive_unit', 'warehouse'])->get();
         $movementTypes = MovementType::where('name', 'Movimiento Entrada')->get(); // Solo entradas
         return view('gvff::admin.inventories.entrance', compact('productiveUnitWarehouses', 'movementTypes'));
-    }
+    }                       
 
 
 
@@ -100,7 +100,6 @@ class PlantInventoryController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Entrada de inventario registrada correctamente.');
-
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -133,6 +132,7 @@ class PlantInventoryController extends Controller
                 'id' => $item->id,
                 'plant_name' => $item->plant->common_name ?? 'Sin nombre',
                 'amount' => $item->amount,
+                'price' => $item->plant->price ?? 0,
             ];
         }));
     }
@@ -163,7 +163,7 @@ class PlantInventoryController extends Controller
     /**
      * Procesar la venta de plantas
      */
-    public function processSale(Request $request)
+       public function processSale(Request $request)
     {
         $request->validate([
             'productive_unit_warehouse_id' => 'required|exists:productive_unit_warehouses,id',
@@ -175,12 +175,20 @@ class PlantInventoryController extends Controller
 
         try {
             $movementType = MovementType::where('name', 'Venta')->firstOrFail();
+            $totalPrice = 0;
+
+            foreach ($request->plants as $plantInventoryId => $quantity) {
+                if ($quantity > 0) {
+                    $inventory = PlantInventory::with('plant')->findOrFail($plantInventoryId);
+                    $totalPrice += ($inventory->plant->price ?? 0) * $quantity;
+                }
+            }
 
             $movement = Movement::create([
                 'registration_date' => now(),
                 'movement_type_id' => $movementType->id,
                 'voucher_number' => time(),
-                'price' => 0,
+                'price' => $totalPrice,
                 'observation' => 'Venta de plantas',
                 'state' => 'APROBADO',
             ]);
@@ -191,7 +199,6 @@ class PlantInventoryController extends Controller
                 'role' => 'Entrega',
             ]);
 
-            // Responsable que entrega (usuario autenticado)
             MovementResponsibility::create([
                 'person_id' => Auth::id(),
                 'movement_id' => $movement->id,
@@ -199,7 +206,6 @@ class PlantInventoryController extends Controller
                 'date' => now(),
             ]);
 
-            // Responsable que recibe (cliente)
             MovementResponsibility::create([
                 'person_id' => $request->client_id,
                 'movement_id' => $movement->id,
@@ -207,10 +213,9 @@ class PlantInventoryController extends Controller
                 'date' => now(),
             ]);
 
-
             foreach ($request->plants as $plantInventoryId => $quantity) {
                 if ($quantity > 0) {
-                    $inventory = PlantInventory::findOrFail($plantInventoryId);
+                    $inventory = PlantInventory::with('plant')->findOrFail($plantInventoryId);
 
                     if ($inventory->amount < $quantity) {
                         throw new \Exception('Stock insuficiente para la planta: ' . $inventory->plant->name);
@@ -222,7 +227,7 @@ class PlantInventoryController extends Controller
                         'plant_inventory_id' => $inventory->id,
                         'movement_id' => $movement->id,
                         'amount' => $quantity,
-                        'price' => 0,
+                        'price' => $inventory->plant->price ?? 0,
                     ]);
                 }
             }
@@ -230,7 +235,6 @@ class PlantInventoryController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'Venta registrada exitosamente.');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error al procesar la venta: ' . $e->getMessage());
