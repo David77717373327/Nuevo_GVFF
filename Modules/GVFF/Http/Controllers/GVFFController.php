@@ -18,20 +18,16 @@ class GVFFController extends Controller
 {
     // Get the count of unique nurseries from the plants table
     $totalNurseries = Plant::distinct('nurseries_id')->count('nurseries_id');
-
     $totalPlants = Plant::count();
     $totalFauna = Fauna::count();
-    
     $ornamentalPlants = Plant::where('plant_type', 'ornamental')->count();
         $medicinalPlants = Plant::where('plant_type', 'medicinal')->count();
         $ventaPlants = Plant::where('plant_type', 'venta')->count();
+        $forestalPlants = Plant::where('plant_type', 'forestal')->count();
 
     // Pass the count to the view
-    return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'ornamentalPlants', 'medicinalPlants', 'ventaPlants', 'totalFauna'));
+    return view('gvff::index', compact('totalNurseries', 'totalPlants', 'totalFauna', 'ornamentalPlants', 'medicinalPlants', 'ventaPlants', 'forestalPlants'));
 }
-
-    
-
 
     //Funcion para los aprensices que no necesitan autenticacion
     public function welcome()

@@ -1,4 +1,7 @@
+
 @extends('gvff::layouts.masterusersNarvas')
+
+
 
 @section('title', 'Plantas en Venta')
 

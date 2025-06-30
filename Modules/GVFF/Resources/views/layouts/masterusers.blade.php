@@ -27,7 +27,8 @@
             transition: all 0.4s ease;
             background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
             animation: gradientShift 10s ease infinite;
-            z-index: 1000;
+            z-index: 2000;
+            position: relative;
         }
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -71,7 +72,8 @@
             transition: all 0.4s ease;
             background: linear-gradient(135deg, rgba(21, 128, 61, 0.95), rgba(5, 150, 105, 0.95));
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
+            z-index: 2001;
+            position: absolute;
         }
         .dropdown-menu li a {
             transition: all 0.3s ease;
@@ -166,13 +168,8 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        #main-carousel {
-            transition: height 0.5s ease;
-        }
-        #main-carousel.shrink {
-            height: 0px;
-            overflow: hidden;
-        }
+        
+        
         .swiper-thumbs {
             position: absolute;
             bottom: 20px;
@@ -203,17 +200,29 @@
         }
 
         #main-carousel {
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition: transform 1.2s cubic-bezier(0.4,0,0.2,1), opacity 1.2s cubic-bezier(0.4,0,0.2,1), max-height 1.2s cubic-bezier(0.4,0,0.2,1), margin 1.2s cubic-bezier(0.4,0,0.2,1);
     transform-origin: top;
-    z-index: 10;
+    z-index: 5;
+    position: relative;
+    max-height: 700px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e6f3e6 0%, #ffffff 100%);
+    margin-bottom: 2rem;
 }
-
 #main-carousel.shrink {
-    transform: scaleY(0.3);
-    opacity: 0.4;
+    transform: scaleY(0.7);
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    pointer-events: none;
 }
 .dropdown-menu {
     z-index: 50;
+}
+
+.section-plants {
+    transition: padding-top 1.2s cubic-bezier(0.4,0,0.2,1);
+    padding-top: 3rem; /* Ajusta según tu diseño */
 }
     </style>
 </head>
@@ -302,8 +311,7 @@
             <span>Destacadas</span>
         </a>
     </li>
-</ul>
-                    </li>
+</ul>                    </li>
                     <li data-aos="fade-right" data-aos-delay="400" class="relative">
                         <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-info-circle animate-pulse"></i>
@@ -367,20 +375,20 @@
             </div>
             <div class="swiper-button-next text-white"></div>
             <div class="swiper-button-prev text-white"></div>
-            <div class="swiper-pagination"></div>
-            
-            <div class="swiper-thumbs absolute bottom-4 w-full">
+            <div class="swiper-pagination"></div>  
+
+            <div class="swiper-thumbs absolute bottom-4 w-full">    
                 <div class="swiper-wrapper flex justify-center space-x-4">
-                    <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div>
+                    <!-- <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('') }}');"></div>
                     <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}');"></div>
-                    <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div>
+                    <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div> -->
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Sección adicional informativa -->
-    <section class="mt-20" data-aos="fade-up">
+    <section class="section-plants mt-20" data-aos="fade-up">
         <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Conoce Más Sobre Nuestras Plantas</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
             <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in">
@@ -488,18 +496,37 @@
             },
         });
 
-        // Barra de navegación al hacer scroll
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            const carousel = document.getElementById('main-carousel');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-                carousel.classList.add('shrink');
-            } else {
-                navbar.classList.remove('scrolled');
-                carousel.classList.remove('shrink');
-            }
-        });
+    const navbar = document.querySelector('.navbar');
+    const carousel = document.getElementById('main-carousel');
+    const sectionPlants = document.querySelector('.section-plants');
+    const scroll = window.scrollY;
+    const maxScroll = 300; // Ajusta para más o menos suavidad
+
+    // Navbar efecto
+    if (scroll > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+
+    // Carrusel efecto progresivo
+    const progress = Math.min(scroll / maxScroll, 1);
+    const scale = 1 - 0.3 * progress;
+    const opacity = 1 - progress;
+    const maxHeight = 700 * (1 - progress);
+    const marginBottom = 32 * (1 - progress);
+
+    carousel.style.transform = `scaleY(${scale})`;
+    carousel.style.opacity = opacity;
+    carousel.style.maxHeight = `${maxHeight}px`;
+    carousel.style.marginBottom = `${marginBottom}px`;
+
+    // Espaciado progresivo para la siguiente sección
+    if (sectionPlants) {
+        sectionPlants.style.paddingTop = `${3 * (1 - progress)}rem`;
+    }
+});
 
         // Menú hamburguesa
         const hamburger = document.querySelector('.hamburger-menu');
@@ -519,17 +546,7 @@
                 dropdownMenu.classList.toggle('hidden');
             }
         });
-        const carousel = document.getElementById('main-carousel');
-window.addEventListener('scroll', () => {
-    const scroll = window.scrollY;
-    const maxScroll = 300;
-
-    const scale = Math.max(0.3, 1 - scroll / maxScroll);
-    const opacity = Math.max(0.3, 1 - scroll / maxScroll);
-
-    carousel.style.transform = `scaleY(${scale})`;
-    carousel.style.opacity = opacity;
-});
+        
     </script>
 </body>
 </html>

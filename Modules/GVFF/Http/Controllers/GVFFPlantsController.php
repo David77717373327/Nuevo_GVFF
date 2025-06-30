@@ -15,12 +15,16 @@ use Throwable;
 
 class GVFFPlantsController extends Controller
 {
-    public function index()
-    {
-        $plants = Plant::all();
-        return view('gvff::admin.plants.index', compact('plants'));
-    }
-
+public function index()
+{
+    $plants = Plant::all();
+    $totalPlants = $plants->count();
+    $ornamentalPlants = Plant::where('plant_type', 'ornamental')->count();
+    $medicinalPlants = Plant::where('plant_type', 'medicinal')->count();
+    $ventaPlants = Plant::where('plant_type', 'venta')->count();
+    // Depuración de datos
+    return view('gvff::admin.plants.index', compact('plants', 'totalPlants', 'ornamentalPlants', 'medicinalPlants', 'ventaPlants'));
+}
 
 
     public function listaOrnamental()
