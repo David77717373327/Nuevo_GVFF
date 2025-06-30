@@ -25,22 +25,16 @@ Route::middleware(['lang'])->group(function () {
     Route::get('/plantas/lista/ornamental', 'GVFFPlantsController@listaOrnamental')->name('gvff.admin.plants.ornamental.lista_ornamental');
     Route::get('/plantas/lista/medicinal', 'GVFFPlantsController@listaMedicinal')->name('gvff.admin.plants.medicinal.lista_medicinal');
     Route::get('/plantas/lista/forestal', 'GVFFPlantsController@listaForestal')->name('gvff.admin.plants.forestal.lista_forestal');
-
     Route::get('/plantas/lista/venta', 'GVFFPlantsController@listaVenta')->name('gvff.admin.plants.venta.lista_venta');
 
-    
     Route::get('/plantas/{plants}/edit', 'GVFFPlantsController@edit')->name('gvff.admin.plants.edit');
     Route::put('/plantas/{plants}', 'GVFFPlantsController@update')->name('gvff.admin.plants.update');
     Route::delete('/plantas/{plants}', 'GVFFPlantsController@destroy')->name('gvff.admin.plants.destroy');
     Route::get('/plantas/{plants}/sell', 'GVFFPlantsController@sell')->name('gvff.admin.plants.sell');
     Route::post('/plantas/{plants}/sell', 'GVFFPlantsController@processSell')->name('gvff.admin.plants.processSell');
 
-
     Route::post('/plantas/store-forestal', 'GVFFPlantsController@storeForestal')->name('gvff.admin.plants.storeForestal');
     Route::post('/plantas/store-forestal', 'GVFFPlantsController@storeForestal')->name('gvff.admin.plants.forestal.store');
-
-
-
     
         // Nuevas rutas para creación por tipo
     Route::get('/plantas/ornamental/create', 'GVFFPlantsController@createOrnamental')->name('gvff.admin.plants.ornamental.create');
