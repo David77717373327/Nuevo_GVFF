@@ -16,125 +16,9 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Google Fonts (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
-        /* Estilos personalizados */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e6f3e6 0%, #ffffff 100%);
-            overflow-x: hidden;
-        }
-        .navbar {
-            transition: all 0.4s ease;
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
-            animation: gradientShift 10s ease infinite;
-            z-index: 2000;
-            position: relative;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .navbar.scrolled {
-            background: linear-gradient(90deg, rgba(21, 128, 61, 0.98), rgba(5, 150, 105, 0.98));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .nav-links li a {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .nav-links li a:hover {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-        .nav-links li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: #facc15;
-            transition: left 0.3s ease;
-        }
-        .nav-links li a:hover::after {
-            left: 0;
-        }
-        .dropdown:hover .dropdown-menu {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 1001;
-        }
-        .dropdown-menu {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-            background: linear-gradient(135deg, rgba(21, 128, 61, 0.95), rgba(5, 150, 105, 0.95));
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 2001;
-            position: absolute;
-        }
-        .dropdown-menu li a {
-            transition: all 0.3s ease;
-        }
-        .dropdown-menu li a:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.1);
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-        .hamburger-menu {
-            display: none;
-        }
-        .nav-links.active {
-            transform: translateX(0);
-        }
-        @media (max-width: 768px) {
-            .hamburger-menu {
-                display: block;
-            }
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100vh;
-                width: 75%;
-                background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
-                flex-direction: column;
-                padding: 2rem;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .dropdown-menu {
-                position: static;
-                width: 100%;
-                background: transparent;
-                box-shadow: none;
-                z-index: 1001;
-            }
-        }
-        .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.875rem;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-            z-index: 1002;
-        }
-        .nav-links li:hover .tooltip {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Estilos inline para el carrusel */
         .carousel-image {
             height: 600px;
             object-fit: cover;
@@ -168,62 +52,23 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
-        
-        .swiper-thumbs {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 10;
-        }
-        .swiper-thumbs .swiper-slide {
-            width: 80px;
-            height: 50px;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.7;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .swiper-thumbs .swiper-slide:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .search-input {
-            transition: all 0.3s ease;
-        }
-        .search-input:focus {
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
-        }
-
         #main-carousel {
-    transition: transform 1.2s cubic-bezier(0.4,0,0.2,1), opacity 1.2s cubic-bezier(0.4,0,0.2,1), max-height 1.2s cubic-bezier(0.4,0,0.2,1), margin 1.2s cubic-bezier(0.4,0,0.2,1);
-    transform-origin: top;
-    z-index: 5;
-    position: relative;
-    max-height: 700px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #e6f3e6 0%, #ffffff 100%);
-    margin-bottom: 2rem;
-}
-#main-carousel.shrink {
-    transform: scaleY(0.7);
-    opacity: 0;
-    max-height: 0;
-    margin-bottom: 0;
-    pointer-events: none;
-}
-.dropdown-menu {
-    z-index: 50;
-}
-
-.section-plants {
-    transition: padding-top 1.2s cubic-bezier(0.4,0,0.2,1);
-    padding-top: 3rem; /* Ajusta según tu diseño */
-}
+            transition: transform 1.2s cubic-bezier(0.4,0,0.2,1), opacity 1.2s cubic-bezier(0.4,0,0.2,1), max-height 1.2s cubic-bezier(0.4,0,0.2,1), margin 1.2s cubic-bezier(0.4,0,0.2,1);
+            transform-origin: top;
+            z-index: 5;
+            position: relative;
+            max-height: 700px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e6f3e6 0%, #ffffff 100%);
+            margin-bottom: 2rem;
+        }
+        #main-carousel.shrink {
+            transform: scaleY(0.7);
+            opacity: 0;
+            max-height: 0;
+            margin-bottom: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -247,76 +92,35 @@
                         <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-home animate-pulse"></i>
                             <span>Inicio</span>
-                            <!-- <a href="#">Inicio</a> -->
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestra página principal</span>
                     </li>
                     <li data-aos="fade-right" data-aos-delay="200" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-leaf animate-spin-slow"></i>
                             <span>Viveros</span>
-                            <!-- <a href="#">Viveros</a> -->
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Descubre nuestros viveros públicos y privados</span>
                     </li>
-                    <li class="relative dropdown" data-aos="fade-right" data-aos-delay="300">
+                    <li class="relative dropdown group" data-aos="fade-right" data-aos-delay="300">
                         <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-seedling animate-bounce"></i>
                             <span>Plantas</span>
                             <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
                         </a>
-                       <!-- Tooltip -->
-<span class="tooltip top-12 left-1/2 -translate-x-1/2">
-    Explora nuestras categorías de plantas
-</span>
-
-<!-- Lista desplegable -->
-<ul class="dropdown-menu absolute hidden bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50 flex-col">
-    <!-- Ornamentales -->
-    <li>
-        <a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-            <i class="fas fa-seedling"></i>
-            <span>Ornamentales</span>
-        </a>
-    </li>
-
-    <!-- Forestales -->
-    <li>
-        <a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-            <i class="fas fa-tree"></i>
-            <span>Forestales</span>
-        </a>
-    </li>
-
-    <!-- Medicinales -->
-    <li>
-        <a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-            <i class="fas fa-mortar-pestle"></i>
-            <span>Medicinales</span>
-        </a>
-    </li>
-
-    <!-- En Venta -->
-    <li>
-        <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-            <i class="fas fa-shopping-cart"></i>
-            <span>En Venta</span>
-        </a>
-    </li>
-
-    <!-- Destacadas -->
-    <li>
-        <a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-            <i class="fas fa-star text-yellow-400"></i>
-            <span>Destacadas</span>
-        </a>
-    </li>
-</ul>                    </li>
+                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestras categorías de plantas</span>
+                        <ul class="dropdown-menu absolute hidden group-hover:flex flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
+                            <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
+                            <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
+                            <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
+                            <li><a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-shopping-cart"></i><span>En Venta</span></a></li>
+                            <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
+                        </ul>
+                    </li>
                     <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-info-circle animate-pulse"></i>
                             <span>Acerca de</span>
-                            <!-- <a href="#">Acerca de</a> -->
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Conoce nuestra misión y visión</span>
                     </li>
@@ -327,24 +131,24 @@
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Contáctanos por WhatsApp</span>
                     </li>
-                    <li data-aos="fade-right" data-aos-delay="600" class="relative">
-                        <form action="{{ route('gvff.user.plants.search') }}" class="flex items-center">
-                            <input type="text" placeholder="Buscar plantas..." class="search-input px-3 py-2 rounded-l-md bg-white text-gray-800 focus:outline-none">
-                            <button type="submit" class="px-3 py-2 bg-green-600 rounded-r-md hover:bg-green-700">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Busca plantas por nombre</span>
+                    <li>
+                        <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>SICEFA</span>
+                        </a>
                     </li>
                 </ul>
             </div>
         </nav>
-        <!-- Carrusel -->
-        <div id="main-carousel" class="swiper mySwiper relative transition-all duration-500" data-aos="fade-in" style="z-index: 10;">
+    </header>
+
+    <!-- Carrusel en una sección independiente -->
+    <section class="relative mt-4">
+        <div id="main-carousel" class="swiper mySwiper relative transition-all duration-500" data-aos="fade-in" style="z-index: 5;">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <div class="relative">
-                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Vivero 1" class="carousel-image">
+                    <div class="relative w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Vivero 1" class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Descubre Nuestros Viveros</h2>
                             <p class="text-lg">Explora una amplia variedad de plantas sostenibles cultivadas con cuidado.</p>
@@ -353,8 +157,8 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="relative">
-                        <img src="{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}" alt="Planta 1" class="carousel-image">
+                    <div class="relative w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}" alt="Planta 1" class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Plantas Medicinales</h2>
                             <p class="text-lg">Aprovecha los beneficios naturales para tu salud y bienestar.</p>
@@ -363,8 +167,8 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="relative">
-                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Planta 2" class="carousel-image">
+                    <div class="relative w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Planta 2" class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Ornamentales y Forestales</h2>
                             <p class="text-lg">Embellece tu hogar o entorno con nuestras plantas únicas.</p>
@@ -375,54 +179,112 @@
             </div>
             <div class="swiper-button-next text-white"></div>
             <div class="swiper-button-prev text-white"></div>
-            <div class="swiper-pagination"></div>  
-
-            <div class="swiper-thumbs absolute bottom-4 w-full">    
+            <div class="swiper-pagination"></div>
+            <div class="swiper-thumbs absolute bottom-4 w-full">
                 <div class="swiper-wrapper flex justify-center space-x-4">
-                    <!-- <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('') }}');"></div>
+                    {{-- <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div>
                     <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}');"></div>
-                    <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div> -->
+                    <div class="swiper-slide w-24 h-16 bg-cover bg-center opacity-60 hover:opacity-100 transition" style="background-image: url('{{ asset('modules/gvff/images/plants/carucel1.jpg') }}');"></div> --}}
                 </div>
             </div>
         </div>
-    </header>
-
-    <!-- Sección adicional informativa -->
-    <section class="section-plants mt-20" data-aos="fade-up">
-        <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Conoce Más Sobre Nuestras Plantas</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in">
-                <img src="{{ asset('modules/gvff/images/plants/papaya-1746365289.png') }}" alt="Papaya" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Papaya</h3>
-                <p class="text-gray-600">Fruta tropical con múltiples beneficios para la digestión y fácil de cultivar en climas cálidos.</p>
-            </div>
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in" data-aos-delay="100">
-                <img src="{{ asset('modules/gvff/images/plants/sandia-1746472453.png') }}" alt="Sandía" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Sandía</h3>
-                <p class="text-gray-600">Rica en agua y refrescante. Ideal para suelos con buen drenaje y exposición solar completa.</p>
-            </div>
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in" data-aos-delay="200">
-                <img src="{{ asset('modules/gvff/images/plants/pera-1748213764.jpg') }}" alt="Pera" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Pera</h3>
-                <p class="text-gray-600">Árbol frutal que se adapta a diversos suelos. Sus frutos son dulces, suaves y nutritivos.</p>
-            </div>
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in">
-                <img src="{{ asset('modules/gvff/images/plants/papaya-1746365289.png') }}" alt="Papaya" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Papaya</h3>
-                <p class="text-gray-600">Fruta tropical con múltiples beneficios para la digestión y fácil de cultivar en climas cálidos.</p>
-            </div>
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in" data-aos-delay="100">
-                <img src="{{ asset('modules/gvff/images/plants/sandia-1746472453.png') }}" alt="Sandía" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Sandía</h3>
-                <p class="text-gray-600">Rica en agua y refrescante. Ideal para suelos con buen drenaje y exposición solar completa.</p>
-            </div>
-            <div class="bg-white rounded-xl shadow-lg p-6" data-aos="zoom-in" data-aos-delay="200">
-                <img src="{{ asset('modules/gvff/images/plants/pera-1748213764.jpg') }}" alt="Pera" class="w-full h-48 object-cover rounded mb-4">
-                <h3 class="text-xl font-bold text-green-700 mb-2">Pera</h3>
-                <p class="text-gray-600">Árbol frutal que se adapta a diversos suelos. Sus frutos son dulces, suaves y nutritivos.</p>
-            </div>
-        </div>
     </section>
+
+<!-- Sección informativa de cards con glassmorphism y animación avanzada -->
+<section class="py-12 bg-gradient-to-b from-green-200 via-white to-green-100">
+  <style>
+    .glass-card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .glass-card:hover {
+      transform: rotateY(5deg) scale(1.05);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .glass-image {
+      transition: transform 0.6s ease;
+    }
+    .glass-card:hover .glass-image {
+      transform: scale(1.15) rotate(2deg);
+    }
+    .glass-content {
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+    }
+    .glass-title {
+      background: linear-gradient(to right, #166534, #10b981);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .glass-description {
+      color: #374151;
+    }
+  </style>
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center text-green-900 mb-12">Conoce más sobre las plantas</h2>
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Card 1 -->
+      <div class="glass-card">
+        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Tipos de plantas" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Tipos de plantas</h3>
+          <p class="glass-description">Explora la increíble variedad de especies vegetales y descubre sus secretos.</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="glass-card">
+        <img src="https://source.unsplash.com/600x400/?plant-care" alt="Cuidados básicos" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Cuidados básicos</h3>
+          <p class="glass-description">Aprende a proteger y nutrir tus plantas para que florezcan todo el año.</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="glass-card">
+        <img src="https://source.unsplash.com/600x400/?environment" alt="Cuidado ambiental" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Cuidado ambiental</h3>
+          <p class="glass-description">Contribuye a un entorno sostenible y ayuda a preservar la biodiversidad.</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="glass-card">
+        <img src="https://source.unsplash.com/600x400/?urban-garden" alt="Huertos en casa" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Huertos en casa</h3>
+          <p class="glass-description">Crea tu propio huerto en casa y disfruta de alimentos frescos y saludables.</p>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="glass-card">
+        <img src="https://source.unsplash.com/600x400/?herbs" alt="Plantas medicinales" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Plantas medicinales</h3>
+          <p class="glass-description">Descubre remedios naturales y cómo usarlos de manera responsable.</p>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="glass-card">
+        <img src="https://source.unsplash.com/600x400/?sustainability" alt="Sostenibilidad" class="glass-image w-full h-52 object-cover">
+        <div class="glass-content">
+          <h3 class="glass-title mb-2">Sostenibilidad</h3>
+          <p class="glass-description">Impulsa prácticas sostenibles y cuida el planeta de forma integral.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
 
     <!-- Contenido principal -->
     <main class="flex-1 container mx-auto px-4 py-12">
@@ -496,37 +358,38 @@
             },
         });
 
+        // Efecto de scroll
         window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    const carousel = document.getElementById('main-carousel');
-    const sectionPlants = document.querySelector('.section-plants');
-    const scroll = window.scrollY;
-    const maxScroll = 300; // Ajusta para más o menos suavidad
+            const navbar = document.querySelector('.navbar');
+            const carousel = document.getElementById('main-carousel');
+            const sectionPlants = document.querySelector('.section-plants');
+            const scroll = window.scrollY;
+            const maxScroll = 300;
 
-    // Navbar efecto
-    if (scroll > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
+            // Navbar efecto
+            if (scroll > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
 
-    // Carrusel efecto progresivo
-    const progress = Math.min(scroll / maxScroll, 1);
-    const scale = 1 - 0.3 * progress;
-    const opacity = 1 - progress;
-    const maxHeight = 700 * (1 - progress);
-    const marginBottom = 32 * (1 - progress);
+            // Carrusel efecto progresivo
+            const progress = Math.min(scroll / maxScroll, 1);
+            const scale = 1 - 0.3 * progress;
+            const opacity = 1 - progress;
+            const maxHeight = 700 * (1 - progress);
+            const marginBottom = 32 * (1 - progress);
 
-    carousel.style.transform = `scaleY(${scale})`;
-    carousel.style.opacity = opacity;
-    carousel.style.maxHeight = `${maxHeight}px`;
-    carousel.style.marginBottom = `${marginBottom}px`;
+            carousel.style.transform = `scaleY(${scale})`;
+            carousel.style.opacity = opacity;
+            carousel.style.maxHeight = `${maxHeight}px`;
+            carousel.style.marginBottom = `${marginBottom}px`;
 
-    // Espaciado progresivo para la siguiente sección
-    if (sectionPlants) {
-        sectionPlants.style.paddingTop = `${3 * (1 - progress)}rem`;
-    }
-});
+            // Espaciado progresivo para la siguiente sección
+            if (sectionPlants) {
+                sectionPlants.style.paddingTop = `${3 * (1 - progress)}rem`;
+            }
+        });
 
         // Menú hamburguesa
         const hamburger = document.querySelector('.hamburger-menu');
@@ -546,7 +409,6 @@
                 dropdownMenu.classList.toggle('hidden');
             }
         });
-        
     </script>
 </body>
 </html>
