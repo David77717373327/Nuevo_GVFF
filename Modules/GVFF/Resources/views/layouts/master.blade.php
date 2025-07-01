@@ -186,13 +186,13 @@
 </a>
     <div class="submenu" id="herramientas-submenu">
     <ul class="submenu-list">
-        <li><a href="#"><i class="fa-solid fa-hammer"></i> Herramientas</a></li>
+        <li><a href="{{route('gvff.admin.tools.index')}}"><i class="fa-solid fa-hammer"></i> Nueva Herramientas</a></li>
         <li><a href="#"><i class="fa-solid fa-plus"></i> Crear Herramienta</a></li>
     </ul>
     </div>
                 <div class="p-4 border-t border-green-700">
                 <a href="{{ route('logout') }}" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition" onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition">
+                    document.getElementById('logout-form').submit();" class="block py-2 px-4 rounded-lg hover:bg-red-600 transition">
                     <i class="fa-solid fa-sign-out-alt mr-2"></i> Cerrar Sesión
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

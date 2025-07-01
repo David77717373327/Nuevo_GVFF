@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\GVFF\Http\Controllers\ToolController;
 use Modules\GVFF\Http\Controllers\PlantInventoryController;
 
 
@@ -84,6 +85,20 @@ Route::prefix('gvff')->group(function () {
     Route::get('/home', 'UserHomeController@index')->name('gvff.user.home');
 
 });
+
+Route::prefix('gvff/admin/tools')->group(function () {
+
+    Route::get('/', 'ToolController@index')->name('gvff.admin.tools.index');
+    Route::get('/create', 'ToolController@create')->name('gvff.admin.tools.create');
+    Route::post('/store', 'ToolController@store')->name('gvff.admin.tools.store');
+    Route::get('/{id}/edit', 'ToolController@edit')->name('gvff.admin.tools.edit');
+    Route::put('/{id}/update', 'ToolController@update')->name('gvff.admin.tools.update');
+    Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.tools.destroy');
+    Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.tools.check');
+
+});
+
+
 
 
 
