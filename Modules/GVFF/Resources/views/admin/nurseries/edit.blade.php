@@ -199,7 +199,7 @@
                                     <img src="{{ asset($plant->image) }}" alt="{{ $plant->common_name }}" width="80">
                                 </td>
                                 <td>
-                                    <a href="{{ route('gvff.admin.plants.edit', $plant) }}" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="{{ route('gvff.admin.nurs.edit', $plant) }}" class="btn btn-warning btn-sm">Editar</a>
                                     <form action="{{ route('gvff.admin.plants.destroy', $plant) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
