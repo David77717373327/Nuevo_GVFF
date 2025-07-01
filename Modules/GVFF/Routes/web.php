@@ -83,6 +83,11 @@ Route::prefix('gvff')->group(function () {
     Route::get('/plantas/search', 'UserPlantSearchControllerr@search')->name('gvff.user.plants.search');
     Route::get('/home', 'UserHomeController@index')->name('gvff.user.home');
 
+
+    //rutas para los viveros
+    Route::get('/nurseries', 'GVFFNurseriesUserController@index')->name('gvff.user.nurseries.index');
+    Route::get('/nurseries/{nursery}', 'GVFFNurseriesUserController@show')->name('gvff.user.nurseries.show');
+    Route::get('/about', 'GVFFNurseriesUserController@about')->name('gvff.user.nurseries.about');
 });
 
 

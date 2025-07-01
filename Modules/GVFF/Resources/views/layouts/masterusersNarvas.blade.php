@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Viveros y Plantas - Explora la Naturaleza')</title>
     <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Meta tags para SEO -->
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Swiper JS para el carrusel -->
@@ -170,7 +174,7 @@
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestra página principal</span>
                     </li>
                     <li data-aos="fade-right" data-aos-delay="200" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-leaf animate-spin-slow"></i>
                             <span>Viveros</span>
                         </a>
@@ -217,7 +221,7 @@
                         </ul>
                     </li>
                     <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-info-circle animate-pulse"></i>
                             <span>Acerca de</span>
                         </a>
@@ -250,9 +254,37 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-green-900 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; {{ date('Y') }} Viveros y Plantas. Todos los derechos reservados.</p>
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div data-aos="fade-up">
+                    <h3 class="text-2xl font-bold mb-4">Sobre Nosotros</h3>
+                    <p>Somos una empresa dedicada a la conservación y distribución de plantas y viveros, promoviendo la sostenibilidad y la conexión con la naturaleza.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-2xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-yellow-300 transition">Inicio</a></li>
+                        <li><a href="#" class="hover:text-yellow-300 transition">Viveros</a></li>
+                        <li><a href="#" class="hover:text-yellow-300 transition">Plantas</a></li>
+                        <li><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">Contacto</a></li>
+                    </ul>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold mb-4">Contáctanos</h3>
+                    <p><i class="fas fa-phone mr-2"></i><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">WhatsApp: +57 123 456 7890</a></p>
+                    <p><i class="fas fa-envelope mr-2"></i><a href="mailto:info@viveros.com" class="hover:text-yellow-300 transition">info@viveros.com</a></p>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p>© {{ date('Y') }} Viveros y Plantas. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
 

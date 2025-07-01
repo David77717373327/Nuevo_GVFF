@@ -252,26 +252,25 @@
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestra página principal</span>
                     </li>
                     <li data-aos="fade-right" data-aos-delay="200" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-leaf animate-spin-slow"></i>
                             <span>Viveros</span>
-                            <!-- <a href="#">Viveros</a> -->
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Descubre nuestros viveros públicos y privados</span>
                     </li>
-                    <li class="relative dropdown" data-aos="fade-right" data-aos-delay="300">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-seedling animate-bounce"></i>
-                            <span>Plantas</span>
-                            <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
-                        </a>
+                    <li class="relative dropdown group" data-aos="fade-right" data-aos-delay="300">
+    <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+        <i class="fas fa-seedling animate-bounce"></i>
+        <span>Plantas</span>
+        <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
+    </a>
                        <!-- Tooltip -->
 <span class="tooltip top-12 left-1/2 -translate-x-1/2">
     Explora nuestras categorías de plantas
 </span>
 
 <!-- Lista desplegable -->
-<ul class="dropdown-menu absolute hidden bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50 flex-col">
+<ul class="dropdown-menu absolute hidden group-hover:flex flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
     <!-- Ornamentales -->
     <li>
         <a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
@@ -303,7 +302,6 @@
             <span>En Venta</span>
         </a>
     </li>
-
     <!-- Destacadas -->
     <li>
         <a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
@@ -313,10 +311,9 @@
     </li>
 </ul>                    </li>
                     <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                        <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                             <i class="fas fa-info-circle animate-pulse"></i>
                             <span>Acerca de</span>
-                            <!-- <a href="#">Acerca de</a> -->
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Conoce nuestra misión y visión</span>
                     </li>
@@ -327,14 +324,12 @@
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Contáctanos por WhatsApp</span>
                     </li>
-                    <li data-aos="fade-right" data-aos-delay="600" class="relative">
-                        <form action="{{ route('gvff.user.plants.search') }}" class="flex items-center">
-                            <input type="text" placeholder="Buscar plantas..." class="search-input px-3 py-2 rounded-l-md bg-white text-gray-800 focus:outline-none">
-                            <button type="submit" class="px-3 py-2 bg-green-600 rounded-r-md hover:bg-green-700">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Busca plantas por nombre</span>
+                    <li>
+                         <!-- boton pra rederigir a sicefa -->
+                         <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                             <i class="fas fa-external-link-alt"></i>
+                             <span>SICEFA</span>
+                         </a>
                     </li>
                 </ul>
             </div>
