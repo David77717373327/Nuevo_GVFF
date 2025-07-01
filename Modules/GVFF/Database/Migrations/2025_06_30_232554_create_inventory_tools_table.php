@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateToolsTable extends Migration
+class CreateInventoryToolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateToolsTable extends Migration
      */
     public function up()
     {
-       Schema::create('inventory_tools', function (Blueprint $table) {
+        Schema::create('inventory_tools', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->text('description')->nullable();
@@ -30,6 +30,6 @@ class CreateToolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tools');
+        Schema::dropIfExists('inventory_tools');
     }
 }

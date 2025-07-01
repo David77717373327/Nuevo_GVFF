@@ -4,43 +4,45 @@
 <div class="container">
     <h2 class="mb-4">Listado de Herramientas</h2>
 
-    <a href="{{ route('gvff.admin.tools.create') }}" class="btn btn-primary">Nueva Herramienta</a>
+    <a href="{{ route('gvff.admin.tools.create') }}" class="btn btn-primary mb-3">Nueva Herramienta</a>
 
     @if(session('success'))
         <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
-    <table border="1" width="100%" cellpadding="5" class="mt-3">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Estado</th>
-                <th>Disponibilidad</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($tools as $tool)
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td>{{ $tool->name }}</td>
-                    <td>{{ $tool->description }}</td>
-                    <td>{{ $tool->status }}</td>
-                    <td>
-                        <button class="btn-check-availability" data-id="{{ $tool->id }}">Ver Disponibilidad</button>
-                        <span id="availability-{{ $tool->id }}"></span>
-                    </td>
-                    <td>
-                        <a href="{{ route('gvff.admin.tools.edit', $tool->id) }}">Editar</a>
-                        <form action="{{ route('gvff.admin.tools.destroy', $tool->id) }}" method="POST" style="display:inline;">
-                            @csrf @method('DELETE')
-                            <button type="submit" onclick="return confirm('¿Eliminar herramienta?')">Eliminar</button>
-                        </form>
-                    </td>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Disponibilidad</th>
+                    <th>Acciones</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($tools as $tool)
+                    <tr>
+                        <td>{{ $tool->name }}</td>
+                        <td>{{ $tool->description }}</td>   
+                        <td>{{ $tool->status }}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm btn-check-availability" data-id="{{ $tool->id }}">Ver Disponibilidad</button>
+                            <span id="availability-{{ $tool->id }}"></span>
+                        </td>
+                        <td>
+                            <a href="{{ route('gvff.admin.tools.edit', $tool->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ route('gvff.admin.tools.destroy', $tool->id) }}" method="POST" style="display:inline;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar herramienta?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 

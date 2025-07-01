@@ -163,7 +163,7 @@ class PlantInventoryController extends Controller
     /**
      * Procesar la venta de plantas
      */
-       public function processSale(Request $request)
+    public function processSale(Request $request)
     {
         $request->validate([
             'productive_unit_warehouse_id' => 'required|exists:productive_unit_warehouses,id',
