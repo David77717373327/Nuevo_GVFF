@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <title>@yield('title', 'Viveros y Plantas - Explora la Naturaleza')</title>
 
     <!-- Tailwind CSS CDN -->
@@ -157,97 +158,76 @@
     <!-- Header -->
     <header class="sticky top-0 z-50">
         <!-- Barra de navegación -->
-        <nav class="navbar text-white py-4 z-50 relative">
-            <div class="container mx-auto px-4 flex justify-between items-center">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" alt="Vivero Logo" class="h-14 w-auto rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
-                    <span class="ml-4 text-3xl font-bold text-white tracking-wide">Viveros y Plantas</span>
+        <nav class="navbar text-white py-3 z-45 relative">
+            <div class="container mx-auto px-4 nav-container">
+                <!-- Logo a la izquierda -->
+                <div class="nav-logo">
+                    <div class="flex items-center">
+                        <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" alt="Vivero Logo" class="h-14 w-auto rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
+                        <span class="ml-2 text-3xl font-bold text-white tracking-wide">Viveros y Plantas</span>
+                    </div>
                 </div>
-                <!-- Menú hamburguesa -->
-                <div class="hamburger-menu md:hidden text-3xl cursor-pointer">
-                    <i class="fas fa-bars"></i>
+                <!-- Menú hamburguesa y enlaces a la derecha -->
+                <div class="flex items-center gap-2">
+                    <ul class="nav-links hidden md:flex items-center text-lg font-semibold">
+                        <li data-aos="fade-right" data-aos-delay="100" class="relative">
+                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-home animate-pulse"></i>
+                                <span>Inicio</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra página principal</span>
+                        </li>
+                        <li data-aos="fade-right" data-aos-delay="200" class="relative">
+                            <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-leaf animate-spin-slow"></i>
+                                <span>Viveros</span>
+                            </a>
+                            <span class="tooltip">Descubre nuestros viveros públicos y privados</span>
+                        </li>
+                        <li class="relative dropdown group" data-aos="fade-right" data-aos-delay="300">
+                            <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-seedling animate-bounce"></i>
+                                <span>Plantas</span>
+                                <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
+                            </a>
+                            <span class="tooltip">Explora nuestras categorías de plantas</span>
+                            <ul class="dropdown-menu hidden flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
+                                <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-shopping-cart"></i><span>En Venta</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
+                            </ul>
+                        </li>
+                        <li data-aos="fade-right" data-aos-delay="400" class="relative">
+                            <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-info-circle animate-pulse"></i>
+                                <span>Acerca de</span>
+                            </a>
+                            <span class="tooltip">Conoce nuestra misión y visión</span>
+                        </li>
+                        <li data-aos="fade-right" data-aos-delay="500" class="relative">
+                            <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fab fa-whatsapp animate-bounce"></i>
+                                <span>Contacto</span>
+                            </a>
+                            <span class="tooltip">Contáctanos por WhatsApp</span>
+                        </li>
+                        <li data-aos="fade-right" data-aos-delay="600" class="relative">
+                            <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>SICEFA</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="hamburger-menu md:hidden text-3xl cursor-pointer">
+                        <i class="fas fa-bars"></i>
+                    </div>
                 </div>
-                <!-- Menú -->
-                <ul class="nav-links flex space-x-10 md:flex items-center text-lg font-semibold">
-                    <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                        <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-home animate-pulse"></i>
-                            <span>Inicio</span>
-                        </a>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestra página principal</span>
-                    </li>
-                    <li data-aos="fade-right" data-aos-delay="200" class="relative">
-                        <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-leaf animate-spin-slow"></i>
-                            <span>Viveros</span>
-                        </a>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Descubre nuestros viveros públicos y privados</span>
-                    </li>
-                    <li class="relative dropdown" data-aos="fade-right" data-aos-delay="300">
-                        <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-seedling animate-bounce"></i>
-                            <span>Plantas</span>
-                            <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
-                        </a>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Explora nuestras categorías de plantas</span>
-                        <ul class="dropdown-menu absolute hidden bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50 flex-col">
-                            <li>
-                                <a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-                                    <i class="fas fa-seedling"></i>
-                                    <span>Ornamentales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-                                    <i class="fas fa-tree"></i>
-                                    <span>Forestales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-                                    <i class="fas fa-mortar-pestle"></i>
-                                    <span>Medicinales</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>En Venta</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition">
-                                    <i class="fas fa-star text-yellow-400"></i>
-                                    <span>Destacadas</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                        <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-info-circle animate-pulse"></i>
-                            <span>Acerca de</span>
-                        </a>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Conoce nuestra misión y visión</span>
-                    </li>
-                    <li data-aos="fade-right" data-aos-delay="500" class="relative">
-                        <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fab fa-whatsapp animate-bounce"></i>
-                            <span>Contacto</span>
-                        </a>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Contáctanos por WhatsApp</span>
-                    </li>
-                    <li data-aos="fade-right" data-aos-delay="500" class="relative">
-                        <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>SICEFA</span>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </nav>
     </header>
+
 
     <!-- Contenido dinámico -->
     <main class="flex-grow">

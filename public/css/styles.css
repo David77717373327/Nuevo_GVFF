@@ -1,8 +1,7 @@
-/* NAVBAR ORGANIZADO */
-
 /* Barra de navegación principal */
 .navbar {
     position: sticky;
+    margin: auto;
     top: 0;
     z-index: 2000;
     background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
@@ -24,11 +23,26 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Contenedor de navegación */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Logo y enlaces a la izquierda */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espacio reducido para que los botones estén más cerca del logo */
+}
+
 /* Enlaces del nav */
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem; /* Espacio reducido entre los enlaces */
 }
 
 /* Elementos de la lista dentro del nav */
@@ -41,7 +55,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem; /* Padding reducido para un diseño más compacto */
     color: white;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -73,6 +87,139 @@
     width: 50%;
 }
 
+/* Botón de cerrar sesión */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 0.375rem;
+}
+.logout-btn:hover,
+.logout-btn:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: #facc15;
+    outline: none;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(21, 128, 61, 0.95), rgba(5, 150, 105, 0.95));
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 50;
+}
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+.dropdown-menu li a {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: #facc15;
+    transform: translateX(5px);
+}
+
+/* Hamburguesa (menú móvil) */
+.hamburger-menu {
+    display: none;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+        z-index: 2001;
+    }
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        flex-direction: column;
+        padding: 3rem 2rem;
+        background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        display: none;
+    }
+    .nav-links.active {
+        display: flex;
+        transform: translateX(0);
+    }
+    .nav-links li {
+        width: 100%;
+    }
+    .nav-links li a {
+        font-size: 1.125rem;
+        padding: 1rem;
+    }
+    .dropdown-menu {
+        position: static;
+        width: 100%;
+        background: transparent;
+        box-shadow: none;
+        opacity: 1;
+        transform: none;
+        display: none;
+    }
+    .dropdown-menu.active {
+        display: flex;
+        flex-direction: column;
+    }
+    .dropdown-menu li a {
+        padding: 0.75rem 1.5rem;
+    }
+    .logout-btn {
+        font-size: 1.125rem;
+        padding: 1rem;
+        width: 100%;
+    }
+}
+
+/* Tooltips dentro del nav */
+.tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1002;
+    white-space: nowrap;
+}
+.nav-links li:hover .tooltip,
+.nav-links li a:focus + .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
 /* Dropdown */
 .dropdown-menu {
     position: absolute;
@@ -257,6 +404,3 @@
     top: 0;
     z-index: 1000;
 }
-
-
-
