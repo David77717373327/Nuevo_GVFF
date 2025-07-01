@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Viveros y Plantas - Explora la Naturaleza')</title>
+
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
+    
+     <!-- Tailwind CSS CDN -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meta tags para SEO -->
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
@@ -234,14 +238,11 @@
                         </a>
                         <span class="tooltip top-12 left-1/2 -translate-x-1/2">Contáctanos por WhatsApp</span>
                     </li>
-                    <li data-aos="fade-right" data-aos-delay="600" class="relative">
-                        <form action="{{ route('gvff.user.plants.search') }}" class="flex items-center">
-                            <input type="text" placeholder="Buscar plantas..." class="search-input px-3 py-2 rounded-l-md bg-white text-gray-800 focus:outline-none">
-                            <button type="submit" class="px-3 py-2 bg-green-600 rounded-r-md hover:bg-green-700">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <span class="tooltip top-12 left-1/2 -translate-x-1/2">Busca plantas por nombre</span>
+                    <li data-aos="fade-right" data-aos-delay="500" class="relative">
+                        <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>SICEFA</span>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -254,6 +255,7 @@
     </main>
 
     <!-- Footer -->
+
     <!-- Footer -->
     <footer class="bg-green-800 text-white py-12">
         <div class="container mx-auto px-4">

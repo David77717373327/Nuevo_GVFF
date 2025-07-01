@@ -29,9 +29,9 @@ class GVFFNurseriesUserController extends Controller
     {
         // Datos ficticios para la vista (puedes reemplazarlos con una base de datos)
         $developers = [
-    ['name' => 'Juan Pérez', 'role' => 'Líder de Desarrollo', 'image' => asset('modules/gvff/images/plants/desarrollador1.jpg')],
-    ['name' => 'María Gómez', 'role' => 'Diseñadora UI/UX', 'image' => asset('modules/gvff/images/plants/desarrollador1.jpg')],
-    ['name' => 'Carlos López', 'role' => 'Backend Developer', 'image' => asset('modules/gvff/images/plants/desarrollador1.jpg')],
+    ['name' => 'Juan Pérez', 'role' => 'Líder de Desarrollo', 'image' => asset('modules/gvff/images/plants/carrucel2.jpg')],
+    ['name' => 'María Gómez', 'role' => 'Diseñadora UI/UX', 'image' => asset('modules/gvff/images/plants/carrucel2.jpg')],
+    ['name' => 'Carlos López', 'role' => 'Backend Developer', 'image' => asset('modules/gvff/images/plants/carrucel2.jpg')],
 ];
         return view('gvff::user.nurseries.about', compact('developers'));
     }

@@ -8,13 +8,11 @@
             <div class="leaf leaf2"></div>
             <div class="leaf leaf3"></div>
         </div>
-
         <div class="container mx-auto px-4 py-12 relative z-10">
             <!-- Encabezado -->
             <h1 class="text-4xl md:text-5xl font-bold text-center text-green-800 mb-8 animate__animated animate__fadeIn">
                 Descubre Nuestros Viveros
             </h1>
-
             <!-- Buscador -->
             <div class="flex flex-col sm:flex-row justify-center mb-8">
                 <div class="relative w-full sm:w-1/3">
@@ -22,7 +20,6 @@
                     <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"></i>
                 </div>
             </div>
-
             <!-- Sección educativa sobre viveros -->
             <div class="bg-emerald-50 rounded-2xl shadow-lg p-6 mb-8 border border-green-200 animate__animated animate__fadeInUp">
                 <h2 class="text-3xl font-bold text-green-800 mb-4">¿Qué es un Vivero?</h2>
@@ -51,7 +48,7 @@
                             <p class="text-sm text-gray-500">Planta de rápido crecimiento y gran resistencia.</p>
                         </div>
                         <div class="min-w-[200px] bg-green-50 p-4 rounded-lg shadow-md hover:shadow-lg transition">
-                            <img src="{{ asset('modules/gvff/images/plants/desarrollador1.jpg') }}" alt="Lavanda" class="w-full h-32 object-cover rounded" onerror="this.src='https://via.placeholder.com/150'; console.log('Imagen lavanda.jpg no encontrada');">
+                            <img src="{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}" alt="Lavanda" class="w-full h-32 object-cover rounded" onerror="this.src='https://via.placeholder.com/150'; console.log('Imagen lavanda.jpg no encontrada');">
                             <p class="text-center font-semibold mt-2">Lavanda</p>
                             <p class="text-sm text-gray-500">Aromática y utilizada en jardinería ornamental.</p>
                         </div>
