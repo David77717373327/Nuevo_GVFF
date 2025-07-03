@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="mb-4">Listado de Herramientas</h2>
 
-    <a href="{{ route('gvff.admin.tools.create') }}" class="btn btn-primary mb-3">Nueva Herramienta</a>
+    <a href="{{ route('gvff.admin.tools.create') }}" class="btn btn-success mb-3">Nueva Herramienta</a>
 
     @if(session('success'))
         <div class="alert alert-success mt-3">{{ session('success') }}</div>

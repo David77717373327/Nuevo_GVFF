@@ -1,13 +1,28 @@
 @extends('gvff::layouts.master')
 
+@section('title', 'Edit Nursery')
+
 @section('content')
     <style>
+        :root {
+            --primary-color: #2f4f2f;
+            --accent-color: #84cc16;
+            --text-color: #1e293b;
+            --ornamental-color: #10b981;
+            --medicinal-color: #ef4444;
+            --forestal-color: #4b5563;
+            --venta-color: #84cc16;
+            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
+        }
+
         .form-section {
             min-height: 100vh;
+            background: var(--background-gradient);
             padding: 3rem 0;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(to bottom, #f0fff4, #e6ffe9);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
         }
 
         .form-section .leaf {
@@ -30,6 +45,15 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
+        .animate__fadeIn {
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .form-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -40,7 +64,7 @@
         }
 
         h1 {
-            color: #2f855a;
+            color: var(--accent-color);
             font-weight: 700;
             text-align: center;
             margin-bottom: 1.5rem;
@@ -49,7 +73,7 @@
 
         .alert-success {
             background-color: #d1fae5;
-            color: #2f855a;
+            color: var(--primary-color);
             border: 1px solid #a7f3d0;
             border-radius: 6px;
             padding: 0.75rem 1rem;
@@ -57,92 +81,93 @@
             text-align: center;
         }
 
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #f87171;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+
         .btn-primary {
-            background-color: #38a169;
-            border-color: #38a169;
+            background: var(--accent-color);
+            color: #ffffff;
             padding: 0.75rem 1.5rem;
             border-radius: 6px;
             font-weight: 500;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+            transition: background 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
             border: none;
         }
 
         .btn-primary:hover {
-            background-color: #2f855a;
-            border-color: #2f855a;
+            background: var(--primary-color);
+            border-color: var(--primary-color);
             transform: translateY(-2px);
         }
 
-        .btn-warning {
-            background-color: #f59e0b;
-            border-color: #f59e0b;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            border: none;
-            margin-right: 0.5rem;
-        }
-
-        .btn-warning:hover {
-            background-color: #d97706;
-            border-color: #d97706;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background-color: #ef4444;
-            border-color: #ef4444;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            border: none;
-            margin-right: 0.5rem;
-        }
-
-        .btn-danger:hover {
-            background-color: #dc2626;
-            border-color: #dc2626;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background-color: #22c55e;
-            border-color: #22c55e;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            border: none;
-        }
-
-        .btn-success:hover {
-            background-color: #16a34a;
-            border-color: #16a34a;
-            transform: translateY(-2px);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #ffffff;
-            margin-top: 1.5rem;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border: 1px solid #e2e8f0;
-        }
-
-        th {
-            background: #2f855a;
+        .btn-secondary {
+            background: #6b7280;
             color: #ffffff;
-            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
+            border: none;
         }
 
-        td img {
+        .btn-secondary:hover {
+            background: #4b5563;
+            border-color: #4b5563;
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(132, 204, 22, 0.3);
+        }
+
+        .form-control-file {
+            padding: 0.5rem;
+        }
+
+        .is-invalid {
+            border-color: #ef4444;
+        }
+
+        .invalid-feedback {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .img-thumbnail {
             max-width: 100%;
             height: auto;
             border-radius: 6px;
@@ -153,66 +178,93 @@
             .form-container {
                 padding: 1rem;
             }
-            th, td {
-                padding: 0.75rem;
+            .form-control, .form-select {
                 font-size: 0.875rem;
-            }
-            td img {
-                width: 60px;
             }
         }
     </style>
 
-    <div class="form-section">
+    <div class="form-section" data-aos="fade-up">
         <div class="container mx-auto px-6 py-16">
-            <div class="form-container">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">Gestión de Plantas</h1>
+            <div class="form-container" data-aos="zoom-in">
+                <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent-color)] text-center mb-6 animate_animated animate_fadeIn">
+                    Editar Vivero
+                </h1>
                 @if (session('success'))
-                    <div class="alert-success">
+                    <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
-                <a href="{{ route('gvff.admin.plants.create') }}" class="btn btn-primary mb-3">Crear Nueva Planta</a>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Nombre Común</th>
-                            <th>Nombre Científico</th>
-                            <th>Vivero</th>
-                            <th>Tipo</th>
-                            <th>Inventario</th>
-                            <th>Disponible</th>
-                            <th>Imagen</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($plants as $plant)
-                            <tr>
-                                <td>{{ $plant->common_name }}</td>
-                                <td>{{ $plant->scientific_name }}</td>
-                                <td>{{ $plant->nurseries->name ?? 'Sin vivero' }}</td>
-                                <td>{{ $plant->plant_type }}</td>
-                                <td>{{ $plant->inventory }}</td>
-                                <td>{{ $plant->available ? 'Sí' : 'No' }}</td>
-                                <td>
-                                    <img src="{{ asset($plant->image) }}" alt="{{ $plant->common_name }}" width="80">
-                                </td>
-                                <td>
-                                    <a href="{{ route('gvff.admin.nurs.edit', $plant) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form action="{{ route('gvff.admin.plants.destroy', $plant) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro?')">Eliminar</button>
-                                    </form>
-                                    <a href="{{ route('gvff.admin.plants.sell', $plant) }}" class="btn btn-success btn-sm">Vender</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <p class="text-[var(--accent-color)] text-center mb-4">ESTA ES LA VISTA CORRECTA PARA EDITAR</p>
+                <form action="{{ route('gvff.admin.nurseries.update', $nurseries) }}" method="POST" enctype="multipart/form-data" class="row g-3">
+                    @csrf
+                    @method('PUT')
+                    <div class="col-md-6 form-group">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $nurseries->name) }}" required>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" name="location" id="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location', $nurseries->location) }}" required>
+                        @error('location')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="max_capacity" class="form-label">Max Capacity</label>
+                        <input type="number" name="max_capacity" id="max_capacity" class="form-control @error('max_capacity') is-invalid @enderror" value="{{ old('max_capacity', $nurseries->max_capacity) }}" required>
+                        @error('max_capacity')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="classification" class="form-label">Classification</label>
+                        <select name="classification" id="classification" class="form-select @error('classification') is-invalid @enderror" required>
+                            <option value="public" {{ old('classification', $nurseries->classification) == 'public' ? 'selected' : '' }}>Public</option>
+                            <option value="private" {{ old('classification', $nurseries->classification) == 'private' ? 'selected' : '' }}>Private</option>
+                        </select>
+                        @error('classification')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-12 form-group">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="3">{{ old('description', $nurseries->description) }}</textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" name="image" id="image" class="form-control-file @error('image') is-invalid @enderror">
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    @if ($nurseries->image)
+                        <div class="col-md-6 form-group d-flex align-items-end">
+                            <img src="{{ asset('storage/' . $nurseries->image) }}" alt="Nursery Image" class="img-thumbnail" width="150">
+                        </div>
+                    @endif
+                    <div class="col-12 form-group">
+                        <button type="submit" class="btn btn-primary">Actualizar Vivero</button>
+                        <a href="{{ route('gvff.admin.nurseries.index') }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
-            <!-- Hojas flotantes decorativas -->
+            <!-- Floating decorative leaves -->
             <div class="leaf leaf1"></div>
             <div class="leaf leaf2"></div>
             <div class="leaf leaf3"></div>

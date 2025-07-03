@@ -11,14 +11,14 @@
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
-            <label for="scientific_name">Scientific Name</label>
+            <label for="scientific_name">Nombre científico</label>
             <input type="text" name="scientific_name" id="scientific_name" class="form-control @error('scientific_name') is-invalid @enderror" value="{{ old('scientific_name', $fauna->scientific_name) }}" required>
             @error('scientific_name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="common_name">Common Name</label>
+            <label for="common_name">Nombre común</label>
             <input type="text" name="common_name" id="common_name" class="form-control @error('common_name') is-invalid @enderror" value="{{ old('common_name', $fauna->common_name) }}" required>
             @error('common_name')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -32,33 +32,33 @@
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="diet">Diet</label>
+            <label for="diet">Dieta</label>
             <textarea name="diet" id="diet" class="form-control @error('diet') is-invalid @enderror">{{ old('diet', $fauna->diet) }}</textarea>
             @error('diet')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="status">Status</label>
+            <label for="status">Estado</label>
             <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
                 <option value="">Select a status</option>
-                <option value="stable" {{ old('status', $fauna->status) == 'stable' ? 'selected' : '' }}>Stable</option>
-                <option value="critical" {{ old('status', $fauna->status) == 'critical' ? 'selected' : '' }}>Critical</option>
-                <option value="extinct" {{ old('status', $fauna->status) == 'extinct' ? 'selected' : '' }}>Extinct</option>
+                <option value="stable" {{ old('status', $fauna->status) == 'stable' ? 'selected' : '' }}>Estable</option>
+                <option value="critical" {{ old('status', $fauna->status) == 'critical' ? 'selected' : '' }}>Critico</option>
+                <option value="extinct" {{ old('status', $fauna->status) == 'extinct' ? 'selected' : '' }}>Extinguido</option>
             </select>
             @error('status')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="location">Location</label>
+            <label for="location">Ubicación</label>
             <input type="text" name="location" id="location" class="form-control @error('location') is-invalid @enderror" value="{{ old('location', $fauna->location) }}">
             @error('location')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group mb-3">
-            <label for="image">Image</label>
+            <label for="image">Imagen</label>
             <input type="file" name="image" id="image" class="form-control-file @error('image') is-invalid @enderror">
             @if ($fauna->image)
                 <img src="{{ asset($fauna->image) }}" alt="{{ $fauna->common_name }}" class="img-thumbnail mt-2" style="max-width: 100px;">
@@ -67,7 +67,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Update Fauna</button>
+        <button type="submit" class="btn btn-success">Actualizar Fauna</button>
         <a href="{{ route('gvff.admin.faunas.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

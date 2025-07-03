@@ -87,7 +87,7 @@
                 <input type="hidden" name="client_id" id="client_id">
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Registrar Venta</button>
+            <button type="submit" class="btn btn-success mt-3">Registrar Venta</button>
         </div>
     </form>
 </div>

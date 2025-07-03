@@ -295,7 +295,7 @@
                             <label for="price">Precio</label>
                             <input type="number" step="0.01" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $plants->price) }}">
                             @error('price')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message}}</div>
                             @enderror
                         </div>
                     @endif

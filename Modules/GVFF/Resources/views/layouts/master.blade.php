@@ -130,9 +130,9 @@
             </video>
             <div class="overlay"></div>
             <div class="sidebar-content">
-               <div class="p-6 border-b border-gray-700 text-center">
+                <div class="p-6 border-b border-gray-700 text-center">
     <div class="flex justify-center">
-    <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" 
+    <img src="{{ asset('modules/gvff/images/logo-.png') }}" 
          alt="Vivero"
          class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
 </div>
@@ -187,7 +187,7 @@
     <div class="submenu" id="herramientas-submenu">
     <ul class="submenu-list">
         <li><a href="{{route('gvff.admin.tools.index')}}"><i class="fa-solid fa-hammer"></i> Nueva Herramientas</a></li>
-        <li><a href="#"><i class="fa-solid fa-plus"></i> Crear Herramienta</a></li>
+        
     </ul>
     </div>
                 <div class="p-4 border-t border-green-700">
