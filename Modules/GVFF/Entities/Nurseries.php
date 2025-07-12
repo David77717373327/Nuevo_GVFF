@@ -26,7 +26,8 @@ class Nurseries extends Model
 
     public function plants()
     {
-        return $this->hasMany(Plant::class, 'Nurseries_id');
+        return $this->hasMany(Plant::class, 'nurseries_id');
+
     }
 
     

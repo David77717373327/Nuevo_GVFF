@@ -149,7 +149,7 @@
                                     </button>
                                 </form>
                                 <a href="{{ route('gvff.admin.plants.sell', $plant) }}" class="btn btn-sm" title="Vender">
-                                    <i class="fas fa-cash-register"></i>
+                                    <i class="fa-solid fa-dollar-sign"></i>
                                 </a>
                             </td>
                         </tr>

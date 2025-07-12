@@ -4,13 +4,13 @@
     <style>
         :root {
             --primary-color: #2f4f2f;
-            --accent-color: #84cc16;
+            --accent-color:#066243;
             --text-color: #1e293b;
             --ornamental-color: #10b981;
             --medicinal-color: #ef4444;
             --forestal-color: #4b5563;
-            --venta-color: #84cc16;
-            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
+            
+            
         }
 
         .form-section {
@@ -89,25 +89,11 @@
             border: none;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
+        
 
-        .btn-secondary {
-            background: #6b7280;
-            color: #ffffff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease;
-            border: none;
-        }
+    
 
-        .btn-secondary:hover {
-            background: #4b5563;
-            transform: translateY(-2px);
-        }
+        
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -328,7 +314,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Actualizar Planta</button>
+                    <button type="submit" class="btn btn-success">Actualizar Planta</button>
                     <a href="{{ route('gvff.admin.plants.index') }}" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>

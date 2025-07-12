@@ -18,6 +18,8 @@ class CreateInventoryToolsTable extends Migration
     $table->string('name');
     $table->text('description')->nullable();
     $table->string('status')->default('DISPONIBLE'); // DISPONIBLE, OCUPADA, DAÑADA, etc.
+    $table->boolean('available')->default(true); // Indica si la herramienta está disponible para uso
+    $table->date('acquisition_date')->nullable(); // Fecha de adquisición de la herramienta
     $table->timestamps();
 });
 

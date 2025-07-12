@@ -6,13 +6,11 @@
     <style>
         :root {
             --primary-color: #2f4f2f;
-            --accent-color: #84cc16;
             --text-color: #1e293b;
             --ornamental-color: #10b981;
             --medicinal-color: #ef4444;
             --forestal-color: #4b5563;
-            --venta-color: #84cc16;
-            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
+            
         }
 
         .form-section {
@@ -63,13 +61,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            color: var(--accent-color);
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 1.2s ease-in-out;
-        }
+        
 
         .alert-success {
             background-color: #d1fae5;
@@ -100,11 +92,6 @@
             border: none;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
 
         .btn-secondary {
             background: #6b7280;
@@ -116,11 +103,7 @@
             border: none;
         }
 
-        .btn-secondary:hover {
-            background: #4b5563;
-            border-color: #4b5563;
-            transform: translateY(-2px);
-        }
+    
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -144,7 +127,7 @@
 
         .form-control:focus, .form-select:focus {
             outline: none;
-            border-color: var(--accent-color);
+            
             box-shadow: 0 0 5px rgba(132, 204, 22, 0.3);
         }
 
@@ -160,6 +143,9 @@
             color: #ef4444;
             font-size: 0.875rem;
             margin-top: 0.25rem;
+        }
+        h1 {
+            color:#0b5a40
         }
 
         textarea.form-control {
@@ -187,7 +173,7 @@
     <div class="form-section" data-aos="fade-up">
         <div class="container mx-auto px-6 py-16">
             <div class="form-container" data-aos="zoom-in">
-                <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent-color)] text-center mb-6 animate_animated animate_fadeIn">
+                <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 animate_animated animate_fadeIn">
                     Editar Vivero
                 </h1>
                 @if (session('success'))
@@ -204,7 +190,6 @@
                         </ul>
                     </div>
                 @endif
-                <p class="text-[var(--accent-color)] text-center mb-4">ESTA ES LA VISTA CORRECTA PARA EDITAR</p>
                 <form action="{{ route('gvff.admin.nurseries.update', $nurseries) }}" method="POST" enctype="multipart/form-data" class="row g-3">
                     @csrf
                     @method('PUT')
@@ -259,7 +244,7 @@
                         </div>
                     @endif
                     <div class="col-12 form-group">
-                        <button type="submit" class="btn btn-primary">Actualizar Vivero</button>
+                        <button type="submit" class="btn btn-success">Actualizar Vivero</button>
                         <a href="{{ route('gvff.admin.nurseries.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </form>

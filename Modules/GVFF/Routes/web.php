@@ -93,17 +93,19 @@ Route::prefix('gvff')->group(function () {
     Route::get('/nurseries', 'GVFFNurseriesUserController@index')->name('gvff.user.nurseries.index');
     Route::get('/nurseries/{nursery}', 'GVFFNurseriesUserController@show')->name('gvff.user.nurseries.show');
     Route::get('/about', 'GVFFNurseriesUserController@about')->name('gvff.user.nurseries.about');
+    Route::delete('nurseries/{nursery}', 'GVFFNurseriesUserController@destroy')->name('gvff.admin.nurseries.destroy');
 });
 
-Route::prefix('gvff/admin/tools')->group(function () {
+Route::prefix('gvff/admin/Tool')->group(function () {
 
-    Route::get('/', 'ToolController@index')->name('gvff.admin.tools.index');
-    Route::get('/create', 'ToolController@create')->name('gvff.admin.tools.create');
-    Route::post('/store', 'ToolController@store')->name('gvff.admin.tools.store');
-    Route::get('/{id}/edit', 'ToolController@edit')->name('gvff.admin.tools.edit');
-    Route::put('/{id}/update', 'ToolController@update')->name('gvff.admin.tools.update');
-    Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.tools.destroy');
-    Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.tools.check');
+    Route::get('/', 'ToolController@index')->name('gvff.admin.Tool.index');
+    Route::get('/create', 'ToolController@create')->name('gvff.admin.Tool.create');
+    Route::post('/store', 'ToolController@store')->name('gvff.admin.Tool.store');
+    Route::get('/{id}/edit', 'ToolController@edit')->name('gvff.admin.Tool.edit');
+    Route::get('Tool/show{id}', 'ToolController@show')->name('gvff.admin.Tool.show');
+    Route::put('/{id}/update', 'ToolController@update')->name('gvff.admin.Tool.update');
+    Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.Tool.destroy');
+    Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.Tool.check');
 
 });
 

@@ -3,6 +3,7 @@
 namespace Modules\GVFF\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
@@ -35,4 +36,25 @@ class GVFFNurseriesUserController extends Controller
 ];
         return view('gvff::user.nurseries.about', compact('developers'));
     }
+
+    public function destroy(Nurseries $nursery)
+{
+    try {
+        // Verificamos si tiene plantas asociadas
+        if ($nursery->plants()->count() > 0) {
+            return redirect()->route('gvff.admin.nurseries.index')
+                ->with('error', 'El vivero no se puede eliminar, tiene registros asociados.');
+        }
+
+        // Intentar eliminar
+        $nursery->delete();
+
+        return redirect()->route('gvff.admin.nurseries.index')
+            ->with('success', 'Vivero eliminado exitosamente.');
+    } catch (QueryException $e) {
+        
+        return redirect()->route('gvff.admin.nurseries.index')
+            ->with('error', 'No se pudo eliminar el vivero por restricciones en la base de datos.');
+    }
+}
 }
