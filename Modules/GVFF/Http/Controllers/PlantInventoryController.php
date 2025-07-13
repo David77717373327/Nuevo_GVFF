@@ -125,8 +125,6 @@ class PlantInventoryController extends Controller
             ->where('productive_unit_warehouse_id', $warehouseId)
             ->get();
 
-
-
         return response()->json($plants->map(function ($item) {
             return [
                 'id' => $item->id,

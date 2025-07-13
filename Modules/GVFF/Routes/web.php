@@ -6,8 +6,6 @@ use Modules\GVFF\Http\Controllers\PlantInventoryController;
 
 
 
-
-
 Route::middleware(['lang'])->group(function () {
     Route::prefix('gvff')->group(function () {
         Route::get('/index', 'GVFFController@index')->name('gvff.index');
@@ -56,7 +54,7 @@ Route::middleware(['lang'])->group(function () {
     Route::delete('/faunas/{fauna}', 'GVFFFaunasController@destroy')->name('gvff.admin.faunas.destroy');
 
 
-    });
+    
 
     Route::get('/admin/plant_inventory/index', 'PlantInventoryController@index')->name('gvff.admin.plant_inventory.index');
     Route::get('/admin/plant_inventory/entrance', 'PlantInventoryController@entrance')->name('gvff.admin.plant_inventory.entrance');
@@ -67,7 +65,7 @@ Route::middleware(['lang'])->group(function () {
     Route::get('/admin/plant_inventory/sale/search/{id}', 'PlantInventoryController@searchPerson')->name('gvff.admin.plant_inventory.sale.searchPerson');
     Route::post('/admin/plant_inventory/sale/store', 'PlantInventoryController@processSale')->name('gvff.admin.plant_inventory.sale.store');
     Route::get('/admin/plant_inventory/history', 'PlantInventoryController@history')->name('gvff.admin.plant_inventory.sale.history');
-
+    });
 });
 
 

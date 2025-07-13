@@ -1,13 +1,15 @@
 @extends('gvff::layouts.master')
 
-@push('styles')
+@section('content')
+
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         :root {
             --primary-color: #2f4f2f; /* Dark green */
             --accent-color: #84cc16; /* Vibrant green */
-            --text-color: #1e293b; /* Dark slate */
+            --text-color: #51b462; /* Dark slate */
             --table-bg: #ffffff; /* White background for table */
             --table-border: #e2e8f0; /* Light gray border */
         }
@@ -29,8 +31,8 @@
         }
 
         .btn-secondary {
-            background-color: #6c757d;
-            color: #ffffff;
+            background-color: #2dc968;
+            color: #2effb9;
             transition: background-color 0.3s ease;
         }
 
@@ -50,7 +52,7 @@
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(109, 253, 128, 0.295);
         }
 
         .table-bordered th, .table-bordered td {
@@ -80,9 +82,7 @@
             }
         }
     </style>
-@endpush
 
-@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Plantas en el vivero: {{ $nurseries->name }}</h1>
         <p><strong>Clasificación del vivero:</strong> {{ ucfirst($nurseries->classification) }}</p>
