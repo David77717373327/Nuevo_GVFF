@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\GVFF\Entities\nurseries;
 
-
 class GVFFNurseriesController extends Controller
 {
     
@@ -23,7 +22,6 @@ class GVFFNurseriesController extends Controller
      */
     public function create()
     {
-        
         return view('gvff::admin.nurseries.create');
     }
 
@@ -114,8 +112,6 @@ public function edit(Nurseries $nurseries)
     // Eliminar un vivero
     public function destroy(Nurseries $nurseries) // Cambiado de Nursery a Nurseries
     {
-        
-
         // Eliminar la imagen si existe
         if ($nurseries->image) {
             \Storage::disk('public')->delete($nurseries->image);
