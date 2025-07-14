@@ -5,13 +5,13 @@
     <style>
         :root {
             --primary-color: #2f4f2f; /* Dark green */
-            --accent-color: #84cc16; /* Vibrant green */
+            
             --text-color: #1e293b; /* Dark slate */
             --ornamental-color: #10b981; /* Emerald */
             --medicinal-color: #ef4444; /* Red */
             --forestal-color: #4b5563; /* Gray */
-            --venta-color: #84cc16; /* Vibrant green for venta */
-            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
+            
+            
         }
 
         .form-section {
@@ -111,34 +111,7 @@
             min-height: 100px;
         }
 
-        .btn-primary, .btn-secondary {
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: #ffffff;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #e2e8f0;
-            color: var(--text-color);
-            border: none;
-        }
-
-        .btn-secondary:hover {
-            background: #d1d5db;
-            transform: translateY(-2px);
-        }
+        
 
         #image-preview {
             max-width: 100%;
@@ -325,7 +298,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-6">
-                        <button type="submit" class="btn btn-primary">Crear Planta</button>
+                        <button type="submit" class="btn btn-success">Crear Planta</button>
                         <a href="{{ route('gvff.admin.plants.index') }}" class="btn btn-secondary ml-2">Cancelar</a>
                     </div>
                 </form>

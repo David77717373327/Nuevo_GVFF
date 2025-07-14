@@ -12,16 +12,16 @@
         @csrf
 
         <div class="mb-3">
-            <label>Unidad Productiva - Bodega</label>
-            <select name="productive_unit_warehouse_id" class="form-control" required>
-                <option value="">Seleccione...</option>
-                @foreach($productiveUnitWarehouses as $puw)
-                    <option value="{{ $puw->id }}">
-                        {{ $puw->productive_unit->name }} - {{ $puw->warehouse->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <label>Unidad Productiva - Bodega</label>
+    <select name="productive_unit_warehouse_id" class="form-control" required>
+        <option value="">Seleccione...</option>
+        @foreach($productiveUnitWarehouses as $puw)
+            <option value="{{ $puw->id }}">
+                {{ $puw->productive_unit->name }} - {{ $puw->warehouse->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <div class="mb-3">
             <label>Planta</label>

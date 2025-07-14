@@ -4,13 +4,11 @@
     <style>
         :root {
             --primary-color: #2f4f2f;
-            --accent-color: #84cc16;
+            
             --text-color: #1e293b;
             --ornamental-color: #10b981;
             --medicinal-color: #ef4444;
-            --forestal-color: #4b5563;
-            --venta-color: #84cc16;
-            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
+            --forestal-color: #4b5563;   
         }
 
         .form-section {
@@ -79,20 +77,8 @@
             text-align: center;
         }
 
-        .btn-primary {
-            background: var(--accent-color);
-            color: #ffffff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease;
-            border: none;
-        }
+    
 
-        .btn-primary:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -160,7 +146,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar Precio</button>
+                    <button type="submit" class="btn btn-success">Guardar Precio</button>
                 </form>
             </div>
             <!-- Floating decorative leaves -->

@@ -63,7 +63,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Crear Fauna</button>
+        <button type="submit" class="btn btn-success">Crear Fauna</button>
         <a href="{{ route('gvff.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

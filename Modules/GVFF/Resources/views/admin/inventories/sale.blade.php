@@ -14,18 +14,18 @@
     
     <form action="{{ route('gvff.admin.plant_inventory.sale.store') }}" method="POST" id="saleForm">
         @csrf
-
+        
         <div class="mb-3">
-            <label for="productive_unit_warehouse_id">Selecciona la Bodega</label>
-            <select name="productive_unit_warehouse_id" id="productive_unit_warehouse_id" class="form-control" required>
-                <option value="">Seleccione...</option>
-                @foreach($warehouses as $bodega)
-                    <option value="{{ $bodega->id }}">
-                        {{ $bodega->productive_unit->name }} - {{ $bodega->warehouse->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <label for="productive_unit_warehouse_id">Selecciona la Bodega</label>
+    <select name="productive_unit_warehouse_id" id="productive_unit_warehouse_id" class="form-control" required>
+        <option value="">Seleccione...</option>
+        @foreach($warehouses as $bodega)
+            <option value="{{ $bodega->id }}">
+                {{ $bodega->productive_unit->name }} - {{ $bodega->warehouse->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <div id="plantsSection" style="display:none;">
             <h4>Agregar Plantas a la Venta</h4>
@@ -87,7 +87,7 @@
                 <input type="hidden" name="client_id" id="client_id">
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Registrar Venta</button>
+            <button type="submit" class="btn btn-success mt-3">Registrar Venta</button>
         </div>
     </form>
 </div>

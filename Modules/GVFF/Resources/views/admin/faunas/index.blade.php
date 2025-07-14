@@ -7,7 +7,7 @@
 @section('content')
 <div class="container mt-5">
     <h1 class="mb-4">Gestión de Faunas</h1>
-    <a href="{{ route('gvff.admin.faunas.create') }}" class="btn btn-primary btn-sm mb-3">Crear Nueva Fauna</a>
+    <a href="{{ route('gvff.admin.faunas.create') }}" class="btn btn-success btn-sm mb-3">Crear Nueva Fauna</a>
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

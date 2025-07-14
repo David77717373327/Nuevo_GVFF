@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class InventoryTool extends Model
 
 {
-    protected $fillable = ['name', 'description', 'status'];
+    protected $fillable = ['name', 'description', 'status','available', 'acquisition_date'];
 
     protected $table = 'inventory_tools'; 
 }
