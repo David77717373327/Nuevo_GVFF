@@ -17,12 +17,10 @@
 
     .form-section {
         min-height: 100vh;
-        background: var(--background-gradient);
+        background: #ffffff;
         padding: 3rem 0;
         position: relative;
         overflow: hidden;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
 
     .form-section .leaf {
@@ -54,15 +52,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .form-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        background: #ffffff;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
     h1 {
         color: var(--accent-color);
         font-weight: 700;
@@ -90,9 +79,9 @@
         border: 1px solid #fca5a5;
     }
 
-    .btn-primary {
-        background: var(--accent-color);
-        color: #ffffff;
+    a.btn-primary, .btn-primary {
+        background: var(--accent-color) !important; /* Misma color que el título */
+        color: #ffffff !important;
         padding: 0.5rem 1rem;
         border-radius: 6px;
         font-weight: 500;
@@ -100,9 +89,8 @@
         border: none;
     }
 
-    .btn-primary:hover {
-        background: var(--primary-color);
-        border-color: var(--primary-color);
+    a.btn-primary:hover, .btn-primary:hover {
+        background: #1e6f33 !important; /* Verde más oscuro para hover, coherente con el diseño */
         transform: translateY(-2px);
     }
 
@@ -161,10 +149,6 @@
     }
 
     @media (max-width: 768px) {
-        .form-container {
-            padding: 1rem;
-        }
-
         .btn {
             padding: 0.4rem 0.8rem;
             font-size: 0.875rem;
@@ -178,75 +162,73 @@
 
 <div class="form-section" data-aos="fade-up">
     <div class="container mx-auto px-6 py-16">
-        <div class="form-container" data-aos="zoom-in">
-            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent-color)] text-center mb-6 animate__animated animate__fadeIn">
-                Gestión de vivero
-            </h1>
-            <a href="{{ route('gvff.admin.nurseries.create') }}" class="btn btn-primary btn-sm mb-4">Crear nuevo vivero</a>
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent-color)] text-center mb-6 animate__animated animate__fadeIn">
+            Gestión de vivero
+        </h1>
+        <a href="{{ route('gvff.admin.nurseries.create') }}" class="btn btn-primary btn-sm mb-4">Crear nuevo vivero</a>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Capacidad Máxima</th>
+                    <th scope="col">Clasificación</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($nurseries as $nursery)
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Ubicación</th>
-                        <th scope="col">Capacidad Máxima</th>
-                        <th scope="col">Clasificación</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Acciones</th>
+                        <td>{{ $nursery->name }}</td>
+                        <td>{{ $nursery->location }}</td>
+                        <td>{{ $nursery->max_capacity }}</td>
+                        <td>{{ ucfirst($nursery->classification) }}</td>
+                        <td>{{ $nursery->description ?? 'Sin descripción' }}</td>
+                        <td>
+                            @if ($nursery->image)
+                                <img src="{{ asset('storage/' . $nursery->image) }}" alt="{{ $nursery->name }}" class="img-thumbnail" style="max-width: 100px;">
+                            @else
+                                Sin imagen
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-sm">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a href="{{ route('gvff.admin.nurseries.edit', $nursery) }}" class="btn btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('gvff.admin.nurseries.destroy', $nursery) }}" method="POST" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este vivero?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse ($nurseries as $nursery)
-                        <tr>
-                            <td>{{ $nursery->name }}</td>
-                            <td>{{ $nursery->location }}</td>
-                            <td>{{ $nursery->max_capacity }}</td>
-                            <td>{{ ucfirst($nursery->classification) }}</td>
-                            <td>{{ $nursery->description ?? 'Sin descripción' }}</td>
-                            <td>
-                                @if ($nursery->image)
-                                    <img src="{{ asset('storage/' . $nursery->image) }}" alt="{{ $nursery->name }}" class="img-thumbnail" style="max-width: 100px;">
-                                @else
-                                    Sin imagen
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-sm">
-                                    <i class="fa-regular fa-eye"></i>
-                                </a>
-                                <a href="{{ route('gvff.admin.nurseries.edit', $nursery) }}" class="btn btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('gvff.admin.nurseries.destroy', $nursery) }}" method="POST" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este vivero?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center">No hay viveros registrados.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">No hay viveros registrados.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
         <div class="leaf leaf1"></div>
         <div class="leaf leaf2"></div>
         <div class="leaf leaf3"></div>
