@@ -10,7 +10,7 @@ class PlantInventory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['productive_unit_warehouse_id','person_id', 'plant_id', 'amount', 'production_date','price'];
+    protected $fillable = ['productive_unit_warehouse_id','person_id', 'plant_id', 'amount', 'production_date','price', 'description'];
     
     protected static function newFactory()
     {

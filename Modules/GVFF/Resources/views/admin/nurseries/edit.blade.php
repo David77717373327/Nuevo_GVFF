@@ -10,58 +10,19 @@
             --ornamental-color: #10b981;
             --medicinal-color: #ef4444;
             --forestal-color: #4b5563;
-            
         }
 
         .form-section {
             min-height: 100vh;
-            background: var(--background-gradient);
             padding: 3rem 0;
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-section .leaf {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: url('https://img.icons8.com/ios-filled/50/000000/leaf.png') no-repeat center;
-            background-size: contain;
-            animation: float 12s infinite ease-in-out;
-            opacity: 0.3;
-        }
-
-        .form-section .leaf1 { top: 15%; left: 5%; animation-delay: 0s; }
-        .form-section .leaf2 { top: 40%; left: 85%; animation-delay: 3s; }
-        .form-section .leaf3 { top: 70%; left: 15%; animation-delay: 6s; }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(120px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        .animate__fadeIn {
-            animation: fadeIn 1.2s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            background: #f8fafc; /* Light neutral background */
         }
 
         .form-container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #ffffff;
             padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        
 
         .alert-success {
             background-color: #d1fae5;
@@ -83,15 +44,19 @@
         }
 
         .btn-primary {
-            background: var(--accent-color);
+            background: #0b5a40;
             color: #ffffff;
             padding: 0.75rem 1.5rem;
             border-radius: 6px;
             font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
             border: none;
         }
 
+        .btn-primary:hover {
+            background: #0b5a40;
+            color: #ffffff;
+            outline: none;
+        }
 
         .btn-secondary {
             background: #6b7280;
@@ -99,11 +64,9 @@
             padding: 0.75rem 1.5rem;
             border-radius: 6px;
             font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
+            transition: background 0.3s ease, transform 0.3s ease;
             border: none;
         }
-
-    
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -127,7 +90,7 @@
 
         .form-control:focus, .form-select:focus {
             outline: none;
-            
+            border-color: var(--ornamental-color);
             box-shadow: 0 0 5px rgba(132, 204, 22, 0.3);
         }
 
@@ -144,8 +107,9 @@
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+
         h1 {
-            color:#0b5a40
+            color: #0b5a40;
         }
 
         textarea.form-control {
@@ -170,10 +134,10 @@
         }
     </style>
 
-    <div class="form-section" data-aos="fade-up">
+    <div class="form-section">
         <div class="container mx-auto px-6 py-16">
-            <div class="form-container" data-aos="zoom-in">
-                <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 animate_animated animate_fadeIn">
+            <div class="form-container">
+                <h1 class="text-3xl md:text-4xl font-bold text-center mb-6">
                     Editar Vivero
                 </h1>
                 @if (session('success'))
@@ -244,15 +208,11 @@
                         </div>
                     @endif
                     <div class="col-12 form-group">
-                        <button type="submit" class="btn btn-success">Actualizar Vivero</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Vivero</button>
                         <a href="{{ route('gvff.admin.nurseries.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </form>
             </div>
-            <!-- Floating decorative leaves -->
-            <div class="leaf leaf1"></div>
-            <div class="leaf leaf2"></div>
-            <div class="leaf leaf3"></div>
         </div>
     </div>
 @endsection

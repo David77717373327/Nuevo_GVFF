@@ -113,7 +113,6 @@
                                 <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-shopping-cart"></i><span>En Venta</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
                             </ul>
                         </li>
@@ -124,6 +123,14 @@
                             </a>
                             <span class="tooltip">Conoce nuestra misión y visión</span>
                         </li>
+                        <li data-aos="fade-right" data-aos-delay="100" class="relative">
+                            <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-shopping-cart animate-pulse"></i>
+                                <span>plantas en venta</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra página principal</span>
+                        </li>
+
                         <li data-aos="fade-right" data-aos-delay="500" class="relative">
                             <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fab fa-whatsapp animate-bounce"></i>

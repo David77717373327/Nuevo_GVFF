@@ -5,13 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+     
     <title>@yield('title', 'Viveros y Plantas - Explora la Naturaleza')</title>
 
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
-    
-     <!-- Tailwind CSS CDN -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Meta tags para SEO -->
