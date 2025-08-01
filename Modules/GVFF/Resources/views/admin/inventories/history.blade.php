@@ -44,7 +44,7 @@
                             $bodega = $movement->warehouse_movements->firstWhere('role', 'Entrega') 
                                     ?? $movement->warehouse_movements->firstWhere('role', 'Recibe');
                         @endphp
-                        {{ $bodega ? $bodega->productive_unit_warehouse->productive_unit->name . ' - ' . $bodega->productive_unit_warehouse->warehouse->name : 'N/A' }}
+                        {{ $bodega?->productive_unit_warehouse?->productive_unit?->name . ' - ' . $bodega?->productive_unit_warehouse?->warehouse?->name ?? 'N/A' }}
                     </td>
                     <td>
                         @php
