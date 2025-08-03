@@ -51,45 +51,45 @@
             </div>
 
             <!-- Grid de plantas -->
-            <div id="plants-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @if($plants->isNotEmpty())
-                    @foreach($plants as $plant)
-                        @if($plant->available)
-                            <div class="plant-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl" data-category="{{ $plant->structure_type ?? 'all' }}" data-inventory="{{ $plant->inventory ?? 0 }}">
-                                <!-- Imagen -->
-                                <div class="relative">
-                                    <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/users/palma.png') }}" alt="{{ $plant->common_name }}" class="w-full h-64 object-cover">
-                                    <div class="absolute top-0 right-0 bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-bl-lg">
-                                        {{ ucfirst($plant->structure_type ?? 'No especificada') }}
-                                    </div>
-                                </div>
-                                <!-- Contenido -->
-                                <div class="p-6">
-                                    <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $plant->common_name }}</h2>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-seedling text-green-600 mr-3"></i> Tipo: {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-leaf text-green-600 mr-3"></i> Familia: {{ $plant->family ?? 'No especificada' }}</p>
-                                    <p class="text-gray-600 text-base mb-6">{{ Str::limit($plant->characteristics ?? 'No disponible', 120) }}</p>
-                                    <button class="btn-cta inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
-                                        data-plant-id="{{ $plant->id }}" 
-                                        data-plant-name="{{ $plant->common_name }}" 
-                                        data-plant-scientific="{{ $plant->scientific_name }}" 
-                                        data-plant-desc="{{ $plant->characteristics ?? 'No disponible' }}" 
-                                        data-plant-image="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}" 
-                                        data-plant-status="{{ $plant->status ?? 'No disponible' }}" 
-                                        data-plant-benefits="{{ $plant->benefits ?? 'No disponible' }}" 
-                                        data-plant-uses="{{ $plant->traditional_uses ?? 'No disponible' }}" 
-                                        data-plant-family="{{ $plant->family ?? 'No especificada' }}" 
-                                        data-plant-type="{{ $plant->plant_type ?? 'No especificado' }}" 
-                                        data-plant-structure="{{ $plant->structure_type ?? 'No especificada' }}"
-                                        data-plant-location="{{ $plant->location ?? 'No especificada' }}">Ver Detalles</button>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                @else
-                    <p class="text-center text-gray-700 text-xl">No hay plantas forestales disponibles en este momento.</p>
-                @endif
-            </div>
+<div id="plants-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    @if($plants->isNotEmpty())
+        @foreach($plants as $plant)
+            @if($plant->available)
+                <div class="plant-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-103 hover:shadow-2xl" data-category="{{ $plant->structure_type ?? 'all' }}" data-inventory="{{ $plant->inventory ?? 0 }}">
+                    <!-- Imagen -->
+                    <div class="relative">
+                        <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/users/palma.png') }}" alt="{{ $plant->common_name }}" class="w-full h-64 object-cover aspect-[4/3]">
+                        <div class="absolute top-0 right-0 bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-bl-lg">
+                            {{ ucfirst($plant->structure_type ?? 'No especificada') }}
+                        </div>
+                    </div>
+                    <!-- Contenido -->
+                    <div class="p-8">
+                        <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $plant->common_name }}</h2>
+                        <p class="text-gray-700 mb-3"><i class="fas fa-seedling text-green-600 mr-3"></i> Tipo: {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
+                        <p class="text-gray-700 mb-3"><i class="fas fa-leaf text-green-600 mr-3"></i> Familia: {{ $plant->family ?? 'No especificada' }}</p>
+                        <p class="text-gray-600 text-base mb-6">{{ Str::limit($plant->characteristics ?? 'No disponible', 120) }}</p>
+                        <button class="btn-cta inline-block bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
+                            data-plant-id="{{ $plant->id }}" 
+                            data-plant-name="{{ $plant->common_name }}" 
+                            data-plant-scientific="{{ $plant->scientific_name }}" 
+                            data-plant-desc="{{ $plant->characteristics ?? 'No disponible' }}" 
+                            data-plant-image="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}" 
+                            data-plant-status="{{ $plant->status ?? 'No disponible' }}" 
+                            data-plant-benefits="{{ $plant->benefits ?? 'No disponible' }}" 
+                            data-plant-uses="{{ $plant->traditional_uses ?? 'No disponible' }}" 
+                            data-plant-family="{{ $plant->family ?? 'No especificada' }}" 
+                            data-plant-type="{{ $plant->plant_type ?? 'No especificado' }}" 
+                            data-plant-structure="{{ $plant->structure_type ?? 'No especificada' }}"
+                            data-plant-location="{{ $plant->location ?? 'No especificada' }}">Ver Detalles</button>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @else
+        <p class="text-center text-gray-700 text-xl">No hay plantas forestales disponibles en este momento.</p>
+    @endif
+</div>
         </div>
 
         <!-- Modal -->
@@ -148,22 +148,42 @@
         }
 
         /* Estilos de las tarjetas */
+    .plant-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        min-height: 400px;
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+    .plant-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+    .plant-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        aspect-ratio: 4/3;
+    }
+    .btn-cta {
+        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-cta:hover {
+        background: #198754;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 640px) {
+        #plants-list {
+            gap: 1.5rem;
+        }
         .plant-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 350px;
         }
-        .plant-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        .animate__animated {
+            animation: none !important;
         }
-
-        .btn-cta {
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .btn-cta:hover {
-            background: #34d399;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
+    }
     </style>
 
     <!-- Script para filtros y búsqueda -->

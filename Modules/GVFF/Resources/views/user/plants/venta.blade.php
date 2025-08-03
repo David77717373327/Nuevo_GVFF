@@ -28,7 +28,7 @@
                     <div id="cart-items" class="cart-items-scroll"></div>
                     <div id="cart-total" class="cart-total"></div>
                     <div class="panel-actions">
-                        <button id="clear-cart" class="clear-cart-btn"><i class="fas fa-trash"></i> Vaciar Carrito</button>
+                        <button id="clear-cart" class="btn btn-danger clear-cart-btn"><i class="fas fa-trash"></i> Vaciar Carrito</button>
                         <button id="checkout" class="checkout-btn"><i class="fas fa-whatsapp"></i> Comprar ahora</button>
                     </div>
                 </div>
@@ -44,11 +44,11 @@
                 <div class="carousel-inner" id="carouselInner">
                     @if ($plants->where('available', true)->sortBy('price')->take(3)->isNotEmpty())
                         @foreach ($plants->where('available', true)->sortBy('price')->take(3) as $offerPlant)
-                            <div class="carousel-item">
+                            <div class="carousel-item" data-index="{{ $loop->index }}">
                                 @if ($offerPlant->image)
                                     <img src="{{ asset('storage/' . $offerPlant->image) }}" alt="{{ $offerPlant->common_name }}" 
                                          onload="this.style.opacity='1'; this.nextElementSibling.style.display='none';"
-                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                         onerror="this.src='{{ asset('modules/gvff/images/plants/placeholder.jpg') }}'; this.style.opacity='1'; this.nextElementSibling.style.display='none';">
                                     <div class="placeholder">Imagen no disponible</div>
                                 @else
                                     <div class="placeholder">Imagen no disponible</div>
@@ -59,13 +59,22 @@
                             </div>
                         @endforeach
                     @else
-                        <div class="carousel-item">
-                            <div class="placeholder">No hay plantas disponibles</div>
+                        <div class="carousel-item" data-index="0">
+                            <div class="placeholder">Imagen no disponible</div>
                         </div>
                     @endif
                 </div>
                 <button class="carousel-prev" onclick="moveCarousel(-1)">❮</button>
                 <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
+                <div class="carousel-dots">
+                    @if ($plants->where('available', true)->sortBy('price')->take(3)->isNotEmpty())
+                        @foreach ($plants->where('available', true)->sortBy('price')->take(3) as $offerPlant)
+                            <span class="carousel-dot" data-index="{{ $loop->index }}"></span>
+                        @endforeach
+                    @else
+                        <span class="carousel-dot" data-index="0"></span>
+                    @endif
+                </div>
             </div>
 
             <div class="plant-section">
@@ -125,6 +134,210 @@
         </div>
     </div>
 
+    <!-- Estilos personalizados -->
+    <style>
+        :root {
+            --primary-color: #198754;
+            --primary-dark: #145c3e;
+            --text-color: #1e293b;
+            --text-secondary: #4a5568;
+        }
+
+        /* Títulos y subtítulos */
+        .header-section h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .header-section p {
+            color: var(--text-color);
+            font-size: 1.25rem;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .cart-panel-content h2 {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Botones */
+        .cart-button,
+        .add-to-cart,
+        .buy-now,
+        .clear-cart-btn,
+        .checkout-btn,
+        .carousel-prev,
+        .carousel-next {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cart-button:hover,
+        .add-to-cart:hover,
+        .buy-now:hover,
+        .clear-cart-btn:hover,
+        .checkout-btn:hover,
+        .carousel-prev:hover,
+        .carousel-next:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            flex: 0 0 100%;
+            position: relative;
+            height: 400px;
+        }
+
+        .carousel-item img,
+        .carousel-item .placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-item .placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--text-secondary);
+            color: #ffffff;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        .carousel-prev,
+        .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .carousel-prev {
+            left: 10px;
+        }
+
+        .carousel-next {
+            right: 10px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            opacity: 0.5;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .carousel-dot.active,
+        .carousel-dot:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Notificación */
+        .notification {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Panel del carrito */
+        .close-panel {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .close-panel:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsividad */
+        @media (max-width: 640px) {
+            .carousel {
+                max-width: 100%;
+            }
+
+            .carousel-item {
+                height: 250px;
+            }
+
+            .carousel-prev,
+            .carousel-next {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
@@ -136,36 +349,63 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cartButtonContainer = document.querySelector('.cart-button-container');
             const cartPanel = document.getElementById('cart-panel');
+            const carouselInner = document.getElementById('carouselInner');
+            const slides = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentSlide = 0;
 
             // Asegurar que el botón y el panel se mantengan en posición relativa al desplazamiento
             function updatePosition() {
                 const scrollPosition = window.scrollY || window.pageYOffset;
-                cartButtonContainer.style.top = (60 + scrollPosition) + 'px'; // Ajusta la posición del botón
-                cartPanel.style.top = (60 + scrollPosition) + 'px'; // Ajusta la posición del panel
+                cartButtonContainer.style.top = (60 + scrollPosition) + 'px';
+                cartPanel.style.top = (60 + scrollPosition) + 'px';
             }
 
-            // Escuchar el evento de scroll
             window.addEventListener('scroll', updatePosition);
-
-            // Inicializar la posición
             updatePosition();
 
-            // Inicializar AOS (Animate On Scroll)
+            // Inicializar AOS
             AOS.init({
                 duration: 1500,
                 once: true,
             });
 
+            // Carousel functionality
+            function showSlide(index) {
+                const totalSlides = slides.length;
+                currentSlide = (index + totalSlides) % totalSlides;
+                carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach(dot => dot.classList.remove('active'));
+                if (dots[currentSlide]) {
+                    dots[currentSlide].classList.add('active');
+                }
+            }
+
+            function moveCarousel(direction) {
+                showSlide(currentSlide + direction);
+            }
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const index = parseInt(dot.getAttribute('data-index'));
+                    showSlide(index);
+                });
+            });
+
+            // Auto-slide every 5 seconds
+            setInterval(() => moveCarousel(1), 5000);
+
+            // Initialize carousel
+            showSlide(0);
+
             // Carrito de compras
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Guardar carrito en localStorage
             function saveCart() {
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartDisplay();
             }
 
-            // Actualizar la visualización del carrito
             function updateCartDisplay() {
                 const cartItemsContainer = document.getElementById('cart-items');
                 const cartTotalContainer = document.getElementById('cart-total');
@@ -202,7 +442,6 @@
                 cartCount.textContent = itemCount;
             }
 
-            // Mostrar notificación
             function showNotification(message) {
                 const notification = document.getElementById('notification');
                 const notificationMessage = document.getElementById('notification-message');
@@ -213,7 +452,6 @@
                 }, 3000);
             }
 
-            // Agregar al carrito
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function() {
                     const plantId = this.getAttribute('data-plant-id');
@@ -239,7 +477,6 @@
                 });
             });
 
-            // Manejo de cantidad en las tarjetas
             document.querySelectorAll('.plant-card .quantity-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const plantId = this.getAttribute('data-plant-id');
@@ -256,7 +493,6 @@
                 });
             });
 
-            // Manejo de cantidad y eliminación en el panel
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.quantity-btn') && e.target.closest('#cart-items')) {
                     const plantId = e.target.closest('.quantity-btn').getAttribute('data-plant-id');
@@ -276,7 +512,6 @@
                 }
             });
 
-            // Manejo de cambio directo en el input del panel
             document.addEventListener('input', function(e) {
                 if (e.target.classList.contains('quantity-input-field') && e.target.closest('#cart-items')) {
                     const plantId = e.target.getAttribute('data-plant-id');
@@ -291,7 +526,6 @@
                 }
             });
 
-            // Abrir/cerrar panel
             document.getElementById('open-cart').addEventListener('click', function() {
                 const cartPanel = document.getElementById('cart-panel');
                 cartPanel.classList.toggle('open');
@@ -303,16 +537,14 @@
                 cartPanel.classList.remove('open');
                 setTimeout(() => {
                     cartPanel.style.display = 'none';
-                }, 300); // Espera a que termine la animación
+                }, 300);
             });
 
-            // Vaciar carrito
             document.getElementById('clear-cart').addEventListener('click', function() {
                 cart = [];
                 saveCart();
             });
 
-            // Comprar ahora (enviar a WhatsApp)
             function checkoutCart() {
                 if (cart.length === 0) {
                     showNotification('El carrito está vacío');
@@ -365,48 +597,7 @@
                 });
             });
 
-            // Checkout desde el panel
             document.getElementById('checkout').addEventListener('click', checkoutCart);
-
-            // Filtrado dinámico
-            document.addEventListener('DOMContentLoaded', function () {
-                updateCartDisplay();
-                const filterButtons = document.querySelectorAll('.filter-btn');
-                const plantCards = document.querySelectorAll('.plant-card');
-
-                filterButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        filterButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-
-                        const filter = this.getAttribute('data-filter');
-
-                        plantCards.forEach(card => {
-                            const cardType = card.getAttribute('data-type').toLowerCase();
-                            if (filter === 'all' || cardType === filter) {
-                                card.style.display = 'flex';
-                                card.classList.add('animate__animated', 'animate__fadeIn');
-                                setTimeout(() => card.classList.remove('animate__animated', 'animate__fadeIn'), 1200);
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
-                    });
-                });
-            });
-
-            // Carrusel dinámico
-            let currentSlide = 0;
-            const carouselInner = document.getElementById('carouselInner');
-            const slides = document.querySelectorAll('.carousel-item');
-            const totalSlides = slides.length;
-
-            function moveCarousel(direction) {
-                currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-                carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }
-
-            setInterval(() => moveCarousel(1), 5000);
 
             document.querySelector('.carousel').addEventListener('click', (e) => e.stopPropagation());
 
@@ -416,8 +607,9 @@
                     this.nextElementSibling.style.display = 'none';
                 };
                 img.onerror = function() {
-                    this.style.display = 'none';
-                    this.nextElementSibling.style.display = 'flex';
+                    this.src = '{{ asset('modules/gvff/images/plants/placeholder.jpg') }}';
+                    this.style.opacity = '1';
+                    this.nextElementSibling.style.display = 'none';
                 };
             });
         });

@@ -238,7 +238,7 @@
         .info-title,
         .card-title,
         .modal-title {
-            color: #84cc16;
+            color: #198754;
             transition: color 0.5s ease;
         }
 
@@ -250,12 +250,12 @@
         }
 
         .btn-cta {
-            background-color: #84cc16;
+            background-color: #198754;
             transition: background-color 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn-cta:hover {
-            background-color: #4a652e;
+            background-color: #198754;
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }

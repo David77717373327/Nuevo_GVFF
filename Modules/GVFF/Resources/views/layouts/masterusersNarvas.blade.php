@@ -28,7 +28,7 @@
         }
         /* Estilos para la navegación */
         .navbar {
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            background: #198754;
             z-index: 1000;
         }
         .nav-container {
@@ -114,7 +114,7 @@
                 <div class="flex items-center gap-2">
                     <ul class="nav-links hidden md:flex items-center text-lg font-semibold">
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-800 transition-all duration-300">
                                 <i class="fas fa-home animate-pulse"></i>
                                 <span>Inicio</span>
                             </a>
@@ -138,7 +138,6 @@
                                 <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star"></i><span>Destacadas</span></a></li>
                             </ul>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">

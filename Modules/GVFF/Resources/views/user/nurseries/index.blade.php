@@ -24,7 +24,7 @@
             <div class="bg-emerald-50 rounded-2xl shadow-lg p-6 mb-8 border border-green-200 animate__animated animate__fadeInUp">
                 <h2 class="text-3xl font-bold text-green-800 mb-4">¿Qué es un Vivero?</h2>
                 <p class="text-gray-600 mb-4">Un vivero es un espacio dedicado al cultivo, cuidado y desarrollo de plantas, desde semillas hasta plántulas listas para trasplante o venta. Estos lugares son esenciales para preservar la biodiversidad y apoyar la reforestación.</p>
-                <h3 class="text-2xl font-semibold text-green-700 mb-3">Tipos de plantas que se cultivan</h3>
+                <h3 class="text-2xl font-semibold text-green-800 mb-3">Tipos de plantas que se cultivan</h3>
                 <div class="relative overflow-hidden" id="plant-carousel">
                     <div class="flex space-x-4 animate-scroll" id="plant-slides">
                         <div class="min-w-[200px] bg-green-50 p-4 rounded-lg shadow-md hover:shadow-lg transition">
@@ -88,7 +88,7 @@
                             <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt text-green-600 mr-2"></i> {{ $nursery->location }}</p>
                             <p class="text-gray-600 mb-2"><i class="fas fa-seedling text-green-600 mr-2"></i> Capacidad: {{ $nursery->max_capacity }}</p>
                             <p class="text-gray-500 text-sm mb-4">{{ Str::limit($nursery->description, 120) }}</p>
-                            <a href="{{ route('gvff.user.nurseries.show', $nursery->id) }}" class="inline-block bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition">Ver Detalles</a>
+                            <a href="{{ route('gvff.user.nurseries.show', $nursery->id) }}" class="inline-block bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-600 transition">Ver Detalles</a>
                         </div>
                     </div>
                 @endforeach

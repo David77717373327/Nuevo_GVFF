@@ -45,7 +45,7 @@
             }
         }
         .btn-cta {
-            background: linear-gradient(45deg, #5e9e77, #45be69);
+            background-color: #198754;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .btn-cta:hover {
@@ -71,7 +71,7 @@
         }
         /* Estilos para la navegación */
         .navbar {
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            background: #198754;
         }
         .nav-container {
             display: flex;
@@ -154,7 +154,6 @@
                                 <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
                             </ul>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="400" class="relative">
@@ -204,7 +203,7 @@
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Descubre Nuestros Viveros</h2>
                             <p class="text-lg">Explora una amplia variedad de plantas sostenibles cultivadas con cuidado.</p>
-                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Ver Viveros</a>
+                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg bg-green-700 hover:bg-green-800 transition">Ver Viveros</a>
                         </div>
                     </div>
                 </div>
@@ -361,11 +360,7 @@
         </div>
     </section>
 
-    <!-- Contenido principal -->
-    <main class="flex-1 container mx-auto px-4 py-12">
-        @yield('content')
-    </main>
-
+    
     <!-- Footer -->
     <footer class="bg-green-800 text-white py-12">
         <div class="container mx-auto px-4">
