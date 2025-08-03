@@ -1,20 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-     
     <title>@yield('title', 'Viveros y Plantas - Explora la Naturaleza')</title>
-
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Meta tags para SEO -->
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <!-- Font Awesome para íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Swiper JS para el carrusel -->
@@ -25,6 +17,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Google Fonts (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
         /* Estilos personalizados */
         body {
@@ -33,100 +26,44 @@
             overflow-x: hidden;
             margin: 0;
         }
+        /* Estilos para la navegación */
         .navbar {
-            transition: all 1s ease;
             background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
-            animation: gradientShift 20s ease infinite;
             z-index: 1000;
         }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .navbar.scrolled {
-            background: linear-gradient(90deg, rgba(21, 128, 61, 0.98), rgba(5, 150, 105, 0.98));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .nav-links li a {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            color: white;
-        }
-        .nav-links li a:hover {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            color: #facc15;
-        }
-        .nav-links li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: #facc15;
-            transition: left 0.3s ease;
-        }
-        .nav-links li a:hover::after {
-            left: 0;
-        }
-        .dropdown:hover .dropdown-menu {
+        .nav-container {
             display: flex;
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 1001;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-left: 0.5rem; /* Padding mínimo a la izquierda */
+            padding-right: 0.5rem; /* Padding mínimo a la derecha */
+        }
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            padding: 1rem;
+            z-index: 40;
         }
         .dropdown-menu {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-            background: linear-gradient(135deg, rgba(21, 128, 61, 0.95), rgba(5, 150, 105, 0.95));
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #15803d; /* bg-green-700 */
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1001;
         }
         .dropdown-menu li a {
-            transition: all 0.3s ease;
+            color: white;
         }
         .dropdown-menu li a:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.1);
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-        .hamburger-menu {
-            display: none;
-        }
-        .nav-links.active {
-            transform: translateX(0);
-        }
-        @media (max-width: 768px) {
-            .hamburger-menu {
-                display: block;
-            }
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100vh;
-                width: 75%;
-                background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
-                flex-direction: column;
-                padding: 2rem;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .dropdown-menu {
-                position: static;
-                width: 100%;
-                background: transparent;
-                box-shadow: none;
-                z-index: 1001;
-            }
+            background: #166534; /* bg-green-800 */
         }
         .tooltip {
             position: absolute;
@@ -145,11 +82,16 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .search-input {
-            transition: all 0.3s ease;
-        }
-        .search-input:focus {
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex !important; /* Asegura que los enlaces estén visibles en escritorio */
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -158,13 +100,15 @@
     <header class="sticky top-0 z-50">
         <!-- Barra de navegación -->
         <nav class="navbar text-white py-3 z-45 relative">
-            <div class="container mx-auto px-4 nav-container">
+            <div class="nav-container">
                 <!-- Logo a la izquierda -->
-                <div class="nav-logo">
-                    <div class="flex items-center">
-                        <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" alt="Vivero Logo" class="h-14 w-auto rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
-                        <span class="ml-2 text-3xl font-bold text-white tracking-wide">Viveros y Plantas</span>
-                    </div>
+                <div class="nav-logo flex items-center space-x-4">
+                    <img src="{{ asset('modules/gvff/images/logo-.png') }}"
+                         alt="Vivero Logo"
+                         class="h-14 w-14 rounded-full shadow-md border-2 border-green-700 bg-white object-cover transition-transform duration-300 hover:scale-105" />
+                    <span class="block text-xl md:text-2xl font-semibold text-white tracking-wide leading-tight">
+                        Viveros y Plantas
+                    </span>
                 </div>
                 <!-- Menú hamburguesa y enlaces a la derecha -->
                 <div class="flex items-center gap-2">
@@ -190,13 +134,19 @@
                                 <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
                             </a>
                             <span class="tooltip">Explora nuestras categorías de plantas</span>
-                            <ul class="dropdown-menu hidden flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
+                            <ul class="dropdown-menu hidden flex-col rounded-lg shadow-xl mt-2 w-48 z-50">
                                 <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-shopping-cart"></i><span>En Venta</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star"></i><span>Destacadas</span></a></li>
                             </ul>
+                        </li>
+                        <li data-aos="fade-right" data-aos-delay="100" class="relative">
+                            <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-shopping-cart animate-pulse"></i>
+                                <span>Venta</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra página principal</span>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="400" class="relative">
                             <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
@@ -227,13 +177,10 @@
         </nav>
     </header>
 
-
     <!-- Contenido dinámico -->
     <main class="flex-grow">
         @yield('content')
     </main>
-
-    <!-- Footer -->
 
     <!-- Footer -->
     <footer class="bg-green-800 text-white py-12">
@@ -284,6 +231,16 @@
             navLinks.classList.toggle('active');
             hamburger.querySelector('i').classList.toggle('fa-bars');
             hamburger.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Submenú en móviles
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.toggle('hidden');
+            }
         });
 
         // Efecto de scroll para la navbar

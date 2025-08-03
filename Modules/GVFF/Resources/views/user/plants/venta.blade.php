@@ -133,275 +133,293 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartButtonContainer = document.querySelector('.cart-button-container');
+            const cartPanel = document.getElementById('cart-panel');
 
-        // Carrito de compras
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            // Asegurar que el botón y el panel se mantengan en posición relativa al desplazamiento
+            function updatePosition() {
+                const scrollPosition = window.scrollY || window.pageYOffset;
+                cartButtonContainer.style.top = (60 + scrollPosition) + 'px'; // Ajusta la posición del botón
+                cartPanel.style.top = (60 + scrollPosition) + 'px'; // Ajusta la posición del panel
+            }
 
-        // Guardar carrito en localStorage
-        function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartDisplay();
-        }
+            // Escuchar el evento de scroll
+            window.addEventListener('scroll', updatePosition);
 
-        // Actualizar la visualización del carrito
-        function updateCartDisplay() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalContainer = document.getElementById('cart-total');
-            const cartCount = document.getElementById('cart-count');
-            let total = 0;
-            let itemCount = 0;
+            // Inicializar la posición
+            updatePosition();
 
-            cartItemsContainer.innerHTML = '';
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p>El carrito está vacío.</p>';
-            } else {
+            // Inicializar AOS (Animate On Scroll)
+            AOS.init({
+                duration: 1500,
+                once: true,
+            });
+
+            // Carrito de compras
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Guardar carrito en localStorage
+            function saveCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+            }
+
+            // Actualizar la visualización del carrito
+            function updateCartDisplay() {
+                const cartItemsContainer = document.getElementById('cart-items');
+                const cartTotalContainer = document.getElementById('cart-total');
+                const cartCount = document.getElementById('cart-count');
+                let total = 0;
+                let itemCount = 0;
+
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>El carrito está vacío.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const subtotal = item.price * item.quantity;
+                        total += subtotal;
+                        itemCount += item.quantity;
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'cart-item';
+                        itemElement.innerHTML = `
+                            <div class="cart-item-details">
+                                <p><strong>${item.name}</strong></p>
+                                <p>Precio: $${item.price.toFixed(2)} x ${item.quantity} = $${subtotal.toFixed(2)}</p>
+                            </div>
+                            <div class="cart-item-actions">
+                                <button class="quantity-btn minus" data-plant-id="${item.id}">-</button>
+                                <input type="number" class="quantity-input-field" value="${item.quantity}" min="1" data-plant-id="${item.id}">
+                                <button class="quantity-btn plus" data-plant-id="${item.id}">+</button>
+                                <button class="remove-item" data-plant-id="${item.id}"><i class="fas fa-trash"></i></button>
+                            </div>`;
+                        cartItemsContainer.appendChild(itemElement);
+                    });
+                }
+
+                cartTotalContainer.textContent = `Total: $${total.toFixed(2)}`;
+                cartCount.textContent = itemCount;
+            }
+
+            // Mostrar notificación
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                const notificationMessage = document.getElementById('notification-message');
+                notificationMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                notification.style.display = 'flex';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }
+
+            // Agregar al carrito
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plantId = this.getAttribute('data-plant-id');
+                    const plantName = this.getAttribute('data-plant-name');
+                    const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
+                    const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
+                    const quantity = parseInt(quantityInput.value) || 1;
+
+                    const existingItem = cart.find(item => item.id === plantId);
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        cart.push({
+                            id: plantId,
+                            name: plantName,
+                            price: plantPrice,
+                            quantity: quantity
+                        });
+                    }
+
+                    saveCart();
+                    showNotification(`${plantName} ha sido añadido al carrito (${quantity} unidad${quantity > 1 ? 'es' : ''})`);
+                });
+            });
+
+            // Manejo de cantidad en las tarjetas
+            document.querySelectorAll('.plant-card .quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plantId = this.getAttribute('data-plant-id');
+                    const input = this.closest('.quantity-input').querySelector('.quantity-input-field');
+                    let quantity = parseInt(input.value) || 1;
+
+                    if (this.classList.contains('plus')) {
+                        quantity++;
+                    } else if (this.classList.contains('minus') && quantity > 1) {
+                        quantity--;
+                    }
+
+                    input.value = quantity;
+                });
+            });
+
+            // Manejo de cantidad y eliminación en el panel
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.quantity-btn') && e.target.closest('#cart-items')) {
+                    const plantId = e.target.closest('.quantity-btn').getAttribute('data-plant-id');
+                    const item = cart.find(item => item.id === plantId);
+
+                    if (e.target.closest('.quantity-btn').classList.contains('plus')) {
+                        item.quantity++;
+                    } else if (e.target.closest('.quantity-btn').classList.contains('minus') && item.quantity > 1) {
+                        item.quantity--;
+                    }
+
+                    saveCart();
+                } else if (e.target.closest('.remove-item')) {
+                    const plantId = e.target.closest('.remove-item').getAttribute('data-plant-id');
+                    cart = cart.filter(item => item.id !== plantId);
+                    saveCart();
+                }
+            });
+
+            // Manejo de cambio directo en el input del panel
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('quantity-input-field') && e.target.closest('#cart-items')) {
+                    const plantId = e.target.getAttribute('data-plant-id');
+                    const item = cart.find(item => item.id === plantId);
+                    const newQuantity = parseInt(e.target.value);
+                    if (newQuantity >= 1) {
+                        item.quantity = newQuantity;
+                        saveCart();
+                    } else {
+                        e.target.value = item.quantity;
+                    }
+                }
+            });
+
+            // Abrir/cerrar panel
+            document.getElementById('open-cart').addEventListener('click', function() {
+                const cartPanel = document.getElementById('cart-panel');
+                cartPanel.classList.toggle('open');
+                cartPanel.style.display = 'block';
+            });
+
+            document.querySelector('.close-panel').addEventListener('click', function() {
+                const cartPanel = document.getElementById('cart-panel');
+                cartPanel.classList.remove('open');
+                setTimeout(() => {
+                    cartPanel.style.display = 'none';
+                }, 300); // Espera a que termine la animación
+            });
+
+            // Vaciar carrito
+            document.getElementById('clear-cart').addEventListener('click', function() {
+                cart = [];
+                saveCart();
+            });
+
+            // Comprar ahora (enviar a WhatsApp)
+            function checkoutCart() {
+                if (cart.length === 0) {
+                    showNotification('El carrito está vacío');
+                    return;
+                }
+
+                let message = "Hola, quiero realizar el siguiente pedido:\n\n";
+                let total = 0;
+
                 cart.forEach(item => {
                     const subtotal = item.price * item.quantity;
+                    message += `${item.name} - Cantidad: ${item.quantity} - Subtotal: $${subtotal.toFixed(2)}\n`;
                     total += subtotal;
-                    itemCount += item.quantity;
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'cart-item';
-                    itemElement.innerHTML = `
-                        <div class="cart-item-details">
-                            <p><strong>${item.name}</strong></p>
-                            <p>Precio: $${item.price.toFixed(2)} x ${item.quantity} = $${subtotal.toFixed(2)}</p>
-                        </div>
-                        <div class="cart-item-actions">
-                            <button class="quantity-btn minus" data-plant-id="${item.id}">-</button>
-                            <input type="number" class="quantity-input-field" value="${item.quantity}" min="1" data-plant-id="${item.id}">
-                            <button class="quantity-btn plus" data-plant-id="${item.id}">+</button>
-                            <button class="remove-item" data-plant-id="${item.id}"><i class="fas fa-trash"></i></button>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemElement);
                 });
-            }
 
-            cartTotalContainer.textContent = `Total: $${total.toFixed(2)}`;
-            cartCount.textContent = itemCount;
-        }
+                message += `\nTotal: $${total.toFixed(2)}\nPor favor, indíquenme los pasos para completar la compra.`;
 
-        // Mostrar notificación
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notification-message');
-            notificationMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            notification.style.display = 'flex';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
+                const whatsappNumber = "+573227220215";
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
 
-        // Agregar al carrito
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const plantId = this.getAttribute('data-plant-id');
-                const plantName = this.getAttribute('data-plant-name');
-                const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
-                const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
-                const quantity = parseInt(quantityInput.value) || 1;
-
-                const existingItem = cart.find(item => item.id === plantId);
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                } else {
-                    cart.push({
-                        id: plantId,
-                        name: plantName,
-                        price: plantPrice,
-                        quantity: quantity
-                    });
-                }
-
+                cart = [];
                 saveCart();
-                showNotification(`${plantName} ha sido añadido al carrito (${quantity} unidad${quantity > 1 ? 'es' : ''})`);
-            });
-        });
-
-        // Manejo de cantidad en las tarjetas
-        document.querySelectorAll('.plant-card .quantity-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const plantId = this.getAttribute('data-plant-id');
-                const input = this.closest('.quantity-input').querySelector('.quantity-input-field');
-                let quantity = parseInt(input.value) || 1;
-
-                if (this.classList.contains('plus')) {
-                    quantity++;
-                } else if (this.classList.contains('minus') && quantity > 1) {
-                    quantity--;
-                }
-
-                input.value = quantity;
-            });
-        });
-
-        // Manejo de cantidad y eliminación en el panel
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.quantity-btn') && e.target.closest('#cart-items')) {
-                const plantId = e.target.closest('.quantity-btn').getAttribute('data-plant-id');
-                const item = cart.find(item => item.id === plantId);
-
-                if (e.target.closest('.quantity-btn').classList.contains('plus')) {
-                    item.quantity++;
-                } else if (e.target.closest('.quantity-btn').classList.contains('minus') && item.quantity > 1) {
-                    item.quantity--;
-                }
-
-                saveCart();
-            } else if (e.target.closest('.remove-item')) {
-                const plantId = e.target.closest('.remove-item').getAttribute('data-plant-id');
-                cart = cart.filter(item => item.id !== plantId);
-                saveCart();
-            }
-        });
-
-        // Manejo de cambio directo en el input del panel
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('quantity-input-field') && e.target.closest('#cart-items')) {
-                const plantId = e.target.getAttribute('data-plant-id');
-                const item = cart.find(item => item.id === plantId);
-                const newQuantity = parseInt(e.target.value);
-                if (newQuantity >= 1) {
-                    item.quantity = newQuantity;
-                    saveCart();
-                } else {
-                    e.target.value = item.quantity;
-                }
-            }
-        });
-
-        // Abrir/cerrar panel
-        document.getElementById('open-cart').addEventListener('click', function() {
-            const cartPanel = document.getElementById('cart-panel');
-            cartPanel.classList.toggle('open');
-            cartPanel.style.display = 'block';
-        });
-
-        document.querySelector('.close-panel').addEventListener('click', function() {
-            const cartPanel = document.getElementById('cart-panel');
-            cartPanel.classList.remove('open');
-            setTimeout(() => {
-                cartPanel.style.display = 'none';
-            }, 300); // Espera a que termine la animación
-        });
-
-        // Vaciar carrito
-        document.getElementById('clear-cart').addEventListener('click', function() {
-            cart = [];
-            saveCart();
-        });
-
-        // Comprar ahora (enviar a WhatsApp)
-        function checkoutCart() {
-            if (cart.length === 0) {
-                showNotification('El carrito está vacío');
-                return;
+                document.getElementById('cart-panel').classList.remove('open');
+                setTimeout(() => {
+                    document.getElementById('cart-panel').style.display = 'none';
+                }, 300);
             }
 
-            let message = "Hola, quiero realizar el siguiente pedido:\n\n";
-            let total = 0;
+            document.querySelectorAll('.buy-now').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plantId = this.getAttribute('data-plant-id');
+                    const plantName = this.getAttribute('data-plant-name');
+                    const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
+                    const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
+                    const quantity = parseInt(quantityInput.value) || 1;
 
-            cart.forEach(item => {
-                const subtotal = item.price * item.quantity;
-                message += `${item.name} - Cantidad: ${item.quantity} - Subtotal: $${subtotal.toFixed(2)}\n`;
-                total += subtotal;
+                    const existingItem = cart.find(item => item.id === plantId);
+                    if (!existingItem) {
+                        cart.push({
+                            id: plantId,
+                            name: plantName,
+                            price: plantPrice,
+                            quantity: quantity
+                        });
+                        saveCart();
+                    }
+
+                    checkoutCart();
+                });
             });
 
-            message += `\nTotal: $${total.toFixed(2)}\nPor favor, indíquenme los pasos para completar la compra.`;
+            // Checkout desde el panel
+            document.getElementById('checkout').addEventListener('click', checkoutCart);
 
-            const whatsappNumber = "+573227220215";
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            // Filtrado dinámico
+            document.addEventListener('DOMContentLoaded', function () {
+                updateCartDisplay();
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                const plantCards = document.querySelectorAll('.plant-card');
 
-            cart = [];
-            saveCart();
-            document.getElementById('cart-panel').classList.remove('open');
-            setTimeout(() => {
-                document.getElementById('cart-panel').style.display = 'none';
-            }, 300);
-        }
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
 
-        document.querySelectorAll('.buy-now').forEach(button => {
-            button.addEventListener('click', function() {
-                const plantId = this.getAttribute('data-plant-id');
-                const plantName = this.getAttribute('data-plant-name');
-                const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
-                const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
-                const quantity = parseInt(quantityInput.value) || 1;
+                        const filter = this.getAttribute('data-filter');
 
-                const existingItem = cart.find(item => item.id === plantId);
-                if (!existingItem) {
-                    cart.push({
-                        id: plantId,
-                        name: plantName,
-                        price: plantPrice,
-                        quantity: quantity
-                    });
-                    saveCart();
-                }
-
-                checkoutCart();
-            });
-        });
-
-        // Checkout desde el panel
-        document.getElementById('checkout').addEventListener('click', checkoutCart);
-
-        // Filtrado dinámico
-        document.addEventListener('DOMContentLoaded', function () {
-            updateCartDisplay();
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const plantCards = document.querySelectorAll('.plant-card');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.getAttribute('data-filter');
-
-                    plantCards.forEach(card => {
-                        const cardType = card.getAttribute('data-type').toLowerCase();
-                        if (filter === 'all' || cardType === filter) {
-                            card.style.display = 'flex';
-                            card.classList.add('animate__animated', 'animate__fadeIn');
-                            setTimeout(() => card.classList.remove('animate__animated', 'animate__fadeIn'), 1200);
-                        } else {
-                            card.style.display = 'none';
-                        }
+                        plantCards.forEach(card => {
+                            const cardType = card.getAttribute('data-type').toLowerCase();
+                            if (filter === 'all' || cardType === filter) {
+                                card.style.display = 'flex';
+                                card.classList.add('animate__animated', 'animate__fadeIn');
+                                setTimeout(() => card.classList.remove('animate__animated', 'animate__fadeIn'), 1200);
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
                     });
                 });
             });
-        });
 
-        // Carrusel dinámico
-        let currentSlide = 0;
-        const carouselInner = document.getElementById('carouselInner');
-        const slides = document.querySelectorAll('.carousel-item');
-        const totalSlides = slides.length;
+            // Carrusel dinámico
+            let currentSlide = 0;
+            const carouselInner = document.getElementById('carouselInner');
+            const slides = document.querySelectorAll('.carousel-item');
+            const totalSlides = slides.length;
 
-        function moveCarousel(direction) {
-            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-            carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
+            function moveCarousel(direction) {
+                currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+                carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
 
-        setInterval(() => moveCarousel(1), 5000);
+            setInterval(() => moveCarousel(1), 5000);
 
-        document.querySelector('.carousel').addEventListener('click', (e) => e.stopPropagation());
+            document.querySelector('.carousel').addEventListener('click', (e) => e.stopPropagation());
 
-        document.querySelectorAll('img').forEach(img => {
-            img.onload = function() {
-                this.style.opacity = '1';
-                this.nextElementSibling.style.display = 'none';
-            };
-            img.onerror = function() {
-                this.style.display = 'none';
-                this.nextElementSibling.style.display = 'flex';
-            };
+            document.querySelectorAll('img').forEach(img => {
+                img.onload = function() {
+                    this.style.opacity = '1';
+                    this.nextElementSibling.style.display = 'none';
+                };
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                };
+            });
         });
     </script>
 @endsection

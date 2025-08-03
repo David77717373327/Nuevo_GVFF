@@ -26,7 +26,7 @@ class PlantInventory extends Model
     {
         return $this->belongsTo(ProductiveUnitWarehouse::class);
     }
-
+    //s
     public function plant()
     {
         return $this->belongsTo(\Modules\GVFF\Entities\Plant::class, 'plant_id');

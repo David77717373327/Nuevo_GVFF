@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\GVFF\Entities\nurseries;
 
-
 class GVFFNurseriesController extends Controller
 {
     
@@ -24,7 +23,6 @@ class GVFFNurseriesController extends Controller
      */
     public function create()
     {
-        
         return view('gvff::admin.nurseries.create');
     }
 
@@ -112,8 +110,7 @@ public function edit(Nurseries $nurseries)
     return redirect()->route('gvff.admin.nurseries.index')->with('success', 'Vivero actualizado con éxito.');
 }
 
-    // Eliminar un vivero
-public function destroy(Nurseries $nursery)
+    public function destroy(Nurseries $nursery)
 {
     try {
         // Verificamos si tiene plantas asociadas

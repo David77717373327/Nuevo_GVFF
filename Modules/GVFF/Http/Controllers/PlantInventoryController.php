@@ -184,7 +184,6 @@ class PlantInventoryController extends Controller
                 'name' => $person->first_name . ' ' . $person->first_last_name . ' ' . $person->second_last_name,
             ]);
         }
-
         return response()->json([]);
     }
 

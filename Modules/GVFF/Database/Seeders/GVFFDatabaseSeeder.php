@@ -32,7 +32,6 @@ class GVFFDatabaseSeeder extends Seeder
          $this->call(RolesTableSeeder::class);
          $this->call(PermissionsTableSeeder::class);
 
-
          DB::commit();
         
     }

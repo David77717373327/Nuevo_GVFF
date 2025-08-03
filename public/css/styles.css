@@ -409,6 +409,53 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Desde aqui comence los demas estilos" */
 
 :root {
@@ -956,13 +1003,55 @@
     }
 }
 
+
+
+
+
+
+
+
 /* Estilos para el panel lateral del carrito */
-.cart-panel {
+.cart-button-container {
     position: fixed;
-    top: 70px;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    will-change: transform;
+}
+
+.cart-button {
+    background: #4CAF50; /* Color verde profesional relacionado con plantas */
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para mejor visibilidad */
+    transition: transform 0.2s ease-in-out;
+}
+
+.cart-button:hover {
+    transform: scale(1.1); /* Efecto de hover para interacción */
+}
+
+#cart-count {
+    background: #ff4d4d;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.cart-panel {
+    position: absolute; /* Cambiado de fixed a absolute para desplazarse con el contenido */
+    top: 70px; /* Mantiene la distancia desde la parte superior, relativa al contenedor padre */
     right: 20px;
     width: 350px;
-    max-height: 80vh; /* Aumentado para dar más espacio */
+    max-height: 80vh;
     background: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
@@ -987,7 +1076,7 @@
 
 .cart-items-scroll {
     overflow-y: auto;
-    max-height: calc(80vh - 200px); /* Ajustado para dejar espacio fijo para acciones */
+    max-height: calc(80vh - 200px);
     flex-grow: 1;
 }
 
@@ -1055,10 +1144,10 @@
     flex-direction: column;
     gap: 10px;
     padding-top: 10px;
-    background: white; /* Fondo fijo para evitar solapamiento con scroll */
+    background: white;
     position: sticky;
-    bottom: 0; /* Fija las acciones al fondo del panel */
-    z-index: 10; /* Asegura que los botones estén encima del contenido */
+    bottom: 0;
+    z-index: 10;
 }
 
 .clear-cart-btn, .checkout-btn {
@@ -1084,11 +1173,13 @@
 }
 
 /* Estilos para el botón del carrito */
-.cart-button-container {
+    .cart-button-container {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1001;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    will-change: transform;
 }
 
 .cart-button {
@@ -1116,6 +1207,37 @@
     padding: 2px 8px;
     font-size: 12px;
 }
+
+
+        /* Nuevos estilos para el scroll */
+        .cart-button-container.scrolling {
+            opacity: 0.9;
+            transform: translateY(100px); /* Ajusta este valor según necesites */
+        }
+
+        /* Indicador visual del carrito (opcional) */
+        .cart-indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff4d4d;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .demo-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            line-height: 1.6;
+        }
 
 /* Estilos para la notificación */
 .notification {

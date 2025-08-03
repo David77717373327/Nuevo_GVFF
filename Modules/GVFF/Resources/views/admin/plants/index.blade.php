@@ -88,9 +88,15 @@
         background: #e9f7ef;
         color: #198754;
     }
-    /* Botones junto al buscador */
     .dt-buttons {
         margin-left: 10px;
+    }
+    /* Style for plant images */
+    .plant-image {
+        max-width: 80px;
+        max-height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
     }
 </style>
 
@@ -115,11 +121,11 @@
                 <table id="plants-table" class="table align-middle">
                     <thead class="table-success">
                         <tr>
+                            <th>Imagen</th>
                             <th>Nombre Común</th>
                             <th>Nombre Científico</th>
                             <th>Vivero</th>
                             <th>Tipo</th>
-                            <th>Inventario</th>
                             <th>Disponible</th>
                             <th>Acciones</th>
                         </tr>
@@ -127,11 +133,17 @@
                     <tbody>
                         @foreach ($plants as $plant)
                         <tr>
+                            <td>
+                                @if ($plant->image)
+                                    <img src="{{ asset('storage/' . $plant->image) }}" alt="{{ $plant->common_name }}" class="plant-image">
+                                @else
+                                    <span>Sin imagen</span>
+                                @endif
+                            </td>
                             <td>{{ $plant->common_name }}</td>
                             <td>{{ $plant->scientific_name }}</td>
                             <td>{{ $plant->nurseries->name ?? 'Sin vivero' }}</td>
                             <td>{{ $plant->plant_type }}</td>
-                            <td>{{ $plant->inventory }}</td>
                             <td>
                                 <span class="badge {{ $plant->available ? 'bg-success' : 'bg-danger' }}">
                                     {{ $plant->available ? 'Sí' : 'No' }}
@@ -197,7 +209,7 @@ $(document).ready(function() {
                 text: '<i class="fas fa-file-excel"></i>',
                 className: 'btn btn-success',
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4] // Adjusted to exclude Imagen and Acciones
                 },
                 filename: 'Listado_Plantas'
             },
@@ -206,7 +218,7 @@ $(document).ready(function() {
                 text: '<i class="fas fa-file-pdf"></i>',
                 className: 'btn btn-success',
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4] // Adjusted to exclude Imagen and Acciones
                 },
                 orientation: 'landscape',
                 pageSize: 'A4',
