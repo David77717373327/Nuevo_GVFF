@@ -112,33 +112,88 @@
     .btn-danger { background: #ef4444; }
     .btn-danger:hover { background: #dc2626; }
 
+    /* Estilos de la tabla #nurseries-table (adaptados de #plants-table) */
+    #nurseries-table {
+        border-collapse: separate !important;
+        border-spacing: 0 12px !important;
+        background: transparent;
+    }
+    #nurseries-table th {
+        background: #e9f7ef;
+        border: none !important;
+        color: #198754;
+        font-weight: 600;
+        text-align: center;
+    }
+    #nurseries-table td {
+        background: #fff;
+        border: none !important;
+        box-shadow: 0 2px 8px rgba(25,135,84,0.07);
+        border-radius: 12px;
+        vertical-align: middle !important;
+        text-align: center;
+    }
+    #nurseries-table tbody tr {
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    #nurseries-table tbody tr:hover {
+        box-shadow: 0 4px 16px rgba(25,135,84,0.12);
+        transform: translateY(-2px) scale(1.01);
+        background: #f6fff9 !important;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.2em 0.8em;
+        margin: 0 2px;
+        border-radius: 6px;
+        border: 1px solid #d1e7dd;
+        background: #e9f7ef;
+        color: #198754 !important;
+        transition: background 0.2s;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: #198754 !important;
+        color: #fff !important;
+    }
+    .dataTables_wrapper .dataTables_filter input {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 0.3em 0.8em;
+    }
+    .dataTables_wrapper .dataTables_length select {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 0.2em 0.6em;
+    }
     .btn i, .btn-sm i {
         color: #198754 !important;
         background: none !important;
-        font-size: 1.5em;
+        font-size: 1.5em; /* Ajustado para mantener coherencia */
     }
-
     .btn, .btn-sm {
         background: none !important;
         border: none !important;
         box-shadow: none !important;
         padding: 0.3rem 0.5rem;
     }
-
     .btn:hover i, .btn-sm:hover i {
         color: #145c32 !important;
         transform: scale(1.15);
     }
-
-    .table {
-        background: #ffffff;
-        border-radius: 6px;
-        overflow: hidden;
+    td:last-child {
+        white-space: nowrap;
     }
-
-    .table-dark {
-        background: var(--primary-color);
-        color: #ffffff;
+    .dataTables_length label {
+        font-weight: 500;
+        color: #198754;
+        font-size: 1rem;
+    }
+    .dataTables_length select {
+        margin: 0 0.3em;
+        background: #e9f7ef;
+        color: #198754;
+    }
+    .dt-buttons {
+        margin-left: 10px;
     }
 
     .img-thumbnail {
@@ -179,8 +234,8 @@
             </div>
         @endif
 
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
+        <table id="nurseries-table" class="table align-middle">
+            <thead class="table-success">
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Ubicación</th>

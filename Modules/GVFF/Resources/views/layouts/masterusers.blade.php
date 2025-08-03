@@ -82,7 +82,7 @@
                 <div class="nav-logo">
                     <div class="flex items-center">
                         <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" alt="Vivero Logo" class="h-14 w-auto rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
-                        <span class="ml-2 text-3xl font-bold text-white tracking-wide">Viveros y Plantas</span>
+                        <span class="ml-2 text-3xl font-bold text-white tracking-wide">Viveros, plantas y fauna</span>
                     </div>
                 </div>
                 <!-- Menú hamburguesa y enlaces a la derecha -->
