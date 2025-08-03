@@ -69,21 +69,62 @@
             margin-bottom: 0;
             pointer-events: none;
         }
+        /* Estilos para la navegación */
+        .navbar {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-left: 0.5rem; /* Padding mínimo a la izquierda */
+            padding-right: 0.5rem; /* Padding mínimo a la derecha */
+        }
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            padding: 1rem;
+            z-index: 40;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex !important; /* Asegura que los enlaces estén visibles en escritorio */
+            }
+            .dropdown-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 200px;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Header -->
-   <!-- Header -->
     <header class="sticky top-0 z-50">
         <!-- Barra de navegación -->
         <nav class="navbar text-white py-3 z-45 relative">
-            <div class="container mx-auto px-4 nav-container">
+            <div class="nav-container">
                 <!-- Logo a la izquierda -->
-                <div class="nav-logo">
-                    <div class="flex items-center">
-                        <img src="{{ asset('modules/gvff/images/logo3jpg.jpg') }}" alt="Vivero Logo" class="h-14 w-auto rounded-full shadow-lg transform hover:scale-110 transition-all duration-300">
-                        <span class="ml-2 text-3xl font-bold text-white tracking-wide">Viveros, plantas y fauna</span>
-                    </div>
+                <div class="nav-logo flex items-center space-x-4">
+                    <img src="{{ asset('modules/gvff/images/logo2.jpeg') }}"
+                         alt="Vivero Logo"
+                         class="h-14 w-14 rounded-full shadow-md border-2 border-green-700 bg-white object-cover transition-transform duration-300 hover:scale-105" />
+                    <span class="block text-xl md:text-2xl font-semibold text-white tracking-wide leading-tight">
+                        Viveros, plantas y fauna
+                    </span>
                 </div>
                 <!-- Menú hamburguesa y enlaces a la derecha -->
                 <div class="flex items-center gap-2">
@@ -126,11 +167,10 @@
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
                             <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-shopping-cart animate-pulse"></i>
-                                <span>plantas en venta</span>
+                                <span>Venta</span>
                             </a>
                             <span class="tooltip">Explora nuestra página principal</span>
                         </li>
-
                         <li data-aos="fade-right" data-aos-delay="500" class="relative">
                             <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fab fa-whatsapp animate-bounce"></i>
@@ -153,6 +193,7 @@
         </nav>
     </header>
 
+    <!-- Resto del código sin cambios -->
     <!-- Carrusel en una sección independiente -->
     <section class="relative mt-4">
         <div id="main-carousel" class="swiper mySwiper relative transition-all duration-500" data-aos="fade-in" style="z-index: 5;">
@@ -201,101 +242,124 @@
         </div>
     </section>
 
-<!-- Sección informativa de cards con glassmorphism y animación avanzada -->
-<section class="py-12 bg-gradient-to-b from-green-200 via-white to-green-100">
-  <style>
-    .glass-card {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-    .glass-card:hover {
-      transform: rotateY(5deg) scale(1.05);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    }
-    .glass-image {
-      transition: transform 0.6s ease;
-    }
-    .glass-card:hover .glass-image {
-      transform: scale(1.15) rotate(2deg);
-    }
-    .glass-content {
-      padding: 1.5rem;
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(6px);
-    }
-    .glass-title {
-      background: linear-gradient(to right, #166534, #10b981);
-      -webkit-background-clip: text;
-      color: transparent;
-      font-weight: 700;
-      font-size: 1.5rem;
-    }
-    .glass-description {
-      color: #374151;
-    }
-  </style>
-  <div class="container mx-auto px-4">
-    <h2 class="text-4xl font-bold text-center text-green-900 mb-12">Conoce más sobre las plantas</h2>
-    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Card 1 -->
-      <div class="glass-card">
-        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Tipos de plantas" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Tipos de plantas</h3>
-          <p class="glass-description">Explora la increíble variedad de especies vegetales y descubre sus secretos.</p>
+    <!-- Sección informativa de cards con glassmorphism y animación avanzada -->
+    <section class="py-12 bg-gradient-to-b from-green-200 via-white to-green-100">
+        <style>
+            .glass-card {
+                backdrop-filter: blur(10px);
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 20px;
+                overflow: hidden;
+                border: 1px solid rgba(255,255,255,0.3);
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                transform-style: preserve-3d;
+                perspective: 1000px;
+            }
+            .glass-card:hover {
+                transform: rotateY(5deg) scale(1.05);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            }
+            .glass-image {
+                transition: transform 0.6s ease;
+            }
+            .glass-card:hover .glass-image {
+                transform: scale(1.15) rotate(2deg);
+            }
+            .glass-content {
+                padding: 1.5rem;
+                background: rgba(255,255,255,0.6);
+                backdrop-filter: blur(6px);
+            }
+            .glass-title {
+                background: linear-gradient(to right, #166534, #10b981);
+                -webkit-background-clip: text;
+                color: transparent;
+                font-weight: 700;
+                font-size: 1.5rem;
+            }
+            .glass-description {
+                color: #374151;
+            }
+        </style>
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-green-900 mb-12">Conoce más sobre las plantas</h2>
+            <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Card 1 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Tipos de plantas" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Tipos de plantas</h3>
+                        <p class="glass-description">Explora la increíble variedad de especies vegetales y descubre sus secretos.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidados básicos" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Cuidados básicos</h3>
+                        <p class="glass-description">Aprende a proteger y nutrir tus plantas para que florezcan todo el año.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidado ambiental" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Cuidado ambiental</h3>
+                        <p class="glass-description">Contribuye a un entorno sostenible y ayuda a preservar la biodiversidad.</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Huertos en casa" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Huertos en casa</h3>
+                        <p class="glass-description">Crea tu propio huerto en casa y disfruta de alimentos frescos y saludables.</p>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas medicinales" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Plantas medicinales</h3>
+                        <p class="glass-description">Descubre remedios naturales y cómo usarlos de manera responsable.</p>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Sostenibilidad" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Sostenibilidad</h3>
+                        <p class="glass-description">Impulsa prácticas sostenibles y cuida el planeta de forma integral.</p>
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Jardinería Urbana" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Jardinería Urbana</h3>
+                        <p class="glass-description">Transforma espacios urbanos con técnicas de jardinería sostenible.</p>
+                    </div>
+                </div>
+                <!-- Card 8 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas de Interior" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Plantas de Interior</h3>
+                        <p class="glass-description">Decora tu hogar con plantas que purifican el aire y embellecen.</p>
+                    </div>
+                </div>
+                <!-- Card 9 -->
+                <div class="glass-card">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Educación Ambiental" class="glass-image w-full h-52 object-cover">
+                    <div class="glass-content">
+                        <h3 class="glass-title mb-2">Educación Ambiental</h3>
+                        <p class="glass-description">Aprende y enseña sobre la importancia de la conservación ambiental.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="glass-card">
-        <img src="https://source.unsplash.com/600x400/?plant-care" alt="Cuidados básicos" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Cuidados básicos</h3>
-          <p class="glass-description">Aprende a proteger y nutrir tus plantas para que florezcan todo el año.</p>
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="glass-card">
-        <img src="https://source.unsplash.com/600x400/?environment" alt="Cuidado ambiental" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Cuidado ambiental</h3>
-          <p class="glass-description">Contribuye a un entorno sostenible y ayuda a preservar la biodiversidad.</p>
-        </div>
-      </div>
-      <!-- Card 4 -->
-      <div class="glass-card">
-        <img src="https://source.unsplash.com/600x400/?urban-garden" alt="Huertos en casa" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Huertos en casa</h3>
-          <p class="glass-description">Crea tu propio huerto en casa y disfruta de alimentos frescos y saludables.</p>
-        </div>
-      </div>
-      <!-- Card 5 -->
-      <div class="glass-card">
-        <img src="https://source.unsplash.com/600x400/?herbs" alt="Plantas medicinales" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Plantas medicinales</h3>
-          <p class="glass-description">Descubre remedios naturales y cómo usarlos de manera responsable.</p>
-        </div>
-      </div>
-      <!-- Card 6 -->
-      <div class="glass-card">
-        <img src="https://source.unsplash.com/600x400/?sustainability" alt="Sostenibilidad" class="glass-image w-full h-52 object-cover">
-        <div class="glass-content">
-          <h3 class="glass-title mb-2">Sostenibilidad</h3>
-          <p class="glass-description">Impulsa prácticas sostenibles y cuida el planeta de forma integral.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-    
+    </section>
 
     <!-- Contenido principal -->
     <main class="flex-1 container mx-auto px-4 py-12">
