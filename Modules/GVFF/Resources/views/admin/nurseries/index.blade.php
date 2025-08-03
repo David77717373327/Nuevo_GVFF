@@ -108,6 +108,7 @@
     }
     .form-section {
         min-height: 100vh;
+        background: var(--background-gradient);
         padding: 3rem 0;
         position: relative;
         overflow: hidden;
@@ -134,8 +135,27 @@
         50% { transform: translateY(120px) rotate(180deg); }
         100% { transform: translateY(0) rotate(360deg); }
     }
+
+    .animate__fadeIn {
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
     h1 {
-        color: var(--success-color);
+        color: var(--accent-color);
         font-weight: 700;
         text-align: center;
         margin-bottom: 1.5rem;
@@ -163,19 +183,21 @@
         margin-bottom: 1.5rem;
         text-align: center;
     }
+
     .btn-primary {
-        background: var(--success-color);
+        background: var(--accent-color);
         color: #ffffff;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.3s ease, border-color 0.2s ease;
         border: none;
         box-shadow: 0 2px 8px rgba(25,135,84,0.2);
     }
+
     .btn-primary:hover {
         background: var(--primary-color);
+        border-color: var(--primary-color);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(25,135,84,0.3);
     }
@@ -198,17 +220,30 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
     }
-    .btn-create-table:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(25, 135, 84, 0.2);
+
+    @media (max-width: 768px) {
+        .form-container {
+            padding: 1rem;
+        }
+
+        .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        .table {
+            font-size: 0.875rem;
+        }
     }
 </style>
 
 <div class="form-section" data-aos="fade-up">
     <div class="container mx-auto px-6 py-16">
-        <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 animate__animated animate__fadeIn">
-            Gestión de Viveros
-        </h1>
+        <div class="form-container" data-aos="zoom-in">
+            <h1 class="text-3xl md:text-4xl font-bold text-[var(--accent-color)] text-center mb-6 animate__animated animate__fadeIn">
+                Gestión de vivero
+            </h1>
+            <a href="{{ route('gvff.admin.nurseries.create') }}" class="btn btn-primary btn-sm mb-4">Crear nuevo vivero</a>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -222,75 +257,61 @@
             </div>
         @endif
 
-        <div class="table-responsive">
-            <table id="nurseries-table" class="table align-middle">
-                <thead class="table-success">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
                     <tr>
-                        <th>Nombre</th>
-                        <th>Ubicación</th>
-                        <th>Capacidad Máxima</th>
-                        <th>Clasificación</th>
-                        <th>Descripción</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Ubicación</th>
+                        <th scope="col">Capacidad Máxima</th>
+                        <th scope="col">Clasificación</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($nurseries as $nursery)
-                    <tr>
-                        <td>{{ $nursery->name }}</td>
-                        <td>{{ $nursery->location }}</td>
-                        <td>{{ $nursery->max_capacity }}</td>
-                        <td>{{ ucfirst($nursery->classification) }}</td>
-                        <td>{{ $nursery->description ?? 'Sin descripción' }}</td>
-                        <td>
-                            @if ($nursery->image)
-                                <img src="{{ asset('storage/' . $nursery->image) }}" alt="{{ $nursery->name }}" class="plant-image">
-                            @else
-                                <span>Sin imagen</span>
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-sm" title="Ver Plantas">
-                                <i class="fa-regular fa-eye"></i>
-                            </a>
-                            <a href="{{ route('gvff.admin.nurseries.edit', $nursery) }}" class="btn btn-sm" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form action="{{ route('gvff.admin.nurseries.destroy', $nursery) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este vivero?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm" title="Eliminar">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $nursery->name }}</td>
+                            <td>{{ $nursery->location }}</td>
+                            <td>{{ $nursery->max_capacity }}</td>
+                            <td>{{ ucfirst($nursery->classification) }}</td>
+                            <td>{{ $nursery->description ?? 'Sin descripción' }}</td>
+                            <td>
+                                @if ($nursery->image)
+                                    <img src="{{ asset('storage/' . $nursery->image) }}" alt="{{ $nursery->name }}" class="img-thumbnail" style="max-width: 100px;">
+                                @else
+                                    Sin imagen
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('gvff.admin.nurseries.showPlants', $nursery) }}" class="btn btn-sm">
+                                    <i class="fa-regular fa-eye"></i>
+                                </a>
+                                <a href="{{ route('gvff.admin.nurseries.edit', $nursery) }}" class="btn btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('gvff.admin.nurseries.destroy', $nursery) }}" method="POST" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este vivero?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="7" class="text-center">No hay viveros registrados.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="7" class="text-center">No hay viveros registrados.</td>
+                        </tr>
                     @endforelse
-                    <tr>
-                        <td colspan="7" class="text-center">
-                            <a href="{{ route('gvff.admin.nurseries.create') }}" class="btn-create-table">
-                                Crear Nuevo Vivero
-                            </a>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
+        <div class="leaf leaf1"></div>
+        <div class="leaf leaf2"></div>
+        <div class="leaf leaf3"></div>
     </div>
-
-    <div class="leaf leaf1"></div>
-    <div class="leaf leaf2"></div>
-    <div class="leaf leaf3"></div>
-    <div class="leaf leaf4"></div>
-    <div class="leaf leaf5"></div>
-    <div class="leaf leaf6"></div>
-    <div class="leaf leaf7"></div>
-    <div class="leaf leaf8"></div>
 </div>
 
 <!-- jQuery, Bootstrap, DataTables y Buttons -->
@@ -353,3 +374,7 @@ $(document).ready(function() {
 });
 </script>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+@endpush

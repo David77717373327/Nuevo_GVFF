@@ -3,325 +3,6 @@
 @section('title', 'Plantas en Venta')
 
 @section('content')
-    <style>
-        :root {
-            --primary-color: #2f4f2f;
-            --accent-color: #84cc16;
-            --text-color: #1e293b;
-            --background-gradient: linear-gradient(to bottom, #f0fdf4, #d4f4dd);
-            --card-hover-gradient: linear-gradient(145deg, #ffffff, #e6f3e6);
-            --shadow-light: 0 8px 20px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .plant-section {
-            min-height: 100vh;
-            background: var(--background-gradient);
-            padding: 3rem 0;
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: var(--shadow-light);
-            animation: fadeInBackground 1.5s ease-in-out;
-        }
-
-        @keyframes fadeInBackground {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .plant-section .leaf {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: url('https://img.icons8.com/ios-filled/50/000000/leaf.png') no-repeat center;
-            background-size: contain;
-            animation: float 12s infinite ease-in-out;
-            opacity: 0.3;
-        }
-
-        .plant-section .leaf1 { top: 15%; left: 5%; animation-delay: 0s; }
-        .plant-section .leaf2 { top: 40%; left: 85%; animation-delay: 3s; }
-        .plant-section .leaf3 { top: 70%; left: 15%; animation-delay: 6s; }
-        .plant-section .leaf4 { top: 25%; right: 10%; animation-delay: 1.5s; }
-        .plant-section .leaf5 { top: 55%; right: 20%; animation-delay: 4.5s; }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(120px) rotate(180deg) scale(1.2); }
-            100% { transform: translateY(0) rotate(360deg) scale(1); }
-        }
-
-        .animate__fadeIn {
-            animation: fadeIn 1.2s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header-section {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            box-shadow: var(--shadow-light);
-            animation: slideUp 1s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .header-section h1 {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .header-section p {
-            color: var(--text-color);
-            font-size: 1.1rem;
-        }
-
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: #e2e8f0;
-            color: var(--text-color);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--accent-color);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding: 0 1rem;
-        }
-
-        .plant-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding-bottom: 1rem;
-        }
-
-        .plant-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-            background: var(--card-hover-gradient);
-        }
-
-        .plant-card img {
-            height: 220px;
-            width: 100%;
-            object-fit: contain;
-            background: #f8fafc;
-            transition: transform 0.4s ease;
-        }
-
-        .plant-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .plant-card h3 {
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 1rem 0 0.75rem;
-        }
-
-        .plant-card p {
-            color: var(--text-color);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 0.5rem;
-        }
-
-        .btn-cta {
-            background: var(--accent-color);
-            color: #ffffff;
-            padding: 0.75rem 1.75rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-cta:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-cta i {
-            font-size: 1.1rem;
-        }
-
-        .alert {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            border-radius: 8px;
-            background: #fee2e2;
-            color: #b91c1c;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeIn 0.8s ease-in;
-        }
-
-        /* Carrusel de Ofertas */
-        .carousel {
-            max-width: 900px;
-            margin: 2rem auto;
-            overflow: hidden;
-            position: relative;
-            border-radius: 12px;
-            box-shadow: var(--shadow-light);
-            background: #ffffff;
-        }
-
-        .carousel-inner {
-            display: flex;
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .carousel-item {
-            min-width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .carousel-item .placeholder {
-            width: 100%;
-            height: 100%;
-            background: #f8fafc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            font-size: 1.2rem;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .carousel-prev, .carousel-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: #ffffff;
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-            z-index: 10;
-            transition: background 0.3s ease;
-        }
-
-        .carousel-prev {
-            left: 10px;
-        }
-
-        .carousel-next {
-            right: 10px;
-        }
-
-        .carousel-prev:hover, .carousel-next:hover {
-            background: var(--primary-color);
-        }
-
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .plant-card img {
-                height: 180px;
-            }
-
-            .plant-card h3 {
-                font-size: 1.25rem;
-            }
-
-            .btn-cta {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .carousel {
-                height: 200px;
-            }
-
-            .carousel-item {
-                height: 200px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .plant-section {
-                padding: 2rem 1rem;
-            }
-
-            .filter-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .header-section h1 {
-                font-size: 2rem;
-            }
-
-            .header-section p {
-                font-size: 1rem;
-            }
-        }
-    </style>
 
     <div class="plant-section" data-aos="fade-up">
         <div class="container mx-auto px-6 py-16 relative z-10">
@@ -331,7 +12,34 @@
                 <p>Explora nuestra selección de plantas únicas y saludables</p>
             </div>
 
-            <!-- Carrusel de Ofertas (Plantas con menor precio) -->
+            <!-- Botón para abrir el panel del carrito -->
+            <div class="cart-button-container">
+                <button id="open-cart" class="cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+
+            <!-- Panel lateral del carrito -->
+            <div id="cart-panel" class="cart-panel" style="display: none;">
+                <div class="cart-panel-content">
+                    <button class="close-panel"><i class="fas fa-times"></i></button>
+                    <h2><i class="fas fa-shopping-cart"></i> Carrito de Compras</h2>
+                    <div id="cart-items" class="cart-items-scroll"></div>
+                    <div id="cart-total" class="cart-total"></div>
+                    <div class="panel-actions">
+                        <button id="clear-cart" class="clear-cart-btn"><i class="fas fa-trash"></i> Vaciar Carrito</button>
+                        <button id="checkout" class="checkout-btn"><i class="fas fa-whatsapp"></i> Comprar ahora</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notificación de producto añadido -->
+            <div id="notification" class="notification" style="display: none;">
+                <span id="notification-message"></span>
+            </div>
+
+            <!-- Carrusel de Ofertas -->
             <div class="carousel">
                 <div class="carousel-inner" id="carouselInner">
                     @if ($plants->where('available', true)->sortBy('price')->take(3)->isNotEmpty())
@@ -360,55 +68,67 @@
                 <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
             </div>
 
-            <!-- Filtros -->
-            <div class="filter-container" id="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="ornamental">Ornamentales</button>
-                <button class="filter-btn" data-filter="medicinal">Medicinales</button>
-                <button class="filter-btn" data-filter="forestal">Forestales</button>
-            </div>
-
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="plant-section">
+                <div class="header-section">
+                    <h1>Producto del mes</h1>
                 </div>
-            @endif
-
-            @if ($plants->isNotEmpty())
                 <div class="grid" id="plants-list">
                     @foreach ($plants as $plant)
                         @if ($plant->available && $plant->price)
-                            <div class="plant-card" data-type="{{ $plant->plant_type ?? 'ornamental' }}" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
-                                <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}" alt="{{ $plant->common_name }}" class="w-full" 
-                                     onload="this.style.opacity='1'; this.nextElementSibling.style.display='none';"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="placeholder hidden">Imagen no disponible</div>
-                                <div class="p-6">
-                                    <h3>{{ $plant->common_name }}</h3>
-                                    <p><i class="fas fa-leaf text-[var(--accent-color)] mr-2"></i><strong>Nombre Científico:</strong> {{ $plant->scientific_name }}</p>
-                                    <p><i class="fas fa-info-circle text-[var(--accent-color)] mr-2"></i><strong>Descripción:</strong> {{ $plant->characteristics ?? 'Sin descripción' }}</p>
-                                    <p><i class="fas fa-dollar-sign text-[var(--accent-color)] mr-2"></i><strong>Precio:</strong> ${{ number_format($plant->price, 2) }}</p>
-                                    <a href="https://wa.me/1234567890?text=Hola,%20quiero%20comprar%20{{ urlencode($plant->common_name) }}%20(%20${{ number_format($plant->price, 2) }})." class="btn-cta mt-4">
-                                        <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                                    </a>
+                            <div class="plant-card" data-type="{{ $plant->plant_type ?? 'ornamental' }}" 
+                                 data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}" 
+                                 data-plant-id="{{ $plant->id }}">
+                                <div class="plant-image">
+                                    <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}" 
+                                         alt="{{ $plant->common_name }}" 
+                                         onload="this.style.opacity='1'; this.nextElementSibling.style.display='none';"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="placeholder hidden">Imagen no disponible</div>
+                                </div>
+                                <div class="plant-details">
+                                    <h2>{{ $plant->common_name }}</h2>
+                                    <p>Tamaño: <span class="size-input">50 x 50</span></p>
+                                    <p>Cantidad:</p>
+                                    <div class="quantity-container">
+                                        <div class="quantity-input">
+                                            <button class="quantity-btn minus" data-plant-id="{{ $plant->id }}">-</button>
+                                            <input type="number" class="quantity-input-field" data-plant-id="{{ $plant->id }}" 
+                                                   value="1" min="1">
+                                            <button class="quantity-btn plus" data-plant-id="{{ $plant->id }}">+</button>
+                                        </div>
+                                    </div>
+                                    <p>$ {{ number_format($plant->price, 2) }} <span>Los gastos de envío se calculan en la pantalla de pago</span></p>
+                                    <div class="buttons">
+                                        <button class="add-to-cart" data-plant-id="{{ $plant->id }}" 
+                                                data-plant-name="{{ $plant->common_name }}" 
+                                                data-plant-price="{{ $plant->price }}">Agregar al carrito</button>
+                                        <button class="buy-now" data-plant-id="{{ $plant->id }}" 
+                                                data-plant-name="{{ $plant->common_name }}" 
+                                                data-plant-price="{{ $plant->price }}">Comprar ahora</button>
+                                    </div>
+                                    <div class="extra-links">
+                                        <a href="#">Share</a>
+                                        <a href="#">Ver todos los detalles</a>
+                                        <a href="#" class="whatsapp-link" data-plant-id="{{ $plant->id }}"> 
+                                            <img src="https://img.icons8.com/color/24/000000/whatsapp.png" alt="WhatsApp">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         @endif
                     @endforeach
                 </div>
-            @else
-                <p class="text-[var(--text-color)] text-center text-xl">No hay plantas en venta disponibles en este momento.</p>
-            @endif
+                @if ($plants->isEmpty())
+                    <p class="text-[var(--text-color)] text-center text-xl">No hay plantas en venta disponibles en este momento.</p>
+                @endif
+            </div>
         </div>
-
-        <!-- Hojas flotantes decorativas -->
-        <div class="leaf leaf1"></div>
-        <div class="leaf leaf2"></div>
-        <div class="leaf leaf3"></div>
-        <div class="leaf leaf4"></div>
-        <div class="leaf leaf5"></div>
     </div>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -418,8 +138,222 @@
             once: true,
         });
 
+        // Carrito de compras
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Guardar carrito en localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+        }
+
+        // Actualizar la visualización del carrito
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalContainer = document.getElementById('cart-total');
+            const cartCount = document.getElementById('cart-count');
+            let total = 0;
+            let itemCount = 0;
+
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>El carrito está vacío.</p>';
+            } else {
+                cart.forEach(item => {
+                    const subtotal = item.price * item.quantity;
+                    total += subtotal;
+                    itemCount += item.quantity;
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'cart-item';
+                    itemElement.innerHTML = `
+                        <div class="cart-item-details">
+                            <p><strong>${item.name}</strong></p>
+                            <p>Precio: $${item.price.toFixed(2)} x ${item.quantity} = $${subtotal.toFixed(2)}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="quantity-btn minus" data-plant-id="${item.id}">-</button>
+                            <input type="number" class="quantity-input-field" value="${item.quantity}" min="1" data-plant-id="${item.id}">
+                            <button class="quantity-btn plus" data-plant-id="${item.id}">+</button>
+                            <button class="remove-item" data-plant-id="${item.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+            }
+
+            cartTotalContainer.textContent = `Total: $${total.toFixed(2)}`;
+            cartCount.textContent = itemCount;
+        }
+
+        // Mostrar notificación
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notification-message');
+            notificationMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            notification.style.display = 'flex';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Agregar al carrito
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const plantId = this.getAttribute('data-plant-id');
+                const plantName = this.getAttribute('data-plant-name');
+                const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
+                const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
+                const quantity = parseInt(quantityInput.value) || 1;
+
+                const existingItem = cart.find(item => item.id === plantId);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({
+                        id: plantId,
+                        name: plantName,
+                        price: plantPrice,
+                        quantity: quantity
+                    });
+                }
+
+                saveCart();
+                showNotification(`${plantName} ha sido añadido al carrito (${quantity} unidad${quantity > 1 ? 'es' : ''})`);
+            });
+        });
+
+        // Manejo de cantidad en las tarjetas
+        document.querySelectorAll('.plant-card .quantity-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const plantId = this.getAttribute('data-plant-id');
+                const input = this.closest('.quantity-input').querySelector('.quantity-input-field');
+                let quantity = parseInt(input.value) || 1;
+
+                if (this.classList.contains('plus')) {
+                    quantity++;
+                } else if (this.classList.contains('minus') && quantity > 1) {
+                    quantity--;
+                }
+
+                input.value = quantity;
+            });
+        });
+
+        // Manejo de cantidad y eliminación en el panel
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.quantity-btn') && e.target.closest('#cart-items')) {
+                const plantId = e.target.closest('.quantity-btn').getAttribute('data-plant-id');
+                const item = cart.find(item => item.id === plantId);
+
+                if (e.target.closest('.quantity-btn').classList.contains('plus')) {
+                    item.quantity++;
+                } else if (e.target.closest('.quantity-btn').classList.contains('minus') && item.quantity > 1) {
+                    item.quantity--;
+                }
+
+                saveCart();
+            } else if (e.target.closest('.remove-item')) {
+                const plantId = e.target.closest('.remove-item').getAttribute('data-plant-id');
+                cart = cart.filter(item => item.id !== plantId);
+                saveCart();
+            }
+        });
+
+        // Manejo de cambio directo en el input del panel
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('quantity-input-field') && e.target.closest('#cart-items')) {
+                const plantId = e.target.getAttribute('data-plant-id');
+                const item = cart.find(item => item.id === plantId);
+                const newQuantity = parseInt(e.target.value);
+                if (newQuantity >= 1) {
+                    item.quantity = newQuantity;
+                    saveCart();
+                } else {
+                    e.target.value = item.quantity;
+                }
+            }
+        });
+
+        // Abrir/cerrar panel
+        document.getElementById('open-cart').addEventListener('click', function() {
+            const cartPanel = document.getElementById('cart-panel');
+            cartPanel.classList.toggle('open');
+            cartPanel.style.display = 'block';
+        });
+
+        document.querySelector('.close-panel').addEventListener('click', function() {
+            const cartPanel = document.getElementById('cart-panel');
+            cartPanel.classList.remove('open');
+            setTimeout(() => {
+                cartPanel.style.display = 'none';
+            }, 300); // Espera a que termine la animación
+        });
+
+        // Vaciar carrito
+        document.getElementById('clear-cart').addEventListener('click', function() {
+            cart = [];
+            saveCart();
+        });
+
+        // Comprar ahora (enviar a WhatsApp)
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showNotification('El carrito está vacío');
+                return;
+            }
+
+            let message = "Hola, quiero realizar el siguiente pedido:\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                message += `${item.name} - Cantidad: ${item.quantity} - Subtotal: $${subtotal.toFixed(2)}\n`;
+                total += subtotal;
+            });
+
+            message += `\nTotal: $${total.toFixed(2)}\nPor favor, indíquenme los pasos para completar la compra.`;
+
+            const whatsappNumber = "+573227220215";
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            cart = [];
+            saveCart();
+            document.getElementById('cart-panel').classList.remove('open');
+            setTimeout(() => {
+                document.getElementById('cart-panel').style.display = 'none';
+            }, 300);
+        }
+
+        document.querySelectorAll('.buy-now').forEach(button => {
+            button.addEventListener('click', function() {
+                const plantId = this.getAttribute('data-plant-id');
+                const plantName = this.getAttribute('data-plant-name');
+                const plantPrice = parseFloat(this.getAttribute('data-plant-price'));
+                const quantityInput = this.closest('.plant-card').querySelector('.quantity-input-field');
+                const quantity = parseInt(quantityInput.value) || 1;
+
+                const existingItem = cart.find(item => item.id === plantId);
+                if (!existingItem) {
+                    cart.push({
+                        id: plantId,
+                        name: plantName,
+                        price: plantPrice,
+                        quantity: quantity
+                    });
+                    saveCart();
+                }
+
+                checkoutCart();
+            });
+        });
+
+        // Checkout desde el panel
+        document.getElementById('checkout').addEventListener('click', checkoutCart);
+
         // Filtrado dinámico
         document.addEventListener('DOMContentLoaded', function () {
+            updateCartDisplay();
             const filterButtons = document.querySelectorAll('.filter-btn');
             const plantCards = document.querySelectorAll('.plant-card');
 
@@ -455,13 +389,10 @@
             carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
 
-        // Automatizar carrusel
         setInterval(() => moveCarousel(1), 5000);
 
-        // Prevenir clics accidentales en el carrusel
         document.querySelector('.carousel').addEventListener('click', (e) => e.stopPropagation());
 
-        // Manejo de imágenes
         document.querySelectorAll('img').forEach(img => {
             img.onload = function() {
                 this.style.opacity = '1';

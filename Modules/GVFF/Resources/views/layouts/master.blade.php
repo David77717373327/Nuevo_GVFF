@@ -22,7 +22,7 @@
             transition: all 0.3s ease;
         }
         h1 {
-            color:white
+            color: black;
         }
 
         .sidebar {
@@ -33,27 +33,7 @@
             width: 250px;
             overflow-y: auto;
             overflow-x: hidden;
-        }
-
-        .sidebar video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 123%;
-            object-fit: cover;
-            z-index: 0;
-            filter: brightness(0.8);
-        }
-
-        .sidebar .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
-            z-index: 1;
+            background-color: #ffffff;
         }
 
         .sidebar .sidebar-content {
@@ -68,7 +48,7 @@
             display: flex;
             align-items: center;
             padding: 10px 15px;
-            color: #ffffff;
+            color: #000000;
             text-decoration: none;
             font-size: 16px;
             transition: all 0.3s ease;
@@ -123,7 +103,7 @@
         .submenu-list li a {
             display: block;
             padding: 0.5rem 1rem;
-            color: #e5e7eb;
+            color: #000000;
             transition: all 0.3s ease;
         }
 
@@ -136,7 +116,19 @@
             color: #ff0000 !important;
         }
 
-        
+        .menu-item.submenu-toggle {
+            position: relative;
+        }
+
+        .menu-item.submenu-toggle .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item.submenu-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -148,24 +140,18 @@
     <div class="flex flex-1">
         <!-- Sidebar -->
         <aside class="sidebar text-white flex flex-col shadow-lg">
-            <video autoplay muted loop>
-                <source src="{{ asset('modules/gvff/images/Learn and Play with Magic Media.mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="overlay"></div>
             <div class="sidebar-content">
                 <div class="p-6 border-b border-gray-700 text-center">
                     <div class="flex justify-center">
                         <img src="{{ asset('modules/gvff/images/logo-.png') }}" alt="Vivero"
                             class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
                     </div>
-                    <h1 class="text-base font-semibold mt-2" style="position: relative;">Gestión de Vivero Fauna y Flora
-                    </h1>
+                    <h1 class="text-base font-semibold mt-2" style="position: relative;">Gestión de Vivero Fauna y Flora</h1>
                 </div>
                 <!-- Add "Administrador" below the logo -->
                 @auth
                     @if (checkRol('gvff.admin'))
-                        <div class="p-4 text-lg font-semibold text-center">
+                        <div class="p-4 text-lg font-semibold text-center text-black">
                             Administrador
                         </div>
                     @endif
@@ -183,7 +169,6 @@
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-seedling"></i> Plantas
                     </a>
-
                     <a href="{{ route('gvff.admin.faunas.index') }}"
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-paw"></i> Fauna
@@ -192,7 +177,6 @@
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-warehouse"></i> Entrada de Inventario
                     </a>
-
                     <a href="{{ route('gvff.admin.plant_inventory.index') }}"
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
                         <i class="fa-solid fa-list-ul"></i> Inventario de Plantas
@@ -203,17 +187,17 @@
                     </a>
                     <a href="{{ route('gvff.admin.plant_inventory.sale.history') }}"
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
-                        <i class="fa-solid fa-landmark"></i></i> Historial de Ventas
+                        <i class="fa-solid fa-landmark"></i> Historial de Ventas
                     </a>
-                    <a href="#" class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition"
+                    <a href="#" class="menu-item submenu-toggle block mb-2 rounded-lg hover:bg-red-600 transition"
                         onclick="toggleSubmenu(event, 'herramientas-submenu')">
                         <i class="fa-solid fa-hammer"></i> Herramientas
+                        <i class="fa-solid fa-chevron-down arrow"></i>
                     </a>
                     <div class="submenu" id="herramientas-submenu">
                         <ul class="submenu-list">
                             <li><a href="{{ route('gvff.admin.Tool.index') }}"><i class="fa-solid fa-hammer"></i> Nueva
                                     Herramientas</a></li>
-
                         </ul>
                     </div>
                     <div class="p-4 border-t border-green-700">
@@ -243,10 +227,13 @@
 
             const isActive = submenu.classList.contains('active');
             document.querySelectorAll('.submenu').forEach(sub => sub.classList.remove('active'));
+            document.querySelectorAll('.submenu-toggle').forEach(toggle => toggle.classList.remove('active'));
             if (!isActive) {
                 submenu.classList.add('active');
+                event.currentTarget.classList.add('active');
             } else {
                 submenu.classList.remove('active');
+                event.currentTarget.classList.remove('active');
             }
 
             if (!submenu.classList.contains('active')) {
