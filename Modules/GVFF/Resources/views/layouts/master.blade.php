@@ -55,7 +55,8 @@
         }
 
         .sidebar a:hover {
-            background-color: #38a169;
+            background-color: white;
+            color: green;
             transform: translateX(5px);
         }
 
@@ -108,13 +109,11 @@
         }
 
         .submenu-list li a:hover {
-            background-color: #38a169;
+            background-color: #ffffff;
             transform: translateX(5px);
         }
 
-        .logout-btn a {
-            color: #ff0000 !important;
-        }
+        
 
         .menu-item.submenu-toggle {
             position: relative;
@@ -145,17 +144,16 @@
                     <div class="flex justify-center">
                         <img src="{{ asset('modules/gvff/images/logo-.png') }}" alt="Vivero"
                             class="rounded-full w-32 h-14 object-cover object shadow-md hover:shadow-lg hover:translate-y-1 transition-all duration-300">
-                    </div>
-                    <h1 class="text-base font-semibold mt-2" style="position: relative;">Gestión de Vivero Fauna y Flora</h1>
-                </div>
-                <!-- Add "Administrador" below the logo -->
-                @auth
+                    </div>     @auth
                     @if (checkRol('gvff.admin'))
                         <div class="p-4 text-lg font-semibold text-center text-black">
                             Administrador
                         </div>
                     @endif
                 @endauth
+                </div>
+                <!-- Add "Administrador" below the logo -->
+           
                 <nav class="flex-1 p-4">
                     <a href="{{ route('gvff.index') }}"
                         class="menu-item block mb-2 rounded-lg hover:bg-red-600 transition">
