@@ -254,6 +254,10 @@
         <div class="leaf leaf3"></div>
     </div>
 </div>
+<<<<<<< HEAD
+@endsection
+
+=======
 
 <!-- jQuery, Bootstrap, DataTables y Buttons -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -316,3 +320,4 @@ $(document).ready(function() {
 </script>
 
 @endsection
+>>>>>>> ff560a38d36cbddf65f5d63e95146827ec9535e0
