@@ -209,7 +209,7 @@
                         </div>
                         <div class="col-md-2">
                             <label class="form-label">Disponible</label>
-                            <input type="text" id="plant_stock" class="form-control" readonly>
+                            <input type="text" id="plant_amount" class="form-control" readonly>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label">Precio Unitario</label>
@@ -329,10 +329,10 @@ $(document).ready(function () {
         const plantId = $(this).val();
         if (plantId && availablePlants[plantId]) {
             const plantData = availablePlants[plantId];
-            $('#plant_stock').val(plantData.amount);
+            $('#plant_amount').val(plantData.amount);
             $('#plant_price').val(parseFloat(plantData.price || 0).toFixed(2));
         } else {
-            $('#plant_stock').val('');
+            $('#plant_amount').val('');
             $('#plant_price').val('');
         }
     });
@@ -340,12 +340,12 @@ $(document).ready(function () {
     $('#addPlant').on('click', function () {
         const plantId = $('#plant_select').val();
         const plantName = $('#plant_select option:selected').text();
-        const stock = parseInt($('#plant_stock').val());
+        const amount = parseInt($('#plant_amount').val());
         const price = parseFloat(availablePlants[plantId]?.price) || 0;
         const quantity = parseInt($('#plant_quantity').val());
 
-        if (!plantId || quantity <= 0 || quantity > stock || !availablePlants[plantId]) {
-            alert('Verifique la selección y la cantidad.');
+        if (!plantId || quantity <= 0 || quantity > amount || !availablePlants[plantId]) {
+            alert('La cantidad solicitada no puede ser mayor a la disponible.');
             return;
         }
 
@@ -359,10 +359,10 @@ $(document).ready(function () {
         $('#saleTable').append(`
             <tr id="row_${plantId}">
                 <td>${plantName}</td>
-                <td>${stock}</td>
+                <td>${amount}</td>
                 <td>${price.toFixed(2)}</td>
                 <td>
-                    <input type="number" name="plants[${plantId}]" class="form-control plant-quantity" value="${quantity}" min="1" max="${stock}" required>
+                    <input type="number" name="plants[${plantId}]" class="form-control plant-quantity" value="${quantity}" min="1" max="${amount}" required>
                 </td>
                 <td class="subtotal" data-price="${price}">${subtotal}</td>
                 <td>
