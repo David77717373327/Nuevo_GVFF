@@ -16,7 +16,7 @@ class AppTableSeeder extends Seeder
             ['name' => 'GVFF'],
             [
             'url' => '/gvff/welcome',
-            'color' => '#FF5733',
+            'color' => '#28b463',
             'icon' => 'fas fa-frog',
             'description' => 'Sistema de gestion de vivero fauna y flora',
             'description_english' => 'Pork unit Management System',

@@ -150,7 +150,8 @@ class PlantInventoryController extends Controller
     {
         $person = Person::where('document_number', $document)->first();
 
-        if ($person) {
+        if ($person) {  
+            
             return response()->json([
                 'id' => $person->id,
                 'name' => $person->first_name . ' ' . $person->first_last_name . ' ' . $person->second_last_name,

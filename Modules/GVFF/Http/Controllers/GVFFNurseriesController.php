@@ -3,6 +3,7 @@
 namespace Modules\GVFF\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\GVFF\Entities\nurseries;
@@ -109,14 +110,25 @@ public function edit(Nurseries $nurseries)
     return redirect()->route('gvff.admin.nurseries.index')->with('success', 'Vivero actualizado con éxito.');
 }
 
-    // Eliminar un vivero
-    public function destroy(Nurseries $nurseries) // Cambiado de Nursery a Nurseries
-    {
-        // Eliminar la imagen si existe
-        if ($nurseries->image) {
-            \Storage::disk('public')->delete($nurseries->image);
+    public function destroy(Nurseries $nursery)
+{
+    try {
+        // Verificamos si tiene plantas asociadas
+        if ($nursery->plants()->count() > 0) {
+            return redirect()->route('gvff.admin.nurseries.index')
+                ->with('error', 'El vivero no se puede eliminar, tiene registros asociados.');
         }
-        $nurseries->delete();
-        return redirect()->route('gvff.admin.nurseries.index')->with('success', 'Vivero eliminado con éxito.');
+
+        // Intentar eliminar
+        $nursery->delete();
+
+        return redirect()->route('gvff.admin.nurseries.index')
+            ->with('success', 'Vivero eliminado exitosamente.');
+    } catch (QueryException $e) {
+        // Si la base de datos lanza un error por restricción de clave foránea
+        return redirect()->route('gvff.admin.nurseries.index')
+            ->with('error', 'No se pudo eliminar el vivero por restricciones en la base de datos.');
     }
+}
+
 }
