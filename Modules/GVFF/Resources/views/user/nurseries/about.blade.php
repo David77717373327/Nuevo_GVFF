@@ -47,7 +47,7 @@
                         <p class="text-center text-sm text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Líder de Desarrollo</p>
                     </div>
                     <div class="dev-card relative bg-gradient-to-b from-green-50 to-green-100 p-6 rounded-2xl shadow-lg transition-all duration-300 group overflow-hidden">
-                        <img src="{{ asset('modules/gvff/images/logo2.jpeg') }}" alt="María Gómez" class="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/150'; console.log('Imagen desarrollador1.jpg no encontrada');">
+                        <img src="{{ asset('modules/gvff/images/Penagos.jpeg') }}" alt="María Gómez" class="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/150'; console.log('Imagen desarrollador1.jpg no encontrada');">
                         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/leaf.png')] opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         <p class="text-center font-semibold mt-4 text-green-900 text-lg group-hover:text-green-700 transition-colors duration-300">Maria Alejandra Penagos</p>
                         <p class="text-center text-sm text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Diseñadora UI/UX</p>
