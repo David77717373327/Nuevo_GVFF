@@ -141,6 +141,16 @@
                                 <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star"></i><span>Destacadas</span></a></li>
                             </ul>
                         </li>
+                         </li>
+                          <li data-aos="fade-right" data-aos-delay="200" class="relative">
+                            <a href="{{ route('gvff.user.fauna.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-paw animate-bounce"></i>
+                                <span>Fauna</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra fauna</span>
+
+                        </li>
+
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
                             <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-shopping-cart animate-pulse"></i>
@@ -154,7 +164,7 @@
                                 <span>Acerca de</span>
                             </a>
                             <span class="tooltip">Conoce nuestra misión y visión</span>
-                        </li>
+                       
                         <li data-aos="fade-right" data-aos-delay="500" class="relative">
                             <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fab fa-whatsapp animate-bounce"></i>

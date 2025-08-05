@@ -164,6 +164,15 @@
                             </a>
                             <span class="tooltip">Conoce nuestra misión y visión</span>
                         </li>
+                       <li data-aos="fade-right" data-aos-delay="200" class="relative">
+                            <a href="{{ route('gvff.user.fauna.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-paw animate-bounce"></i>
+                                <span>Fauna</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra fauna</span>
+
+                        </li>
+
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
                             <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-shopping-cart animate-pulse"></i>
