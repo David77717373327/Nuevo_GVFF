@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\SICA\Entities\ProductiveUnitWarehouse;
 
 class PlantInventory extends Model
-{
+{   
     use HasFactory;
 
-    protected $fillable = ['productive_unit_warehouse_id','person_id', 'plant_id', 'amount', 'production_date','price', 'description'];
+    protected $fillable = ['productive_unit_warehouse_id','person_id', 'plant_id', 'amount', 'production_date','price', 'description','stock'];
     
     protected static function newFactory()
     {

@@ -21,7 +21,7 @@ class PlantInventoryController extends Controller
 {
     public function index()
     {
-        $inventories = PlantInventory::with([
+        $inventories = PlantInventory::where('amount','>', 0)->with([
             'plant',
             'productive_unit_warehouse.productive_unit',
             'productive_unit_warehouse.warehouse'
@@ -31,15 +31,15 @@ class PlantInventoryController extends Controller
     }
 
     public function entrance()
-{
-    $productiveUnitWarehouses = ProductiveUnitWarehouse::with(['productive_unit', 'warehouse'])
-        ->whereHas('productive_unit', function ($query) {
-            $query->where('id', 18); // Filtra por Viveros Frutales (id 18)
-        })->get();
-    $movementTypes = MovementType::where('name', 'Movimiento Entrada')->get();
+    {
+        $productiveUnitWarehouses = ProductiveUnitWarehouse::with(['productive_unit', 'warehouse'])
+            ->whereHas('productive_unit', function ($query) {
+                $query->where('id', 18);
+            })->first();
+        $movementTypes = MovementType::where('name', 'Movimiento Entrada')->get();
 
-    return view('gvff::admin.inventories.entrance', compact('productiveUnitWarehouses', 'movementTypes'));
-}              
+        return view('gvff::admin.inventories.entrance', compact('productiveUnitWarehouses', 'movementTypes'));
+    }
 
 
 
@@ -77,25 +77,44 @@ class PlantInventoryController extends Controller
 
             // Registrar responsable del movimiento
             MovementResponsibility::create([
-                'person_id' => Auth::id(),
+                'person_id' => Auth::user()->person_id,
                 'movement_id' => $movement->id,
                 'role' => 'RECIBE',
                 'date' => now(),
             ]);
 
-            // Crear inventario de plantas
-            $inventory = PlantInventory::create([
-                'person_id' => Auth::id(),
-                'productive_unit_warehouse_id' => $request->productive_unit_warehouse_id,
-                'plant_id' => $request->plant_id,
-                'description' => $request->description,
-                'amount' => $request->amount,
-                'production_date' => $request->production_date,
-            ]);
+            $plant_inventory = PlantInventory::where('plant_id', $request->plant_id)
+                ->where('productive_unit_warehouse_id', $request->productive_unit_warehouse_id)
+                ->where('production_date', $request->production_date)
+                ->first();
+
+
+            if ($plant_inventory) {
+                // Si ya existe un inventario para esta planta, actualizarlo
+                $plant_inventory->update([
+                    'amount' => $plant_inventory->amount + $request->amount,
+                    'stock' => $request->stock,
+                ]);
+
+            } else {
+                // Si no existe, crear un nuevo inventario
+                // Crear inventario de plantas
+                $plant_inventory = PlantInventory::create([
+                    'person_id' => Auth::user()->person_id,
+                    'productive_unit_warehouse_id' => $request->productive_unit_warehouse_id,
+                    'plant_id' => $request->plant_id,
+                    'description' => $request->description,
+                    'amount' => $request->amount,
+                    'stock' => $request->stock,
+                    'production_date' => $request->production_date,
+                ]);
+            }
+
+            $plant_inventory->save();
 
             // Registrar detalle del movimiento
             MovementDetailPlant::create([
-                'plant_inventory_id' => $inventory->id,
+                'plant_inventory_id' => $plant_inventory->id,
                 'movement_id' => $movement->id,
                 'amount' => $request->amount,
                 'price' => 0,
@@ -115,32 +134,35 @@ class PlantInventoryController extends Controller
     }
 
     public function sale()
-{
-    $warehouses = ProductiveUnitWarehouse::with(['productive_unit', 'warehouse'])
-        ->whereHas('productive_unit', function ($query) {
-            $query->where('id', 18); // Filtra por Viveros Frutales (id 18)
-        })->get();
-    return view('gvff::admin.inventories.sale', compact('warehouses'));
-}
+    {
+        $warehouses = ProductiveUnitWarehouse::with(['productive_unit', 'warehouse'])
+            ->whereHas('productive_unit', function ($query) {
+                $query->where('id', 18); // Filtra por Viveros Frutales (id 18)
+            })->get();
+        return view('gvff::admin.inventories.sale', compact('warehouses'));
+    }
 
     /**
      * Traer las plantas disponibles en la bodega (AJAX)
      */
     public function getPlantsByWarehouse($warehouseId)
     {
-        $plants = PlantInventory::with('plant')
+        $plants = PlantInventory::selectRaw('plant_id, SUM(amount) as total_amount')
+            ->with('plant') // Esto no funciona directamente con groupBy, se debe ajustar
             ->where('productive_unit_warehouse_id', $warehouseId)
+            ->groupBy('plant_id')
             ->get();
 
         return response()->json($plants->map(function ($item) {
             return [
-                'id' => $item->id,
+                'id' => $item->plant_id,
                 'plant_name' => $item->plant->common_name ?? 'Sin nombre',
-                'amount' => $item->amount,
+                'amount' => $item->total_amount,
                 'price' => $item->plant->price ?? 0,
             ];
         }));
     }
+
     public function history()
     {
         $movements = Movement::orderBy('registration_date', 'desc')->wherehas('movement_detail_plants')->get();
@@ -155,8 +177,8 @@ class PlantInventoryController extends Controller
     {
         $person = Person::where('document_number', $document)->first();
 
-        if ($person) {  
-            
+        if ($person) {
+
             return response()->json([
                 'id' => $person->id,
                 'name' => $person->first_name . ' ' . $person->first_last_name . ' ' . $person->second_last_name,
@@ -169,83 +191,101 @@ class PlantInventoryController extends Controller
      * Procesar la venta de plantas
      */
     public function processSale(Request $request)
-{
-    $request->validate([
-        'productive_unit_warehouse_id' => 'required|exists:productive_unit_warehouses,id',
-        'client_id' => 'required|exists:people,id',
-        'plants' => 'required|array',
-    ]);
-
-    DB::beginTransaction();
-
-    try {
-        $movementType = MovementType::where('name', 'Venta')->firstOrFail();
-        $totalPrice = 0;
-
-        $movement = Movement::create([
-            'registration_date' => now(),
-            'movement_type_id' => $movementType->id,
-            'voucher_number' => time(),
-            'price' => 0, // Se calculará después
-            'observation' => 'Venta de plantas',
-            'state' => 'APROBADO',
+    {
+        $request->validate([
+            'productive_unit_warehouse_id' => 'required|exists:productive_unit_warehouses,id',
+            'client_id' => 'required|exists:people,id',
+            'plants' => 'required|array',
         ]);
 
-        WarehouseMovement::create([
-            'productive_unit_warehouse_id' => $request->productive_unit_warehouse_id,
-            'movement_id' => $movement->id,
-            'role' => 'Entrega',
-        ]);
+        DB::beginTransaction();
 
-        MovementResponsibility::create([
-            'person_id' => Auth::id(),
-            'movement_id' => $movement->id,
-            'role' => 'ENTREGA',
-            'date' => now(),
-        ]);
+        try {
+            $movementType = MovementType::where('name', 'Venta')->firstOrFail();
+            $totalPrice = 0;
 
-        MovementResponsibility::create([
-            'person_id' => $request->client_id,
-            'movement_id' => $movement->id,
-            'role' => 'RECIBE',
-            'date' => now(),
-        ]);
+            $movement = Movement::create([
+                'registration_date' => now(),
+                'movement_type_id' => $movementType->id,
+                'voucher_number' => time(),
+                'price' => 0, // Se actualizará luego
+                'observation' => 'Venta de plantas',
+                'state' => 'APROBADO',
+            ]);
 
-        foreach ($request->plants as $plantInventoryId => $quantity) {
-            if ($quantity > 0) {
-                $inventory = PlantInventory::with('plant')->findOrFail($plantInventoryId);
+            WarehouseMovement::create([
+                'productive_unit_warehouse_id' => $request->productive_unit_warehouse_id,
+                'movement_id' => $movement->id,
+                'role' => 'Entrega',
+            ]);
 
-                // Validar que el stock actual sea suficiente
-                if ($quantity > $inventory->stock) {
-                    throw new \Exception('Stock insuficiente para la planta: ' . ($inventory->plant->common_name ?? 'Sin nombre'));
+            MovementResponsibility::create([
+                'person_id' => Auth::user()->person_id,
+                'movement_id' => $movement->id,
+                'role' => 'ENTREGA',
+                'date' => now(),
+            ]);
+
+            MovementResponsibility::create([
+                'person_id' => $request->client_id,
+                'movement_id' => $movement->id,
+                'role' => 'RECIBE',
+                'date' => now(),
+            ]);
+
+            // 🔹 Ahora recorremos cada planta que se va a vender
+            foreach ($request->plants as $plantId => $quantityRequested) {
+                if ($quantityRequested <= 0)
+                    continue;
+
+                // 🔹 Buscar todos los registros de esa planta en el almacén, ordenados por fecha de producción (FIFO)
+                $inventories = PlantInventory::with('plant')
+                    ->where('productive_unit_warehouse_id', $request->productive_unit_warehouse_id)
+                    ->where('plant_id', $plantId)
+                    ->orderBy('production_date', 'asc')
+                    ->get();
+
+                $totalAvailable = $inventories->sum('amount');
+
+                // 🔹 Validar stock suficiente sumando todos los registros
+                if ($totalAvailable < $quantityRequested) {
+                    throw new \Exception('Stock insuficiente para la planta: ' . ($inventories->first()->plant->common_name ?? 'Sin nombre'));
                 }
 
-                // Calcular el nuevo stock y asegurarse de que no baje de 0 (aunque no debería ser necesario si la validación funciona)
-                $newStock = $inventory->stock - $quantity;
+                $remaining = $quantityRequested;
 
-                // Actualizar el stock directamente
-                $inventory->update(['stock' => $newStock]);
+                foreach ($inventories as $inventory) {
+                    if ($remaining <= 0)
+                        break;
 
-                $totalPrice += ($inventory->plant->price ?? 0) * $quantity;
+                    $deduct = min($inventory->amount, $remaining);
+                    $inventory->amount -= $deduct;
+                    $inventory->save();
 
-                MovementDetailPlant::create([
-                    'plant_inventory_id' => $inventory->id,
-                    'movement_id' => $movement->id,
-                    'amount' => $quantity,
-                    'price' => $inventory->plant->price ?? 0,
-                ]);
+                    // 🔹 Registrar cada descuento en MovementDetailPlant
+                    MovementDetailPlant::create([
+                        'plant_inventory_id' => $inventory->id,
+                        'movement_id' => $movement->id,
+                        'amount' => $deduct,
+                        'price' => $inventory->plant->price ?? 0,
+                    ]);
+
+                    $totalPrice += ($inventory->plant->price ?? 0) * $deduct;
+
+                    $remaining -= $deduct;
+                }
             }
+
+            // 🔹 Actualizar precio total del movimiento
+            $movement->update(['price' => $totalPrice]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Venta registrada exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error al procesar la venta: ' . $e->getMessage());
         }
-
-        // Actualizar el precio total del movimiento
-        $movement->update(['price' => $totalPrice]);
-
-        DB::commit();
-
-        return redirect()->back()->with('success', 'Venta registrada exitosamente.');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()->with('error', 'Error al procesar la venta: ' . $e->getMessage());
     }
-}
+
 }

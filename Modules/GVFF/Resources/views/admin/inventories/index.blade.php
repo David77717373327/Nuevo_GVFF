@@ -215,8 +215,8 @@
                             <th>Unidad Productiva</th>
                             <th>Bodega</th>
                             <th>Descripción</th>
-                            <th>Cantidad Registrada</th>
-                            <th>Stock Actual</th>
+                            <th>Cantidad</th>
+                            <th>Stock Minimo</th>
                             <th>Fecha de Producción</th>
                         </tr>
                     </thead>

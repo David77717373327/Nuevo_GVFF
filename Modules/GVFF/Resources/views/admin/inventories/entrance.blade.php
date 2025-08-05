@@ -142,14 +142,8 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">Unidad Productiva - Bodega</label>
-                            <select name="productive_unit_warehouse_id" class="form-control @error('productive_unit_warehouse_id') is-invalid @enderror" required>
-                                <option value="">Seleccione...</option>
-                                @foreach($productiveUnitWarehouses as $puw)
-                                    <option value="{{ $puw->id }}">
-                                        {{ $puw->productive_unit->name }} - {{ $puw->warehouse->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <input type="hidden" name="productive_unit_warehouse_id" value="{{ $productiveUnitWarehouses->id }}">
+                            <input type="text" name="productive_unit_warehouse_name" value="{{ $productiveUnitWarehouses->productive_unit->name }} - {{ $productiveUnitWarehouses->warehouse->name }}" class="form-control @error('productive_unit_warehouse_id') is-invalid @enderror" readonly>
                             @error('productive_unit_warehouse_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -169,6 +163,13 @@
                             <label class="form-label">Cantidad</label>
                             <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror" required>
                             @error('amount')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Stock Minimo</label>
+                            <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror" required>
+                            @error('stock')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

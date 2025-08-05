@@ -124,6 +124,7 @@ Route::prefix('gvff/admin/Tool')->group(function () {
     Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.Tool.destroy');
     Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.Tool.check');
 
+    
 });
 
 // Rutas para la búsqueda de fauna

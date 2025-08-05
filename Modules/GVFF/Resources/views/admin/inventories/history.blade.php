@@ -32,7 +32,8 @@
             color: var(--text-color);
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             width: 100%;
             max-width: 200px;
             padding: 0.75rem;
@@ -42,10 +43,11 @@
             transition: border-color 0.2s ease;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             outline: none;
             border-color: var(--success-color);
-            box-shadow: 0 0 5px rgba(25,135,84,0.3);
+            box-shadow: 0 0 5px rgba(25, 135, 84, 0.3);
         }
 
         #history-table {
@@ -65,7 +67,7 @@
         #history-table td {
             background: #fff;
             border: none !important;
-            box-shadow: 0 2px 8px rgba(25,135,84,0.07);
+            box-shadow: 0 2px 8px rgba(25, 135, 84, 0.07);
             border-radius: 12px;
             vertical-align: middle !important;
             text-align: center;
@@ -76,7 +78,7 @@
         }
 
         #history-table tbody tr:hover {
-            box-shadow: 0 4px 16px rgba(25,135,84,0.12);
+            box-shadow: 0 4px 16px rgba(25, 135, 84, 0.12);
             transform: translateY(-2px) scale(1.01);
             background: #f6fff9 !important;
         }
@@ -98,7 +100,7 @@
         .detail-row table td {
             background: #fff;
             border: none !important;
-            box-shadow: 0 2px 8px rgba(25,135,84,0.07);
+            box-shadow: 0 2px 8px rgba(25, 135, 84, 0.07);
             border-radius: 6px;
             vertical-align: middle !important;
             text-align: center;
@@ -140,17 +142,20 @@
         }
 
         h2 {
-            color: var(--success-color); /* Fixed to match the green theme */
+            color: var(--success-color);
+            /* Fixed to match the green theme */
         }
 
         @media (max-width: 768px) {
             .form-container {
                 padding: 1rem;
             }
+
             #history-table th,
             #history-table td {
                 font-size: 0.875rem;
             }
+
             .detail-row table th,
             .detail-row table td {
                 font-size: 0.875rem;
@@ -165,13 +170,13 @@
                     Historial de Movimientos de Inventario
                 </h2>
 
-                @if(session('success'))
+                @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
 
-                @if(session('error'))
+                @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
@@ -187,7 +192,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="history-table" class="table align-middle">
+                    <table class="table table-striped" border="1" width="100%" cellpadding="5" id="history">
                         <thead>
                             <tr>
                                 <th>Comprobante</th>
@@ -207,20 +212,27 @@
                                     <td>{{ $movement->movement_type->name }}</td>
                                     <td>
                                         @php
-                                            $bodega = $movement->warehouse_movements->firstWhere('role', 'Entrega')
-                                                    ?? $movement->warehouse_movements->firstWhere('role', 'Recibe');
+                                            $bodega =
+                                                $movement->warehouse_movements->firstWhere('role', 'Entrega') ??
+                                                $movement->warehouse_movements->firstWhere('role', 'Recibe');
                                         @endphp
-                                        {{ $bodega ? $bodega->productive_unit_warehouse->productive_unit->name . ' - ' . $bodega->productive_unit_warehouse->warehouse->name : 'N/A' }}
+                                        {{ $bodega?->productive_unit_warehouse?->productive_unit?->name . ' - ' . $bodega?->productive_unit_warehouse?->warehouse?->name ?? 'N/A' }}
                                     </td>
                                     <td>
                                         @php
-                                            $entrega = $movement->movement_responsibilities->firstWhere('role', 'ENTREGA');
+                                            $entrega = $movement->movement_responsibilities->firstWhere(
+                                                'role',
+                                                'ENTREGA',
+                                            );
                                         @endphp
                                         {{ $entrega ? $entrega->person->first_name : 'N/A' }}
                                     </td>
                                     <td>
                                         @php
-                                            $recibe = $movement->movement_responsibilities->firstWhere('role', 'RECIBE');
+                                            $recibe = $movement->movement_responsibilities->firstWhere(
+                                                'role',
+                                                'RECIBE',
+                                            );
                                         @endphp
                                         {{ $recibe ? $recibe->person->first_name : 'N/A' }}
                                     </td>
@@ -241,9 +253,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($movement->movement_detail_plants as $detail)
+                                                @foreach ($movement->movement_detail_plants as $detail)
                                                     <tr>
-                                                        <td>{{ $detail->plant_inventory->plant->common_name ?? 'Sin Nombre' }}</td>
+                                                        <td>{{ $detail->plant_inventory->plant->common_name ?? 'Sin Nombre' }}
+                                                        </td>
                                                         <td>{{ $detail->amount }}</td>
                                                     </tr>
                                                 @endforeach
@@ -267,27 +280,27 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function () {
-    $('.btn-toggle-detail').on('click', function () {
-        const id = $(this).data('id');
-        $('#detail-' + id).toggle();
-    });
+    $(document).ready(function() {
+        $('.btn-toggle-detail').on('click', function() {
+            const id = $(this).data('id');
+            $('#detail-' + id).toggle();
+        });
 
-    $('#filterType').on('change', function () {
-        const filter = $(this).val();   
-        $('.movement-row').each(function () {
-            const type = $(this).data('type');
-            
-            if (filter === '') {
-                $(this).show();
-                $('#detail-' + $(this).find('.btn-toggle-detail').data('id')).hide();
-            } else if (type === filter) {
-                $(this).show();
-            } else {
-                $(this).hide();
-                $('#detail-' + $(this).find('.btn-toggle-detail').data('id')).hide();
-            }
+        $('#filterType').on('change', function() {
+            const filter = $(this).val();
+            $('.movement-row').each(function() {
+                const type = $(this).data('type');
+
+                if (filter === '') {
+                    $(this).show();
+                    $('#detail-' + $(this).find('.btn-toggle-detail').data('id')).hide();
+                } else if (type === filter) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                    $('#detail-' + $(this).find('.btn-toggle-detail').data('id')).hide();
+                }
+            });
         });
     });
-});
 </script>

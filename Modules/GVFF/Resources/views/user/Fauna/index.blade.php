@@ -15,11 +15,11 @@
             <!-- Encabezado con imágenes grandes -->
             <div class="text-center mb-12">
                 <div class="flex justify-center items-center space-x-8">
-                    <img src="{{ asset('modules/gvff/images/users/animal.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110">
+                    <img src="{{ asset('modules/gvff/images/users/pata-Photoroom.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110">
                     <h1 class="text-5xl md:text-6xl font-bold text-green-800 leading-tight animate__animated animate__fadeIn">
                         Explora la Fascinante Fauna
                     </h1>
-                    <img src="{{ asset('modules/gvff/images/users/animal.png') }}" alt="Animal Derecha" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110" style="transform: rotate(180deg);">
+                    <img src="{{ asset('modules/gvff/images/users/pata-Photoroom.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110" style="transform: rotate(180deg);">
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
             <!-- Información sobre fauna -->
             <div class="bg-white rounded-xl shadow-xl p-8 mb-12 animate__animated animate__fadeIn flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/3">
-                    <img src="{{ asset('modules/gvff/images/users/fauna.png') }}" alt="Fauna" class="w-full h-auto object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('modules/gvff/images/users/iguana.jpg') }}" alt="Fauna" class="w-full h-auto object-cover rounded-lg shadow-md">
                 </div>
                 <div class="w-full md:w-2/3">
                     <h3 class="text-3xl font-semibold text-green-800 mb-6">¿Qué es la Fauna?</h3>
@@ -66,7 +66,7 @@
                                 <p class="text-gray-700 mb-3"><i class="fas fa-paw text-green-600 mr-3"></i> Tipo: {{ ucfirst($fauna->habitat ?? 'No especificado') }}</p>
                                 <p class="text-gray-700 mb-3"><i class="fas fa-map-marker-alt text-green-600 mr-3"></i> Ubicación: {{ $fauna->location ?? 'No especificada' }}</p>
                                 <p class="text-gray-600 text-base mb-6">{{ Str::limit($fauna->diet ?? 'No disponible', 120) }}</p>
-                                <button class="btn-cta inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
+                                <button class="btn-cta inline-block bg-green-800 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
                                     data-fauna-id="{{ $fauna->id }}" 
                                     data-fauna-name="{{ $fauna->common_name }}" 
                                     data-fauna-scientific="{{ $fauna->scientific_name }}" 

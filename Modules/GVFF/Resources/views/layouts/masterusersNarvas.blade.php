@@ -28,7 +28,7 @@
         }
         /* Estilos para la navegación */
         .navbar {
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            background: #198754;
             z-index: 1000;
         }
         .nav-container {
@@ -114,7 +114,7 @@
                 <div class="flex items-center gap-2">
                     <ul class="nav-links hidden md:flex items-center text-lg font-semibold">
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-800 transition-all duration-300">
                                 <i class="fas fa-home animate-pulse"></i>
                                 <span>Inicio</span>
                             </a>
@@ -138,11 +138,17 @@
                                 <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
                                 <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star"></i><span>Destacadas</span></a></li>
                             </ul>
                         </li>
-                         </li>
-                          <li data-aos="fade-right" data-aos-delay="200" class="relative">
+                         <li data-aos="fade-right" data-aos-delay="400" class="relative">
+                            <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-info-circle animate-pulse"></i>
+                                <span>Acerca de</span>
+                            </a>
+                            <span class="tooltip">Conoce nuestra misión y visión</span>
+                        </li>
+
+                        <li data-aos="fade-right" data-aos-delay="200" class="relative">
                             <a href="{{ route('gvff.user.fauna.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-paw animate-bounce"></i>
                                 <span>Fauna</span>
@@ -158,12 +164,7 @@
                             </a>
                             <span class="tooltip">Explora nuestra página principal</span>
                         </li>
-                        <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                            <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
-                                <i class="fas fa-info-circle animate-pulse"></i>
-                                <span>Acerca de</span>
-                            </a>
-                            <span class="tooltip">Conoce nuestra misión y visión</span>
+                       
                        
                         <li data-aos="fade-right" data-aos-delay="500" class="relative">
                             <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
@@ -198,7 +199,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div data-aos="fade-up">
                     <h3 class="text-2xl font-bold mb-4">Sobre Nosotros</h3>
-                    <p>Somos una empresa dedicada a la conservación y distribución de plantas y viveros, promoviendo la sostenibilidad y la conexión con la naturaleza.</p>
+                    <p>Somos una empresa dedicada a la conservación y distribución de plantas y viveros, promoviendo la
+                        sostenibilidad y la conexión con la naturaleza.</p>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <h3 class="text-2xl font-bold mb-4">Enlaces Rápidos</h3>
@@ -206,17 +208,23 @@
                         <li><a href="#" class="hover:text-yellow-300 transition">Inicio</a></li>
                         <li><a href="#" class="hover:text-yellow-300 transition">Viveros</a></li>
                         <li><a href="#" class="hover:text-yellow-300 transition">Plantas</a></li>
-                        <li><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">Contacto</a></li>
+                        <li><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">Contacto</a>
+                        </li>
                     </ul>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="200">
                     <h3 class="text-2xl font-bold mb-4">Contáctanos</h3>
-                    <p><i class="fas fa-phone mr-2"></i><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">WhatsApp: +57 123 456 7890</a></p>
-                    <p><i class="fas fa-envelope mr-2"></i><a href="mailto:info@viveros.com" class="hover:text-yellow-300 transition">info@viveros.com</a></p>
+                    <p><i class="fas fa-phone mr-2"></i><a href="https://wa.me/1234567890"
+                            class="hover:text-yellow-300 transition">WhatsApp: +57 123 456 7890</a></p>
+                    <p><i class="fas fa-envelope mr-2"></i><a href="mailto:info@viveros.com"
+                            class="hover:text-yellow-300 transition">info@viveros.com</a></p>
                     <div class="mt-4 flex space-x-4">
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>

@@ -21,19 +21,29 @@ class ToolController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:inventory_tools,name',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+            'min_stock' => 'required|integer|min:1',
+            'description' => 'required|string',
+            'status' => 'required',
+            'available' => 'required|boolean',
+            'acquisition_date' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        InventoryTool::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => 'DISPONIBLE',
-        ]);
+        $data = $request->all();
 
-        return redirect()->route('gvff.admin.Tool.index')->with('success', 'Herramienta registrada correctamente.');
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/tools'), $imageName);
+            $data['image'] = 'uploads/tools/' . $imageName;
+        }
+
+        InventoryTool::create($data);
+
+        return redirect()->route('gvff.admin.Tool.index')
+            ->with('success', '✅ La herramienta se guardó correctamente.');
     }
-
     public function edit($id)
     {
         $tool = InventoryTool::findOrFail($id);
@@ -41,27 +51,40 @@ class ToolController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $tool = InventoryTool::findOrFail($id);
+    {
+        $tool = InventoryTool::findOrFail($id);
 
-    $request->validate([
-        'name' => 'required|string|unique:tools,name,' . $tool->id,
-        'description' => 'required|string',
-        'status' => 'required|string',
-        'available' => 'required|boolean',
-        'acquisition_date' => 'nullable|date',
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+            'min_stock' => 'required|integer|min:1',
+            'description' => 'required|string',
+            'status' => 'required',
+            'available' => 'required|boolean',
+            'acquisition_date' => 'nullable|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $tool->update([
-        'name' => $request->name,
-        'description' => $request->description,
-        'status' => $request->status,
-        'available' => $request->available,
-        'acquisition_date' => $request->acquisition_date,
-    ]);
+        $data = $request->all();
 
-    return redirect()->route('gvff.admin.Tool.index')->with('success', 'Herramienta actualizada correctamente.');
-}
+        // Si se sube una nueva imagen, reemplazar la anterior
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/tools'), $imageName);
+            $data['image'] = 'uploads/tools/' . $imageName;
+
+            // Eliminar imagen anterior si existe
+            if ($tool->image && file_exists(public_path($tool->image))) {
+                unlink(public_path($tool->image));
+            }
+        }
+
+        $tool->update($data);
+
+        return redirect()->route('gvff.admin.Tool.index')
+            ->with('success', '✅ La herramienta se actualizó correctamente.');
+    }
+
 
     public function destroy($id)
     {
@@ -69,11 +92,11 @@ class ToolController extends Controller
         return redirect()->back()->with('success', 'Herramienta eliminada.');
     }
     public function show($id)
-{
-    $tool = InventoryTool::findOrFail($id);
+    {
+        $tool = InventoryTool::findOrFail($id);
 
-    return view('gvff::admin.Tool.show', compact('tool'));
-}
+        return view('gvff::admin.Tool.show', compact('tool'));
+    }
 
     // Consultar disponibilidad con AJAX
     public function checkAvailability($id)
