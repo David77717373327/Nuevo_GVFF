@@ -103,6 +103,7 @@ Route::prefix('gvff')->group(function () {
     Route::get('/nurseries/{nursery}', 'GVFFNurseriesUserController@show')->name('gvff.user.nurseries.show');
     Route::get('/about', 'GVFFNurseriesUserController@about')->name('gvff.user.nurseries.about');
     Route::delete('nurseries/{nursery}', 'GVFFNurseriesUserController@destroy')->name('gvff.admin.nurseries.destroy');
+    Route::get('/fauna/search', 'UserFaunaSearchController@search')->name('gvff.user.fauna.search');
 });
 
 Route::prefix('gvff/admin/Tool')->group(function () {
@@ -116,6 +117,7 @@ Route::prefix('gvff/admin/Tool')->group(function () {
     Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.Tool.destroy');
     Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.Tool.check');
 
+    
 });
 
 
