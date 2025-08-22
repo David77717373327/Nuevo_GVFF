@@ -15,11 +15,11 @@
             <!-- Encabezado con imágenes grandes -->
             <div class="text-center mb-12">
                 <div class="flex justify-center items-center space-x-8">
-                    <img src="{{ asset('modules/gvff/images/users/animal.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110">
+                    <img src="{{ asset('modules/gvff/images/users/pata-Photoroom.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110">
                     <h1 class="text-5xl md:text-6xl font-bold text-green-800 leading-tight animate__animated animate__fadeIn">
                         Explora la Fascinante Fauna
                     </h1>
-                    <img src="{{ asset('modules/gvff/images/users/animal.png') }}" alt="Animal Derecha" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110" style="transform: rotate(180deg);">
+                    <img src="{{ asset('modules/gvff/images/users/pata-Photoroom.png') }}" alt="Animal Izquierda" class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110" style="transform: rotate(180deg);">
                 </div>
             </div>
 
@@ -36,11 +36,11 @@
                     <option value="reptile">Reptiles</option>
                 </select>
             </div>
-
+            
             <!-- Información sobre fauna -->
             <div class="bg-white rounded-xl shadow-xl p-8 mb-12 animate__animated animate__fadeIn flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/3">
-                    <img src="{{ asset('modules/gvff/images/users/fauna.png') }}" alt="Fauna" class="w-full h-auto object-cover rounded-lg shadow-md">
+                    <img src="{{ asset('modules/gvff/images/users/iguana.jpg') }}" alt="Fauna" class="w-full h-auto object-cover rounded-lg shadow-md">
                 </div>
                 <div class="w-full md:w-2/3">
                     <h3 class="text-3xl font-semibold text-green-800 mb-6">¿Qué es la Fauna?</h3>
@@ -49,41 +49,37 @@
                     </p>
                 </div>
             </div>
-            
+
             <!-- Grid de fauna -->
             <div id="fauna-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @if($faunas->isNotEmpty())
+                @if(isset($faunas) && !$faunas->isEmpty())
                     @foreach($faunas as $fauna)
-                        @if($fauna->status === 'active')
-                            <div class="fauna-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl" data-category="{{ $fauna->habitat ?? 'all' }}" data-status="{{ $fauna->status ?? 'unknown' }}">
-                                <!-- Imagen -->
-                                <div class="relative">
-                                    <img src="{{ $fauna->image ? asset('storage/' . $fauna->image) : asset('modules/gvff/images/users/animal-placeholder.png') }}" alt="{{ $fauna->common_name }}" class="w-full h-64 object-cover">
-                                    <div class="absolute top-0 right-0 bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-bl-lg">
-                                        {{ ucfirst($fauna->habitat ?? 'No especificado') }}
-                                    </div>
-                                </div>
-                                <!-- Contenido -->
-                                <div class="p-6">
-                                    <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $fauna->common_name }}</h2>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-paw text-green-600 mr-3"></i> Tipo: {{ ucfirst($fauna->habitat ?? 'No especificado') }}</p>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-map-marker-alt text-green-600 mr-3"></i> Ubicación: {{ $fauna->location ?? 'No especificada' }}</p>
-                                    <p class="text-gray-600 text-base mb-6">{{ Str::limit($fauna->diet ?? 'No disponible', 120) }}</p>
-                                    <button class="btn-cta inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
-                                        data-fauna-id="{{ $fauna->id }}" 
-                                        data-fauna-name="{{ $fauna->common_name }}" 
-                                        data-fauna-scientific="{{ $fauna->scientific_name }}" 
-                                        data-fauna-desc="{{ $fauna->diet ?? 'No disponible' }}" 
-                                        data-fauna-image="{{ $fauna->image ? asset('storage/' . $fauna->image) : asset('modules/gvff/images/fauna/placeholder.jpg') }}" 
-                                        data-fauna-status="{{ $fauna->status ?? 'No disponible' }}" 
-                                        data-fauna-habitat="{{ $fauna->habitat ?? 'No especificado' }}" 
-                                        data-fauna-location="{{ $fauna->location ?? 'No especificada' }}">Ver Detalles</button>
+                        <div class="fauna-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl" data-category="{{ $fauna->habitat ?? 'all' }}" data-status="{{ $fauna->status ?? 'unknown' }}">
+                            <div class="relative">
+                                <img src="{{ $fauna->image ? asset('storage/' . $fauna->image) : asset('modules/gvff/images/users/animal-placeholder.png') }}" alt="{{ $fauna->common_name }}" class="w-full h-64 object-cover">
+                                <div class="absolute top-0 right-0 bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-bl-lg">
+                                    {{ ucfirst($fauna->habitat ?? 'No especificado') }}
                                 </div>
                             </div>
-                        @endif
+                            <div class="p-6">
+                                <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $fauna->common_name }}</h2>
+                                <p class="text-gray-700 mb-3"><i class="fas fa-paw text-green-600 mr-3"></i> Tipo: {{ ucfirst($fauna->habitat ?? 'No especificado') }}</p>
+                                <p class="text-gray-700 mb-3"><i class="fas fa-map-marker-alt text-green-600 mr-3"></i> Ubicación: {{ $fauna->location ?? 'No especificada' }}</p>
+                                <p class="text-gray-600 text-base mb-6">{{ Str::limit($fauna->diet ?? 'No disponible', 120) }}</p>
+                                <button class="btn-cta inline-block bg-green-800 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
+                                    data-fauna-id="{{ $fauna->id }}" 
+                                    data-fauna-name="{{ $fauna->common_name }}" 
+                                    data-fauna-scientific="{{ $fauna->scientific_name }}" 
+                                    data-fauna-desc="{{ $fauna->diet ?? 'No disponible' }}" 
+                                    data-fauna-image="{{ $fauna->image ? asset('storage/' . $fauna->image) : asset('modules/gvff/images/fauna/placeholder.jpg') }}" 
+                                    data-fauna-status="{{ $fauna->status ?? 'No disponible' }}" 
+                                    data-fauna-habitat="{{ $fauna->habitat ?? 'No especificado' }}" 
+                                    data-fauna-location="{{ $fauna->location ?? 'No especificada' }}">Ver Detalles</button>
+                            </div>
+                        </div>
                     @endforeach
                 @else
-                    <p class="text-center text-gray-700 text-xl">No hay fauna disponible en este momento.</p>
+                    <p class="text-center text-gray-700 text-xl">No hay fauna disponible. Depuración: {{ isset($faunas) ? 'Datos vacíos' : 'No se recibió $faunas' }}</p>
                 @endif
             </div>
         </div>
@@ -109,7 +105,6 @@
 
     <!-- Estilos personalizados -->
     <style>
-        /* Animación de siluetas de animales */
         .animal {
             position: absolute;
             width: 20px;
@@ -129,7 +124,6 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        /* Animaciones de entrada */
         .animate__fadeIn {
             animation: fadeIn 1s ease-in;
         }
@@ -139,7 +133,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estilos de las tarjetas */
         .fauna-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -158,7 +151,7 @@
         }
     </style>
 
-    <!-- Script para filtros y búsqueda -->
+    <!-- Script para filtros, búsqueda y modal -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('search');
@@ -188,7 +181,6 @@
             searchInput.addEventListener('input', filterFauna);
             filterSelect.addEventListener('change', filterFauna);
 
-            // Cerrar modal
             const modal = document.getElementById('faunaModal');
             const closeModal = document.getElementById('closeModal');
             closeModal.addEventListener('click', () => {
@@ -200,7 +192,6 @@
                 }
             });
 
-            // Modal dinámico
             document.querySelectorAll('.open-modal').forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById('faunaModal');

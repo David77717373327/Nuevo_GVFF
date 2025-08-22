@@ -72,12 +72,14 @@ Route::middleware(['lang'])->group(function () {
 
 
 
+
     Route::get('/admin/plant_inventory/sale/index', 'PlantInventoryController@sale')->name('gvff.admin.plant_inventory.sale.index');
     Route::get('/admin/plant_inventory/sale/get_plants/{id}', 'PlantInventoryController@getPlantsByWarehouse')->name('gvff.admin.plant_inventory.sale.getPlantsByWarehouse');
     Route::get('/admin/plant_inventory/sale/search/{id}', 'PlantInventoryController@searchPerson')->name('gvff.admin.plant_inventory.sale.searchPerson');
     Route::post('/admin/plant_inventory/sale/store', 'PlantInventoryController@processSale')->name('gvff.admin.plant_inventory.sale.store');
     Route::get('/admin/plant_inventory/history', 'PlantInventoryController@history')->name('gvff.admin.plant_inventory.sale.history');
     });
+
 
 
 
@@ -103,6 +105,12 @@ Route::prefix('gvff')->group(function () {
     Route::get('/nurseries/{nursery}', 'GVFFNurseriesUserController@show')->name('gvff.user.nurseries.show');
     Route::get('/about', 'GVFFNurseriesUserController@about')->name('gvff.user.nurseries.about');
     Route::delete('nurseries/{nursery}', 'GVFFNurseriesUserController@destroy')->name('gvff.admin.nurseries.destroy');
+
+    // Rutas para fauna
+    Route::get('/fauna', 'UserFaunaController@index')->name('gvff.user.fauna.index');
+    Route::get('/fauna/{id}', 'UserFaunaController@show')->name('gvff.user.fauna.show');        
+    Route::get('/fauna/search', 'UserFaunaSearchController@search')->name('gvff.user.fauna.search');
+
 });
 
 Route::prefix('gvff/admin/Tool')->group(function () {
@@ -116,7 +124,13 @@ Route::prefix('gvff/admin/Tool')->group(function () {
     Route::delete('/{id}/destroy', 'ToolController@destroy')->name('gvff.admin.Tool.destroy');
     Route::get('/check/{id}', 'ToolController@checkAvailability')->name('gvff.admin.Tool.check');
 
+    
 });
+
+// Rutas para la búsqueda de fauna
+
+
+
 
 
 

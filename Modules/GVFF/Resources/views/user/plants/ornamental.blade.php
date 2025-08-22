@@ -49,7 +49,9 @@
                     </p>
                 </div>
             </div>
-            
+
+             <h3 class="text-3xl font-semibold text-green-800 mb-6">Plantas Ornamentales Encontradas en el SENA</h3>
+
             <!-- Grid de plantas -->
             <div id="plants-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @if($plants->isNotEmpty())
@@ -66,10 +68,10 @@
                                 <!-- Contenido -->
                                 <div class="p-6">
                                     <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $plant->common_name }}</h2>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-seedling text-green-600 mr-3"></i> Tipo: {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
-                                    <p class="text-gray-700 mb-3"><i class="fas fa-leaf text-green-600 mr-3"></i> Familia: {{ $plant->family ?? 'No especificada' }}</p>
+                                    <p class="text-gray-700 mb-3"><i class="fas fa-seedling text-green-700 mr-3"></i> Tipo: {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
+                                    <p class="text-gray-700 mb-3"><i class="fas fa-leaf text-green-700 mr-3"></i> Familia: {{ $plant->family ?? 'No especificada' }}</p>
                                     <p class="text-gray-600 text-base mb-6">{{ Str::limit($plant->characteristics ?? 'No disponible', 120) }}</p>
-                                    <button class="btn-cta inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 open-modal" 
+                                    <button class="btn-cta inline-block bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300 open-modal" 
                                         data-plant-id="{{ $plant->id }}" 
                                         data-plant-name="{{ $plant->common_name }}" 
                                         data-plant-scientific="{{ $plant->scientific_name }}" 

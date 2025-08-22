@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,9 +27,11 @@
             transform: scale(1.1);
             transition: transform 10s ease;
         }
+
         .swiper-slide-active .carousel-image {
             transform: scale(1);
         }
+
         .carousel-caption {
             background: rgba(0, 0, 0, 0.6);
             padding: 1.5rem;
@@ -38,22 +41,26 @@
             animation: slideUp 1s ease forwards 0.5s;
             z-index: 10;
         }
+
         @keyframes slideUp {
             to {
                 transform: translateY(0);
                 opacity: 1;
             }
         }
+
         .btn-cta {
-            background: linear-gradient(45deg, #5e9e77, #45be69);
+            background-color: #198754;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .btn-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
+
         #main-carousel {
-            transition: transform 1.2s cubic-bezier(0.4,0,0.2,1), opacity 1.2s cubic-bezier(0.4,0,0.2,1), max-height 1.2s cubic-bezier(0.4,0,0.2,1), margin 1.2s cubic-bezier(0.4,0,0.2,1);
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), max-height 1.2s cubic-bezier(0.4, 0, 0.2, 1), margin 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: top;
             z-index: 5;
             position: relative;
@@ -62,6 +69,7 @@
             background: linear-gradient(135deg, #e6f3e6 0%, #ffffff 100%);
             margin-bottom: 2rem;
         }
+
         #main-carousel.shrink {
             transform: scaleY(0.7);
             opacity: 0;
@@ -69,18 +77,23 @@
             margin-bottom: 0;
             pointer-events: none;
         }
+
         /* Estilos para la navegación */
         .navbar {
-            background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(21, 128, 61, 0.95));
+            background: #198754;
         }
+
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding-left: 0.5rem; /* Padding mínimo a la izquierda */
-            padding-right: 0.5rem; /* Padding mínimo a la derecha */
+            padding-left: 0.5rem;
+            /* Padding mínimo a la izquierda */
+            padding-right: 0.5rem;
+            /* Padding mínimo a la derecha */
         }
+
         .nav-links.active {
             display: flex;
             flex-direction: column;
@@ -92,16 +105,20 @@
             padding: 1rem;
             z-index: 40;
         }
+
         .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
             width: 100%;
         }
+
         @media (min-width: 768px) {
             .nav-links {
-                display: flex !important; /* Asegura que los enlaces estén visibles en escritorio */
+                display: flex !important;
+                /* Asegura que los enlaces estén visibles en escritorio */
             }
+
             .dropdown-menu {
                 position: absolute;
                 top: 100%;
@@ -111,6 +128,7 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
     <!-- Header -->
     <header class="sticky top-0 z-50">
@@ -119,9 +137,8 @@
             <div class="nav-container">
                 <!-- Logo a la izquierda -->
                 <div class="nav-logo flex items-center space-x-4">
-                    <img src="{{ asset('modules/gvff/images/logo2.jpeg') }}"
-                         alt="Vivero Logo"
-                         class="h-14 w-14 rounded-full shadow-md border-2 border-green-700 bg-white object-cover transition-transform duration-300 hover:scale-105" />
+                    <img src="{{ asset('modules/gvff/images/logo2.jpeg') }}" alt="Vivero Logo"
+                        class="h-14 w-14 rounded-full shadow-md border-2 border-green-700 bg-white object-cover transition-transform duration-300 hover:scale-105" />
                     <span class="block text-xl md:text-2xl font-semibold text-white tracking-wide leading-tight">
                         Viveros, plantas y fauna
                     </span>
@@ -130,56 +147,79 @@
                 <div class="flex items-center gap-2">
                     <ul class="nav-links hidden md:flex items-center text-lg font-semibold">
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                            <a href="{{ route('gvff.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.welcome') }}"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-home animate-pulse"></i>
                                 <span>Inicio</span>
                             </a>
                             <span class="tooltip">Explora nuestra página principal</span>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="200" class="relative">
-                            <a href="{{ route('gvff.user.nurseries.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.user.nurseries.index') }}"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-leaf animate-spin-slow"></i>
                                 <span>Viveros</span>
                             </a>
                             <span class="tooltip">Descubre nuestros viveros públicos y privados</span>
                         </li>
                         <li class="relative dropdown group" data-aos="fade-right" data-aos-delay="300">
-                            <a href="#" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="#"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-seedling animate-bounce"></i>
                                 <span>Plantas</span>
-                                <i class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
+                                <i
+                                    class="fas fa-chevron-down ml-1 transform transition-transform duration-300 group-hover:rotate-180"></i>
                             </a>
                             <span class="tooltip">Explora nuestras categorías de plantas</span>
-                            <ul class="dropdown-menu hidden flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
-                                <li><a href="{{ route('gvff.user.plants.ornamental') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.forestal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-tree"></i><span>Forestales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.medicinal') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
-                                <li><a href="{{ route('gvff.user.plants.destacadas') }}" class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i class="fas fa-star text-yellow-400"></i><span>Destacadas</span></a></li>
+                            <ul
+                                class="dropdown-menu hidden flex-col bg-green-700 text-white rounded-lg shadow-xl mt-2 w-48 z-50">
+                                <li><a href="{{ route('gvff.user.plants.ornamental') }}"
+                                        class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i
+                                            class="fas fa-seedling"></i><span>Ornamentales</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.forestal') }}"
+                                        class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i
+                                            class="fas fa-tree"></i><span>Forestales</span></a></li>
+                                <li><a href="{{ route('gvff.user.plants.medicinal') }}"
+                                        class="flex items-center space-x-2 px-4 py-3 hover:bg-green-800 transition"><i
+                                            class="fas fa-mortar-pestle"></i><span>Medicinales</span></a></li>
                             </ul>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="400" class="relative">
-                            <a href="{{ route('gvff.user.nurseries.about') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.user.nurseries.about') }}"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-info-circle animate-pulse"></i>
                                 <span>Acerca de</span>
                             </a>
                             <span class="tooltip">Conoce nuestra misión y visión</span>
                         </li>
+                       <li data-aos="fade-right" data-aos-delay="200" class="relative">
+                            <a href="{{ route('gvff.user.fauna.index') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                                <i class="fas fa-paw animate-bounce"></i>
+                                <span>Fauna</span>
+                            </a>
+                            <span class="tooltip">Explora nuestra fauna</span>
+
+                        </li>
+
                         <li data-aos="fade-right" data-aos-delay="100" class="relative">
-                            <a href="{{ route('gvff.user.plants.venta') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('gvff.user.plants.venta') }}"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-shopping-cart animate-pulse"></i>
                                 <span>Venta</span>
                             </a>
                             <span class="tooltip">Explora nuestra página principal</span>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="500" class="relative">
-                            <a href="https://wa.me/1234567890" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="https://wa.me/1234567890"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fab fa-whatsapp animate-bounce"></i>
                                 <span>Contacto</span>
                             </a>
                             <span class="tooltip">Contáctanos por WhatsApp</span>
                         </li>
                         <li data-aos="fade-right" data-aos-delay="600" class="relative">
-                            <a href="{{ route('cefa.welcome') }}" class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
+                            <a href="{{ route('cefa.welcome') }}"
+                                class="flex items-center space-x-2 hover:text-yellow-300 transition-all duration-300">
                                 <i class="fas fa-external-link-alt"></i>
                                 <span>SICEFA</span>
                             </a>
@@ -196,35 +236,45 @@
     <!-- Resto del código sin cambios -->
     <!-- Carrusel en una sección independiente -->
     <section class="relative mt-4">
-        <div id="main-carousel" class="swiper mySwiper relative transition-all duration-500" data-aos="fade-in" style="z-index: 5;">
+        <div id="main-carousel" class="swiper mySwiper relative transition-all duration-500" data-aos="fade-in"
+            style="z-index: 5;">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="relative w-full">
-                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Vivero 1" class="carousel-image w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Vivero 1"
+                            class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Descubre Nuestros Viveros</h2>
-                            <p class="text-lg">Explora una amplia variedad de plantas sostenibles cultivadas con cuidado.</p>
-                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Ver Viveros</a>
+                            <p class="text-lg">Explora una amplia variedad de plantas sostenibles cultivadas con
+                                cuidado.</p>
+                            <a href="#"
+                                class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg bg-green-700 hover:bg-green-800 transition">Ver
+                                Viveros</a>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
                     <div class="relative w-full">
-                        <img src="{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}" alt="Planta 1" class="carousel-image w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carrucel2.jpg') }}" alt="Planta 1"
+                            class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Plantas Medicinales</h2>
                             <p class="text-lg">Aprovecha los beneficios naturales para tu salud y bienestar.</p>
-                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Explorar Medicinales</a>
+                            <a href="#"
+                                class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Explorar
+                                Medicinales</a>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
                     <div class="relative w-full">
-                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Planta 2" class="carousel-image w-full">
+                        <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Planta 2"
+                            class="carousel-image w-full">
                         <div class="absolute bottom-16 left-10 carousel-caption text-white max-w-md">
                             <h2 class="text-4xl font-bold mb-2">Ornamentales y Forestales</h2>
                             <p class="text-lg">Embellece tu hogar o entorno con nuestras plantas únicas.</p>
-                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Ver Plantas</a>
+                            <a href="#" class="btn-cta inline-block mt-4 px-6 py-3 text-white rounded-lg">Ver
+                                Plantas</a>
                         </div>
                     </div>
                 </div>
@@ -250,27 +300,32 @@
                 background: rgba(255, 255, 255, 0.4);
                 border-radius: 20px;
                 overflow: hidden;
-                border: 1px solid rgba(255,255,255,0.3);
-                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
                 transition: transform 0.2s ease, box-shadow 0.2s ease;
                 transform-style: preserve-3d;
                 perspective: 1000px;
             }
+
             .glass-card:hover {
                 transform: rotateY(5deg) scale(1.05);
-                box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             }
+
             .glass-image {
                 transition: transform 0.6s ease;
             }
+
             .glass-card:hover .glass-image {
                 transform: scale(1.15) rotate(2deg);
             }
+
             .glass-content {
                 padding: 1.5rem;
-                background: rgba(255,255,255,0.6);
+                background: rgba(255, 255, 255, 0.6);
                 backdrop-filter: blur(6px);
             }
+
             .glass-title {
                 background: linear-gradient(to right, #166534, #10b981);
                 -webkit-background-clip: text;
@@ -278,6 +333,7 @@
                 font-weight: 700;
                 font-size: 1.5rem;
             }
+
             .glass-description {
                 color: #374151;
             }
@@ -287,84 +343,98 @@
             <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
                 <!-- Card 1 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Tipos de plantas" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Tipos de plantas"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Tipos de plantas</h3>
-                        <p class="glass-description">Explora la increíble variedad de especies vegetales y descubre sus secretos.</p>
+                        <p class="glass-description">Explora la increíble variedad de especies vegetales y descubre sus
+                            secretos.</p>
                     </div>
                 </div>
                 <!-- Card 2 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidados básicos" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidados básicos"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Cuidados básicos</h3>
-                        <p class="glass-description">Aprende a proteger y nutrir tus plantas para que florezcan todo el año.</p>
+                        <p class="glass-description">Aprende a proteger y nutrir tus plantas para que florezcan todo el
+                            año.</p>
                     </div>
                 </div>
                 <!-- Card 3 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidado ambiental" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Cuidado ambiental"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Cuidado ambiental</h3>
-                        <p class="glass-description">Contribuye a un entorno sostenible y ayuda a preservar la biodiversidad.</p>
+                        <p class="glass-description">Contribuye a un entorno sostenible y ayuda a preservar la
+                            biodiversidad.</p>
                     </div>
                 </div>
                 <!-- Card 4 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Huertos en casa" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Huertos en casa"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Huertos en casa</h3>
-                        <p class="glass-description">Crea tu propio huerto en casa y disfruta de alimentos frescos y saludables.</p>
+                        <p class="glass-description">Crea tu propio huerto en casa y disfruta de alimentos frescos y
+                            saludables.</p>
                     </div>
                 </div>
                 <!-- Card 5 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas medicinales" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas medicinales"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Plantas medicinales</h3>
-                        <p class="glass-description">Descubre remedios naturales y cómo usarlos de manera responsable.</p>
+                        <p class="glass-description">Descubre remedios naturales y cómo usarlos de manera responsable.
+                        </p>
                     </div>
                 </div>
                 <!-- Card 6 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Sostenibilidad" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Sostenibilidad"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Sostenibilidad</h3>
-                        <p class="glass-description">Impulsa prácticas sostenibles y cuida el planeta de forma integral.</p>
+                        <p class="glass-description">Impulsa prácticas sostenibles y cuida el planeta de forma
+                            integral.</p>
                     </div>
                 </div>
                 <!-- Card 7 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Jardinería Urbana" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Jardinería Urbana"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Jardinería Urbana</h3>
-                        <p class="glass-description">Transforma espacios urbanos con técnicas de jardinería sostenible.</p>
+                        <p class="glass-description">Transforma espacios urbanos con técnicas de jardinería sostenible.
+                        </p>
                     </div>
                 </div>
                 <!-- Card 8 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas de Interior" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Plantas de Interior"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Plantas de Interior</h3>
-                        <p class="glass-description">Decora tu hogar con plantas que purifican el aire y embellecen.</p>
+                        <p class="glass-description">Decora tu hogar con plantas que purifican el aire y embellecen.
+                        </p>
                     </div>
                 </div>
                 <!-- Card 9 -->
                 <div class="glass-card">
-                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Educación Ambiental" class="glass-image w-full h-52 object-cover">
+                    <img src="{{ asset('modules/gvff/images/plants/carucel1.jpg') }}" alt="Educación Ambiental"
+                        class="glass-image w-full h-52 object-cover">
                     <div class="glass-content">
                         <h3 class="glass-title mb-2">Educación Ambiental</h3>
-                        <p class="glass-description">Aprende y enseña sobre la importancia de la conservación ambiental.</p>
+                        <p class="glass-description">Aprende y enseña sobre la importancia de la conservación
+                            ambiental.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contenido principal -->
-    <main class="flex-1 container mx-auto px-4 py-12">
-        @yield('content')
-    </main>
 
     <!-- Footer -->
     <footer class="bg-green-800 text-white py-12">
@@ -372,7 +442,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div data-aos="fade-up">
                     <h3 class="text-2xl font-bold mb-4">Sobre Nosotros</h3>
-                    <p>Somos una empresa dedicada a la conservación y distribución de plantas y viveros, promoviendo la sostenibilidad y la conexión con la naturaleza.</p>
+                    <p>Somos una empresa dedicada a la conservación y distribución de plantas y viveros, promoviendo la
+                        sostenibilidad y la conexión con la naturaleza.</p>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="100">
                     <h3 class="text-2xl font-bold mb-4">Enlaces Rápidos</h3>
@@ -380,17 +451,24 @@
                         <li><a href="#" class="hover:text-yellow-300 transition">Inicio</a></li>
                         <li><a href="#" class="hover:text-yellow-300 transition">Viveros</a></li>
                         <li><a href="#" class="hover:text-yellow-300 transition">Plantas</a></li>
-                        <li><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">Contacto</a></li>
+                        
+                        <li><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">Contacto</a>
+                        </li>
                     </ul>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="200">
                     <h3 class="text-2xl font-bold mb-4">Contáctanos</h3>
-                    <p><i class="fas fa-phone mr-2"></i><a href="https://wa.me/1234567890" class="hover:text-yellow-300 transition">WhatsApp: +57 123 456 7890</a></p>
-                    <p><i class="fas fa-envelope mr-2"></i><a href="mailto:info@viveros.com" class="hover:text-yellow-300 transition">info@viveros.com</a></p>
+                    <p><i class="fas fa-phone mr-2"></i><a href="https://wa.me/1234567890"
+                            class="hover:text-yellow-300 transition">WhatsApp: +57 123 456 7890</a></p>
+                    <p><i class="fas fa-envelope mr-2"></i><a href="mailto:info@viveros.com"
+                            class="hover:text-yellow-300 transition">info@viveros.com</a></p>
                     <div class="mt-4 flex space-x-4">
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-yellow-300 transition"><i
+                                class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
@@ -486,4 +564,5 @@
         });
     </script>
 </body>
+
 </html>

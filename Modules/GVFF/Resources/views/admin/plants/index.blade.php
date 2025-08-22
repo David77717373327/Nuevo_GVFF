@@ -121,11 +121,12 @@
                 <table id="plants-table" class="table align-middle">
                     <thead class="table-success">
                         <tr>
-                            <th>Imagen</th>
+                            
                             <th>Nombre Común</th>
                             <th>Nombre Científico</th>
                             <th>Vivero</th>
                             <th>Tipo</th>
+                            <th>Imagen</th>
                             <th>Disponible</th>
                             <th>Acciones</th>
                         </tr>
@@ -133,6 +134,11 @@
                     <tbody>
                         @foreach ($plants as $plant)
                         <tr>
+                            
+                            <td>{{ $plant->common_name }}</td>
+                            <td>{{ $plant->scientific_name }}</td>
+                            <td>{{ $plant->nurseries->name ?? 'Sin vivero' }}</td>
+                            <td>{{ $plant->plant_type }}</td>
                             <td>
                                 @if ($plant->image)
                                     <img src="{{ asset('storage/' . $plant->image) }}" alt="{{ $plant->common_name }}" class="plant-image">
@@ -140,10 +146,6 @@
                                     <span>Sin imagen</span>
                                 @endif
                             </td>
-                            <td>{{ $plant->common_name }}</td>
-                            <td>{{ $plant->scientific_name }}</td>
-                            <td>{{ $plant->nurseries->name ?? 'Sin vivero' }}</td>
-                            <td>{{ $plant->plant_type }}</td>
                             <td>
                                 <span class="badge {{ $plant->available ? 'bg-success' : 'bg-danger' }}">
                                     {{ $plant->available ? 'Sí' : 'No' }}

@@ -3,7 +3,7 @@
 @section('title', 'Plantas Medicinales')
 
 @section('content')
-    <div class="relative min-h-screen bg-gradient-to-b from-ecfccb to-bbf7d0 overflow-hidden" id="pageContainer">
+    <div class="relative min-h-screen  bg-gradient-to-b from-green-50 to-green-200 overflow-hidden" id="pageContainer">
         <!-- Fondo decorativo con hojas flotantes -->
         <div class="absolute inset-0 pointer-events-none">
             <div class="leaf leaf1"></div>
@@ -17,7 +17,7 @@
                 <div class="flex justify-center items-center space-x-8 mb-6">
                     <img src="{{ asset('modules/gvff/images/users/hoja.png') }}" alt="Hoja Izquierda"
                         class="w-24 md:w-32 h-24 md:h-32 object-contain transition-transform duration-300 hover:scale-110 filter drop-shadow-md">
-                    <h1 class="text-5xl md:text-6xl font-bold text-84cc16 leading-tight animate__animated animate__fadeIn">
+                    <h1 class="text-5xl md:text-6xl text-green-800 font-bold text-84cc16 leading-tight animate__animated animate__fadeIn">
                         Descubre las Plantas Medicinales
                     </h1>
                     <img src="{{ asset('modules/gvff/images/users/hoja.png') }}" alt="Hoja Derecha"
@@ -83,50 +83,46 @@
                 </div>
             </div>
 
-            <!-- Plantas Medicinales Encontradas en el SENA -->
-            <div class="bg-white rounded-xl shadow-xl p-8 mb-12 animate__animated animate__fadeIn">
-                <h3 class="text-3xl font-semibold text-84cc16 mb-6">Plantas Medicinales Encontradas en el SENA</h3>
-                <div class="plant-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="plants-list">
-                    @if($plants->isNotEmpty())
-                        @foreach($plants as $plant)
-                            @if($plant->available)
-                                <div class="plant-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-ecfccb/50 relative"
-                                    data-category="{{ $plant->structure_type ?? 'all' }}" data-inventory="{{ $plant->inventory ?? 0 }}">
-                                    <!-- Imagen estática con efecto de opacidad -->
-                                    <div class="relative h-64 overflow-hidden">
-                                        <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}"
-                                            alt="{{ $plant->common_name }}"
-                                            class="w-full h-full object-cover transition-opacity duration-300 static-image"
-                                            data-speed="0.3">
-                                        <div class="absolute top-0 right-0 bg-84cc16 text-white text-sm font-medium px-4 py-2 rounded-bl-lg shadow-md"
-                                            data-tooltip="Tipo de planta">
-                                            {{ ucfirst($plant->structure_type ?? 'No especificada') }}
-                                        </div>
-                                    </div>
-                                    <!-- Contenido -->
-                                    <div class="p-6">
-                                        <h2 class="text-2xl font-semibold text-84cc16 mb-4 card-title">{{ $plant->common_name }}</h2>
-                                        <p class="text-1e293b mb-3"><i class="fas fa-seedling text-84cc16 mr-3"></i> Tipo:
-                                            {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
-                                        <p class="text-1e293b mb-3"><i class="fas fa-leaf text-84cc16 mr-3"></i> Propiedades:
-                                            {{ $plant->properties ?? 'No disponible' }}</p>
-                                        <p class="text-1e293b mb-3"><i class="fas fa-book-medical text-84cc16 mr-3"></i> Usos Trad.:
-                                            {{ $plant->traditional_uses ?? 'No disponible' }}</p>
-                                        <p class="text-4a652e/70 text-base mb-6 card-text">
-                                            {{ Str::limit($plant->characteristics ?? 'Sin descripción', 120) }}</p>
-                                        <button
-                                            class="btn-cta inline-block bg-84cc16 text-white px-6 py-3 rounded-lg hover:bg-4a652e transition duration-300 expand-btn"
-                                            data-plant-id="{{ $plant->id }}">
-                                            Más Detalles
-                                        </button>
+            <!-- Plantas Medicinales Encontradas en el SENA (sin fondo blanco, con estilos de ornamentales) -->
+            <h3 class="text-3xl font-semibold text-green-800 mb-6">Plantas Medicinales Encontradas en el SENA</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="plants-list">
+                @if($plants->isNotEmpty())
+                    @foreach($plants as $plant)
+                        @if($plant->available)
+                            <div class="plant-card bg-white rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                                data-category="{{ $plant->structure_type ?? 'all' }}" data-inventory="{{ $plant->inventory ?? 0 }}">
+                                <!-- Imagen -->
+                                <div class="relative">
+                                    <img src="{{ $plant->image ? asset('storage/' . $plant->image) : asset('modules/gvff/images/plants/placeholder.jpg') }}"
+                                        alt="{{ $plant->common_name }}"
+                                        class="w-full h-64 object-cover">
+                                    <div class="absolute top-0 right-0 bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-bl-lg">
+                                        {{ ucfirst($plant->structure_type ?? 'No especificada') }}
                                     </div>
                                 </div>
-                            @endif
-                        @endforeach
-                    @else
-                        <p class="text-center text-1e293b text-xl">No hay plantas medicinales disponibles en este momento.</p>
-                    @endif
-                </div>
+                                <!-- Contenido -->
+                                <div class="p-6">
+                                    <h2 class="text-2xl font-semibold text-green-800 mb-4">{{ $plant->common_name }}</h2>
+                                    <p class="text-gray-700 mb-3"><i class="fas fa-seedling text-green-700 mr-3"></i> Tipo:
+                                        {{ ucfirst($plant->plant_type ?? 'No especificado') }}</p>
+                                    <p class="text-gray-700 mb-3"><i class="fas fa-leaf text-green-700 mr-3"></i> Propiedades:
+                                        {{ $plant->properties ?? 'No disponible' }}</p>
+                                    <p class="text-gray-700 mb-3"><i class="fas fa-book-medical text-green-700 mr-3"></i> Usos Trad.:
+                                        {{ $plant->traditional_uses ?? 'No disponible' }}</p>
+                                    <p class="text-gray-600 text-base mb-6">
+                                        {{ Str::limit($plant->characteristics ?? 'Sin descripción', 120) }}</p>
+                                    <button
+                                        class="btn-cta inline-block bg-green-800 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300"
+                                        data-plant-id="{{ $plant->id }}">
+                                        Más Detalles
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                @else
+                    <p class="text-center text-gray-700 text-xl">No hay plantas medicinales disponibles en este momento.</p>
+                @endif
             </div>
         </div>
 
@@ -238,7 +234,7 @@
         .info-title,
         .card-title,
         .modal-title {
-            color: #84cc16;
+            color: #086d3eff;
             transition: color 0.5s ease;
         }
 
@@ -250,12 +246,12 @@
         }
 
         .btn-cta {
-            background-color: #84cc16;
+            background-color: #016537ff;
             transition: background-color 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn-cta:hover {
-            background-color: #4a652e;
+            background-color: #0f683fff;
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
@@ -412,10 +408,10 @@
                     const plantCard = button.closest('.plant-card');
                     const plantImage = plantCard.querySelector('img').src;
                     const plantCommonName = plantCard.querySelector('h2').textContent;
-                    const plantScientificName = plantCard.querySelector('p:nth-child(2)').textContent.replace('Nombre Científico: ', '');
+                    const plantScientificName = plantCard.querySelector('p:nth-child(2)').textContent.replace('Tipo: ', '');
                     const plantProperties = plantCard.querySelector('p:nth-child(3)').textContent.replace('Propiedades: ', '');
                     const plantTraditionalUses = plantCard.querySelector('p:nth-child(4)').textContent.replace('Usos Trad.: ', '');
-                    const plantCharacteristics = plantCard.querySelector('p:nth-child(5)').textContent.replace('Descripción: ', '');
+                    const plantCharacteristics = plantCard.queryselector('p:nth-child(5)').textContent.replace('Descripción: ', '');
                     const plantBenefits = plantCard.querySelector('div.extra-info p:nth-child(1)')?.textContent.replace('Beneficios: ', '') ?? 'No disponible';
                     const plantContraindications = plantCard.querySelector('div.extra-info p:nth-child(2)')?.textContent.replace('Contraindic.: ', '') ?? 'No disponible';
                     const plantModernUses = plantCard.querySelector('div.extra-info p:nth-child(3)')?.textContent.replace('Uso Moderno: ', '') ?? 'No disponible';
